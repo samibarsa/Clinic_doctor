@@ -1,6 +1,8 @@
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeScreanBody extends StatelessWidget {
   const HomeScreanBody({
@@ -18,7 +20,23 @@ class HomeScreanBody extends StatelessWidget {
             height: 300,
             width: 300,
           ),
-          SvgPicture.asset(ImagesPath.wellcome),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              SvgPicture.asset(ImagesPath.wellcome),
+               Column(
+                children: [
+                  const CustomButton(
+                    title: "انشاء حساب",
+                    color: AppColor.primaryColor,
+                  ),
+                  SizedBox(height: 24.h,),
+                  const CustomButton(
+                      title: 'تسجيل دخول', color: AppColor.secondColor),
+                ],
+              ),
+            ],
+          )
         ],
       ),
     );

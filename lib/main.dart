@@ -17,14 +17,13 @@ class ClinicDoctor extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-       
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            textTheme:  const TextTheme(
+            fontFamily: AppFont.primaryFont, // تطبيق الخط على جميع النصوص
+            textTheme: const TextTheme(
               bodyMedium: TextStyle(
-                fontFamily: AppFont.primaryFont, // Use your custom font here
-                fontSize: 16.0, // Adjust the font size as needed
+                fontSize: 16.0,
               ),
             ),
           ),

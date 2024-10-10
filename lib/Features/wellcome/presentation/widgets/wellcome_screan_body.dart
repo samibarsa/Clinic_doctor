@@ -1,4 +1,6 @@
+import 'package:doctor_app/Features/Signup/presentation/views/sign_up.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,15 +26,22 @@ class HomeScreanBody extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               SvgPicture.asset(ImagesPath.wellcome),
-               Column(
+              Column(
                 children: [
-                  const CustomButton(
+                  CustomButton(
+                    onTap: () {
+                      MovingNavigation.navTo(context, page: const SignUpView());
+                    },
                     title: "انشاء حساب",
-                    color: AppColor.primaryColor,
+                    color: AppColor.primaryColor, titleColor: Colors.black,
                   ),
-                  SizedBox(height: 24.h,),
-                  const CustomButton(
-                      title: 'تسجيل دخول', color: AppColor.secondColor),
+                  SizedBox(
+                    height: 24.h,
+                  ),
+                  CustomButton(titleColor: Colors.black,
+                      onTap: () {},
+                      title: 'تسجيل دخول',
+                      color: AppColor.secondColor),
                 ],
               ),
             ],

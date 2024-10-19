@@ -21,11 +21,11 @@ class LoginView extends StatelessWidget {
               style: TextStyle(fontSize: 12.sp, color: const Color(0xff898A8F)),
             ),
           ),
-          const AuthViewBody(
+           AuthViewBody(onTap: (){},
               firstFiled: "البريد الاكتروني",
               secondFiled: "كلمة السر",
               questestion: "ليس لديك حساب ؟",
-              state: "انشىء حساب"),
+              state: "انشىء حساب", buttontitle: 'تسجيل دخول',),
         ],
       ),
     );

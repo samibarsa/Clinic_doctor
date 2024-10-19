@@ -1,8 +1,9 @@
+
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
 import 'package:flutter/material.dart';
 
-class SignUpView extends StatelessWidget {
-  const SignUpView({super.key});
+class SignUpPasswordView extends StatelessWidget {
+  const SignUpPasswordView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,11 +12,14 @@ class SignUpView extends StatelessWidget {
         title: const Text("إنشاء حساب"),
         centerTitle: true,
       ),
-      body: const AuthViewBody(
-        firstFiled: "الاسم الأول",
-        secondFiled: "الاسم الثاني",
+      body:  AuthViewBody(
+        onTap: (){
+          
+        },
+        firstFiled: "كلمة السر",
+        secondFiled: "تأكيد كلمة السر",
         questestion: "لديك حساب بالغعل ؟",
-        state: "سجل دخول",
+        state: "سجل دخول", buttontitle: 'انشىء حساب',
       ),
     );
   }

@@ -12,13 +12,16 @@ class AuthViewBody extends StatelessWidget {
       required this.firstFiled,
       required this.secondFiled,
       required this.state,
-      required this.questestion});
+      required this.questestion,
+      required this.onTap, required this.buttontitle});
 
   final String firstFiled;
   final String secondFiled;
 
   final String state;
   final String questestion;
+  final void Function()? onTap;
+    final String buttontitle ;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -41,9 +44,9 @@ class AuthViewBody extends StatelessWidget {
               height: 174.h,
             ),
             CustomButton(
-                title: "التالي",
+                title: buttontitle,
                 color: 0xff4CAF50,
-                onTap: () {},
+                onTap: onTap,
                 titleColor: Colors.white),
             SizedBox(
               height: 36.h,

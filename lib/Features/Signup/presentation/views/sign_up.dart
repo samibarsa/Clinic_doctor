@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/Signup/presentation/widget/sign_up_view_body.dart';
+import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
 import 'package:flutter/material.dart';
 
 class SignUpView extends StatelessWidget {
@@ -6,10 +6,17 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(title:const Text("إنشاء حساب"),
-      centerTitle: true,),
-      body:const SignUpViewBody(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("إنشاء حساب"),
+        centerTitle: true,
+      ),
+      body: const AuthViewBody(
+        firstFiled: "الاسم الأول",
+        secondFiled: "الاسم الثاني",
+        questestion: "لديك حساب بالغعل ؟",
+        state: "سجل دخول",
+      ),
     );
   }
 }

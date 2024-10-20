@@ -13,7 +13,8 @@ class AuthViewBody extends StatelessWidget {
       required this.secondFiled,
       required this.state,
       required this.questestion,
-      required this.onTap, required this.buttontitle});
+      required this.onTap,
+      required this.buttontitle});
 
   final String firstFiled;
   final String secondFiled;
@@ -21,7 +22,7 @@ class AuthViewBody extends StatelessWidget {
   final String state;
   final String questestion;
   final void Function()? onTap;
-    final String buttontitle ;
+  final String buttontitle;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -33,11 +34,13 @@ class AuthViewBody extends StatelessWidget {
             ),
             CustomTextField(
               title: firstFiled,
+              radius: 12,
             ),
             SizedBox(
               height: 24.h,
             ),
             CustomTextField(
+              radius: 12,
               title: secondFiled,
             ),
             SizedBox(

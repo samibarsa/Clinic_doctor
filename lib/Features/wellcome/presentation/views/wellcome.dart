@@ -11,7 +11,7 @@ class WellcomeScrean extends StatelessWidget {
       appBar: AppBar(
      
       ),
-      body:  const HomeScreanBody(),
+      body:  const WellcomeViewBody(),
     );
   }
 }

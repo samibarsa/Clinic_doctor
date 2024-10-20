@@ -1,4 +1,6 @@
+import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
 import 'package:doctor_app/Features/wellcome/presentation/views/wellcome.dart';
+import 'package:doctor_app/Features/wellcome/presentation/widgets/wellcome_screan_body.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -18,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const WellcomeScrean()));
+          MaterialPageRoute(builder: (context) => const HomeView()));
     });
   }
 

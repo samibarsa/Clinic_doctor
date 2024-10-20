@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-class HomeScreanBody extends StatelessWidget {
-  const HomeScreanBody({
+class WellcomeViewBody extends StatelessWidget {
+  const WellcomeViewBody({
     super.key,
   });
 

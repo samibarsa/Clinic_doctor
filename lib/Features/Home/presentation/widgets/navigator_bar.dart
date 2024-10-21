@@ -22,7 +22,7 @@ class _NavBarState extends State<NavBar> {
         Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 30.w, top: 30.h),
+              padding: EdgeInsets.only(left: 40.w, top: 30.h),
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -31,13 +31,13 @@ class _NavBarState extends State<NavBar> {
                   });
                 },
                 child: SizedBox(
-                  height: 60.h,
-                  width: 90.w,
+                  height:60.h,
+                  width: 60.w,
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 45.w, bottom: 35.h),
+              padding: EdgeInsets.only(left: 60.w, top: 30.h),
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -45,17 +45,15 @@ class _NavBarState extends State<NavBar> {
                     widget.homeViewBody.animateNavBar(1);
                   });
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35.r),
-                  ),
+                child: SizedBox(
+                
                   height: 60.h,
                   width: 60.w,
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 45.w, top: 30.h),
+              padding: EdgeInsets.only(left: 60.w, top: 30.h),
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -64,8 +62,8 @@ class _NavBarState extends State<NavBar> {
                   });
                 },
                 child: SizedBox(
-                  height: 50.h,
-                  width: 90.w,
+                  height: 60.h,
+                  width: 60.w,
                 ),
               ),
             ),

@@ -17,58 +17,65 @@ class _NavBarState extends State<NavBar> {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        SvgPicture.asset(fit: BoxFit.fill, widget.homeViewBody.imagePath),
+        Padding(
+          padding:  EdgeInsets.only(bottom: 21.h),
+          child: SvgPicture.asset(fit: BoxFit.fill, widget.homeViewBody.imagePath),
+        ),
      
-        Row(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 40.w, top: 30.h),
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    widget.homeViewBody.pageController.jumpToPage(0);
-                    widget.homeViewBody.animateNavBar(0);
-                  });
-                },
-                child: SizedBox(
-                  height:60.h,
-                  width: 60.w,
+        Padding(
+          padding:  EdgeInsets.symmetric(vertical: 25.h),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 40.w, top: 30.h),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      widget.homeViewBody.pageController.jumpToPage(0);
+                      widget.homeViewBody.animateNavBar(0);
+                    });
+                  },
+                  child: SizedBox(
+                    height:60.h,
+                    width: 60.w,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 60.w, top: 30.h),
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    widget.homeViewBody.pageController.jumpToPage(1);
-                    widget.homeViewBody.animateNavBar(1);
-                  });
-                },
-                child: SizedBox(
-                
-                  height: 60.h,
-                  width: 60.w,
+              Padding(
+                padding: EdgeInsets.only(left: 60.w, top: 30.h),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      widget.homeViewBody.pageController.jumpToPage(1);
+                      widget.homeViewBody.animateNavBar(1);
+                    });
+                  },
+                  child: SizedBox(
+                  
+                    height: 60.h,
+                    width: 60.w,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 60.w, top: 30.h),
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    widget.homeViewBody.pageController.jumpToPage(2);
-                    widget.homeViewBody.animateNavBar(2);
-                  });
-                },
-                child: SizedBox(
-                  height: 60.h,
-                  width: 60.w,
+              Padding(
+                padding: EdgeInsets.only(left: 60.w, top: 30.h),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      widget.homeViewBody.pageController.jumpToPage(2);
+                      widget.homeViewBody.animateNavBar(2);
+                    });
+                  },
+                  child: SizedBox(
+                    height: 60.h,
+                    width: 60.w,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         )
+        ,
       ],
     );
   }

@@ -2,8 +2,15 @@ import 'package:doctor_app/Features/Splash/splash_screan.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: SupabaseKeys.projectUrl,
+    anonKey: SupabaseKeys.anonyKey,
+  );
   runApp(const ClinicDoctor());
 }
 

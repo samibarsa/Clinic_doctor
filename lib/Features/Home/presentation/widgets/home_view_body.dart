@@ -92,10 +92,7 @@ class Home extends StatelessWidget {
                 onTap: () {}, child: SvgPicture.asset(ImagesPath.orderHistory)),
             GestureDetector(
                 onTap: () {}, child: SvgPicture.asset(ImagesPath.addOrder)),
-            // Padding(
-            //   padding: EdgeInsets.only(bottom: 21.h),
-            //   child: NavBar(homeViewBody: HomeViewBody()),
-            // ),
+            
           ],
         )
       ],

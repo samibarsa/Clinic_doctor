@@ -7,8 +7,8 @@ class ImagesPath {
   static String filter ='asset/images/filter.svg';
   static String addOrder ='asset/images/add_order.svg';
   static String orderHistory ='asset/images/order_hisory.svg';
-  static String navbarHome ='asset/images/navbar_history.svg';
-  static String navbarHistory ='asset/images/navbar_home.svg';
+  static String navbarHistory ='asset/images/navbar_history.svg';
+  static String navbarHome ='asset/images/navbar_home.svg';
   static String navbarSettings ='asset/images/navbar_settings.svg';
   static String navbarSellect ='asset/images/navbar_sellect.svg';
 }

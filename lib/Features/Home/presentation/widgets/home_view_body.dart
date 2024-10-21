@@ -10,24 +10,24 @@ class HomeViewBody extends StatefulWidget {
     super.key,
   });
 
- int currentIndex = 1;
+ int currentIndex = 0;
 
   EdgeInsetsGeometry padding = const EdgeInsets.only();
 
   String imagePath = ImagesPath.navbarHome;
 
   var pageController = PageController(
-    initialPage: 1,
+    initialPage: 2,
   );
 
   void animateNavBar(int value) {
-    if (value == 0) {
+    if (value == 1) {
       padding = EdgeInsets.only(right: 220.w);
-      imagePath = ImagesPath.navbarHome;
-    } else if (value == 1) {
-      padding = EdgeInsets.zero;
       imagePath = ImagesPath.navbarHistory;
     } else if (value == 2) {
+      padding = EdgeInsets.zero;
+      imagePath = ImagesPath.navbarHome;
+    } else if (value == 0) {
       padding = EdgeInsets.only(left: 220.w);
       imagePath = ImagesPath.navbarSettings;
     }
@@ -80,11 +80,11 @@ class Home extends StatelessWidget {
         SizedBox(
           height: 40.h,
         ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          GestureDetector(
-              onTap: () {}, child: SvgPicture.asset(ImagesPath.orderHistory)),
-          GestureDetector(
-              onTap: () {}, child: SvgPicture.asset(ImagesPath.addOrder)),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          // GestureDetector(
+          //     onTap: () {}, child: SvgPicture.asset(ImagesPath.orderHistory)),
+          // GestureDetector(
+          //     onTap: () {}, child: SvgPicture.asset(ImagesPath.addOrder)),
           Padding(
             padding:  EdgeInsets.only(bottom: 21.h),
             child: NavBar(homeViewBody: HomeViewBody()),

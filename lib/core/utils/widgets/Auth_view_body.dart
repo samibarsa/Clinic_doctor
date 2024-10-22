@@ -14,10 +14,14 @@ class AuthViewBody extends StatelessWidget {
       required this.state,
       required this.questestion,
       required this.onTap,
-      required this.buttontitle});
+      required this.buttontitle,
+      required this.firstTextEditingFiled,
+      required this.secondTextEditingFiled});
 
   final String firstFiled;
   final String secondFiled;
+  final TextEditingController firstTextEditingFiled;
+  final TextEditingController secondTextEditingFiled;
 
   final String state;
   final String questestion;
@@ -35,6 +39,7 @@ class AuthViewBody extends StatelessWidget {
             CustomTextField(
               title: firstFiled,
               radius: 12,
+              textEditingController: firstTextEditingFiled,
             ),
             SizedBox(
               height: 24.h,
@@ -42,6 +47,7 @@ class AuthViewBody extends StatelessWidget {
             CustomTextField(
               radius: 12,
               title: secondFiled,
+              textEditingController: secondTextEditingFiled,
             ),
             SizedBox(
               height: 174.h,

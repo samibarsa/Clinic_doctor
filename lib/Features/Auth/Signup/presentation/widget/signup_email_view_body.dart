@@ -8,19 +8,24 @@ class SignUpEmailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController email = TextEditingController();
+    TextEditingController password = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text("إنشاء حساب"),
         centerTitle: true,
       ),
       body: AuthViewBody(
+        firstTextEditingFiled: email,
+        secondTextEditingFiled: password,
         onTap: () {
           MovingNavigation.navTo(context, page: const SignUpPasswordView());
         },
         firstFiled: "البريد الاكتروني",
         secondFiled: "رقم الهاتف",
         questestion: "لديك حساب بالغعل ؟",
-        state: "سجل دخول", buttontitle: 'التالي',
+        state: "سجل دخول",
+        buttontitle: 'التالي',
       ),
     );
   }

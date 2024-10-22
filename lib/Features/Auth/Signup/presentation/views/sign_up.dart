@@ -8,12 +8,15 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  TextEditingController firstName = TextEditingController();
+  TextEditingController secondName = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text("إنشاء حساب"),
         centerTitle: true,
       ),
-      body:  AuthViewBody(
+      body:  AuthViewBody(firstTextEditingFiled: firstName,
+      secondTextEditingFiled: secondName,
         onTap: (){
           MovingNavigation.navTo(context, page: const SignUpEmailView());
           

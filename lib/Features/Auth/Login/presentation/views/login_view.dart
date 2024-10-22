@@ -22,6 +22,8 @@ class LoginView extends StatelessWidget {
             ),
           ),
            AuthViewBody(onTap: (){},
+           firstTextEditingFiled: TextEditingController(),
+           secondTextEditingFiled: TextEditingController(),
               firstFiled: "البريد الاكتروني",
               secondFiled: "كلمة السر",
               questestion: "ليس لديك حساب ؟",

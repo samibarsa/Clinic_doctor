@@ -9,7 +9,7 @@ class SignUpEmailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController email = TextEditingController();
-    TextEditingController password = TextEditingController();
+    TextEditingController phoneNumber = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text("إنشاء حساب"),
@@ -17,9 +17,9 @@ class SignUpEmailView extends StatelessWidget {
       ),
       body: AuthViewBody(
         firstTextEditingFiled: email,
-        secondTextEditingFiled: password,
+        secondTextEditingFiled: phoneNumber,
         onTap: () {
-          MovingNavigation.navTo(context, page: const SignUpPasswordView());
+          MovingNavigation.navTo(context, page:  SignUpPasswordView(email: email.text,));
         },
         firstFiled: "البريد الاكتروني",
         secondFiled: "رقم الهاتف",

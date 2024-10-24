@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
@@ -16,13 +18,16 @@ class AuthViewBody extends StatelessWidget {
       required this.onTap,
       required this.buttontitle,
       required this.firstTextEditingFiled,
-      required this.secondTextEditingFiled});
+      required this.secondTextEditingFiled,
+      required this.firstKeyboardType,
+      required this.secondKeyboardType});
 
   final String firstFiled;
   final String secondFiled;
   final TextEditingController firstTextEditingFiled;
   final TextEditingController secondTextEditingFiled;
-
+  final TextInputType firstKeyboardType;
+  final TextInputType secondKeyboardType;
   final String state;
   final String questestion;
   final void Function()? onTap;
@@ -37,6 +42,7 @@ class AuthViewBody extends StatelessWidget {
               height: 52.h,
             ),
             CustomTextField(
+              keyboardType: firstKeyboardType,
               title: firstFiled,
               radius: 12,
               textEditingController: firstTextEditingFiled,
@@ -45,6 +51,7 @@ class AuthViewBody extends StatelessWidget {
               height: 24.h,
             ),
             CustomTextField(
+              keyboardType: secondKeyboardType,
               radius: 12,
               title: secondFiled,
               textEditingController: secondTextEditingFiled,

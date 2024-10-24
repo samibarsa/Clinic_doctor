@@ -15,11 +15,12 @@ class SignUpEmailView extends StatelessWidget {
         title: const Text("إنشاء حساب"),
         centerTitle: true,
       ),
-      body: AuthViewBody(
+      body: AuthViewBody(firstKeyboardType: TextInputType.emailAddress,
+      secondKeyboardType: TextInputType.phone,
         firstTextEditingFiled: email,
         secondTextEditingFiled: phoneNumber,
         onTap: () {
-          MovingNavigation.navTo(context, page:  SignUpPasswordView(email: email.text,));
+          MovingNavigation.navTo(context, page:  SignUpPasswordView(email: email.text, phone: phoneNumber.text,));
         },
         firstFiled: "البريد الاكتروني",
         secondFiled: "رقم الهاتف",

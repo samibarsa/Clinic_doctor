@@ -15,7 +15,7 @@ class HomeTextWidgets extends StatelessWidget {
       children: [
         SvgPicture.asset(ImagesPath.filter),
         SizedBox(width: 10.w,),
-        SizedBox(width: 329.w,child:  CustomTextField(title: "مريض,تصوير مقطعي",radius: 24.r, textEditingController: TextEditingController(),)),
+        SizedBox(width: 329.w,child:  CustomTextField(keyboardType: TextInputType.text,title: "مريض,تصوير مقطعي",radius: 24.r, textEditingController: TextEditingController(),)),
         SizedBox(width: 10.w,),
       ],
     );

@@ -8,23 +8,26 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  TextEditingController firstName = TextEditingController();
-  TextEditingController secondName = TextEditingController();
+    TextEditingController firstName = TextEditingController();
+    TextEditingController secondName = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text("إنشاء حساب"),
         centerTitle: true,
       ),
-      body:  AuthViewBody(firstTextEditingFiled: firstName,
-      secondTextEditingFiled: secondName,
-        onTap: (){
+      body: AuthViewBody(
+        firstTextEditingFiled: firstName,
+        firstKeyboardType: TextInputType.text,
+        secondKeyboardType: TextInputType.text,
+        secondTextEditingFiled: secondName,
+        onTap: () {
           MovingNavigation.navTo(context, page: const SignUpEmailView());
-          
         },
         firstFiled: "الاسم الأول",
         secondFiled: "الاسم الثاني",
         questestion: "لديك حساب بالغعل ؟",
-        state: "سجل دخول", buttontitle: 'التالي',
+        state: "سجل دخول",
+        buttontitle: 'التالي',
       ),
     );
   }

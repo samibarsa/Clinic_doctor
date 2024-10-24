@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({
+  const   CustomButton({
     super.key, required this.title, required this.color,required this.onTap, required this.titleColor,  
   });
     final String title;

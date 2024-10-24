@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key, required this.title, required this.radius, required this.textEditingController});
+  const CustomTextField({super.key, required this.title, required this.radius, required this.textEditingController, required this.keyboardType});
   final String title;
   final double radius;
   final TextEditingController textEditingController;
+  final TextInputType keyboardType;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 361.w,
-      child: TextField(style: const TextStyle(fontSize: 12,height: 1),
+      child: TextField(keyboardType: keyboardType,
+        controller: textEditingController,
+        style: const TextStyle(fontSize: 12,height: 1),
         textDirection: TextDirection.rtl,
         decoration: InputDecoration(
           focusColor: Colors.black,

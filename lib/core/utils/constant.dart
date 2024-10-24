@@ -26,4 +26,5 @@ class SupabaseKeys {
   static const projectUrl = 'https://ncbjffnfecycqtlwwgco.supabase.co';
   static const anonyKey =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jYmpmZm5mZWN5Y3F0bHd3Z2NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk1MzIyODIsImV4cCI6MjA0NTEwODI4Mn0.-dCoPEwNB8ov6Lpyg_RMkre27ejO7SjXnJdxgr02F6I';
+ 
 }

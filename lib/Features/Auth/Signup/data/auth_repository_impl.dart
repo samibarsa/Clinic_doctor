@@ -17,6 +17,9 @@ class AuthRepositoryImpl implements AuthRepository {
       if (response.user == null) {
         throw Exception("Failed to sign up");
       }
+
+      
+      
     } catch (e) {
       throw Exception('Error during sign up: $e');
     }
@@ -33,6 +36,8 @@ class AuthRepositoryImpl implements AuthRepository {
       if (response.user == null) {
         throw Exception("Failed to sign in");
       }
+
+      
     } catch (e) {
       throw Exception('Error during sign in: $e');
     }

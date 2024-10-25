@@ -9,25 +9,34 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
-  await Supabase.initialize(
-    url: SupabaseKeys.anonyKey,
-    anonKey: SupabaseKeys.projectUrl,
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // تهيئة SharedPreferences
+
+
+  // تهيئة Supabase مع SharedPreferences كـ asyncStorage
+ final supabase =await Supabase.initialize(
+    url: SupabaseKeys.projectUrl,
+    anonKey: SupabaseKeys.anonyKey,
+
   );
-  var supabaseClient =
-      SupabaseClient(SupabaseKeys.anonyKey, SupabaseKeys.projectUrl);
+
+
   runApp(ClinicDoctor(
-    signInUseCase: SignInUseCase(AuthRepositoryImpl(supabaseClient)),
-    signOutUseCase: SignOutUseCase(AuthRepositoryImpl(supabaseClient)),
-    signUpUseCase: SignUpUseCase(AuthRepositoryImpl(supabaseClient)),
+    signInUseCase: SignInUseCase(AuthRepositoryImpl(supabase.client)),
+    signOutUseCase: SignOutUseCase(AuthRepositoryImpl(supabase.client)),
+    signUpUseCase: SignUpUseCase(AuthRepositoryImpl(supabase.client)),
   ));
 }
 
 class ClinicDoctor extends StatelessWidget {
-  const ClinicDoctor(
-      {super.key,
-      required this.signInUseCase,
-      required this.signOutUseCase,
-      required this.signUpUseCase});
+  const ClinicDoctor({
+    super.key,
+    required this.signInUseCase,
+    required this.signOutUseCase,
+    required this.signUpUseCase,
+  });
+
   final SignInUseCase signInUseCase;
   final SignOutUseCase signOutUseCase;
   final SignUpUseCase signUpUseCase;
@@ -41,17 +50,16 @@ class ClinicDoctor extends StatelessWidget {
       builder: (context, child) {
         return BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(
-              signInUseCase: signInUseCase,
-              signOutUseCase: signOutUseCase,
-              signUpUseCase: signUpUseCase),
+            signInUseCase: signInUseCase,
+            signOutUseCase: signOutUseCase,
+            signUpUseCase: signUpUseCase,
+          ),
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              fontFamily: AppFont.primaryFont, // تطبيق الخط على جميع النصوص
+              fontFamily: AppFont.primaryFont,
               textTheme: const TextTheme(
-                bodyMedium: TextStyle(
-                  fontSize: 16.0,
-                ),
+                bodyMedium: TextStyle(fontSize: 16.0),
               ),
             ),
             home: const SplashScreen(),

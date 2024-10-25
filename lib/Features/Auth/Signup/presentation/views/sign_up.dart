@@ -10,19 +10,36 @@ class SignUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController firstName = TextEditingController();
     TextEditingController secondName = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+    void submitForm() {
+      if (formKey.currentState!.validate()) {
+        // النموذج صحيح
+        MovingNavigation.navTo(context,
+            page: SignUpEmailView(
+              doctorName: "${firstName.text} ${secondName.text}",
+            ));
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("إنشاء حساب"),
         centerTitle: true,
       ),
       body: AuthViewBody(
+        formKey: formKey,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'لا يمكن أن يكون هذا الحقل فارغا'; // تحقق من أن الحقل ليس فارغًا
+          }
+
+          return null; // لا يوجد خطأ
+        },
         firstTextEditingFiled: firstName,
         firstKeyboardType: TextInputType.text,
         secondKeyboardType: TextInputType.text,
         secondTextEditingFiled: secondName,
-        onTap: () {
-          MovingNavigation.navTo(context, page: const SignUpEmailView());
-        },
+        onTap: () {submitForm();},
         firstFiled: "الاسم الأول",
         secondFiled: "الاسم الثاني",
         questestion: "لديك حساب بالغعل ؟",

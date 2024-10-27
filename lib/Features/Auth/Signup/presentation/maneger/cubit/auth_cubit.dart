@@ -3,7 +3,6 @@ import 'package:bloc/bloc.dart';
 import 'package:doctor_app/Features/Auth/Signup/domain/usecases/sign_up.dart';
 import 'package:equatable/equatable.dart';
 
-part 'auth_state.dart';
 
 abstract class AuthState extends Equatable {
   @override

@@ -1,4 +1,9 @@
-part of 'auth_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../domain/usecases/sign_up.dart';
+import 'auth_cubit.dart';
+
+
 class AuthCubit extends Cubit<AuthState> {
   final SignUpUseCase signUpUseCase;
   final SignInUseCase signInUseCase;
@@ -17,7 +22,13 @@ class AuthCubit extends Cubit<AuthState> {
       await signUpUseCase.call(email, password);
       emit(AuthSuccess());
     } catch (e) {
-      emit(AuthFailure(e.toString()));
+      String errorMessage = 'حدث خطأ غير متوقع. يرجى المحاولة لاحقًا.';
+      if (e.toString().contains('User already exists')) {
+        errorMessage = 'هذا البريد الإلكتروني مسجل بالفعل. يرجى استخدام بريد إلكتروني آخر.';
+      } else if (e.toString().contains('weak password')) {
+        errorMessage = 'كلمة المرور ضعيفة. يرجى استخدام كلمة مرور أقوى.';
+      }
+      emit(AuthFailure(errorMessage));
     }
   }
 
@@ -28,7 +39,13 @@ class AuthCubit extends Cubit<AuthState> {
       await signInUseCase.call(email, password);
       emit(AuthSuccess());
     } catch (e) {
-      emit(AuthFailure(e.toString()));
+      String errorMessage = 'حدث خطأ غير متوقع. يرجى المحاولة لاحقًا.';
+      if (e.toString().contains('Invalid login credentials')) {
+        errorMessage = 'بيانات تسجيل الدخول غير صحيحة. يرجى التحقق من البريد الإلكتروني وكلمة المرور.';
+      } else if (e.toString().contains('Network request failed')) {
+        errorMessage = 'لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك.';
+      }
+      emit(AuthFailure(errorMessage));
     }
   }
 
@@ -39,7 +56,8 @@ class AuthCubit extends Cubit<AuthState> {
       await signOutUseCase.call();
       emit(AuthLoggedOut());
     } catch (e) {
-      emit(AuthFailure(e.toString()));
+      String errorMessage = 'حدث خطأ غير متوقع أثناء تسجيل الخروج. يرجى المحاولة لاحقًا.';
+      emit(AuthFailure(errorMessage));
     }
   }
 }

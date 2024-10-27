@@ -1,5 +1,5 @@
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_state.dart';
+import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
 import 'package:flutter/material.dart';
@@ -8,17 +8,18 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class SignUpPasswordView extends StatefulWidget {
   const SignUpPasswordView({
-    Key? key,
+    super.key,
     required this.email,
     required this.phone,
     required this.doctorName,
-  }) : super(key: key);
+  });
 
   final String email;
   final String phone;
   final String doctorName;
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpPasswordViewState createState() => _SignUpPasswordViewState();
 }
 
@@ -43,10 +44,7 @@ class _SignUpPasswordViewState extends State<SignUpPasswordView> {
           setState(() {
             inAsyncCall = false;
           });
-          // Save the phone and doctorName in SharedPreferences
-          // تأكد من إضافة التهيئة الصحيحة لـ SharedPreferences هنا
-          // prefs.setString(CachedName.phone, widget.phone);
-          // prefs.setString(CachedName.doctorName, widget.doctorName);
+         
         } else if (state is AuthLoading) {
           setState(() {
             inAsyncCall = true;

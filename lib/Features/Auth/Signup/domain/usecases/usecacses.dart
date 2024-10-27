@@ -29,3 +29,15 @@ class SignOutUseCase {
     return repository.signOut();
   }
 }
+
+class RessetPasswordUseCase {
+  final AuthRepository repository;
+
+  RessetPasswordUseCase(this.repository);
+
+  
+
+  Future<void> call(String email) {
+    return repository.ressetPassword(email);
+  }
+}

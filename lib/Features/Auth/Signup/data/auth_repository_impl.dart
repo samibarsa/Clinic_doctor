@@ -51,4 +51,15 @@ class AuthRepositoryImpl implements AuthRepository {
       throw Exception('Error during sign out: $e');
     }
   }
+  
+  @override
+  Future<void> ressetPassword(String email)async {
+    try {
+      await supabaseClient.auth.resetPasswordForEmail(email);
+    } catch (e) {
+         throw Exception('Error during resset password: $e');
+    }
+  }
+
+  
 }

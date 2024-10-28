@@ -1,6 +1,8 @@
+import 'package:doctor_app/Features/Auth/Login/presentation/widget/verify_token.dart';
 import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_state.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class RessetPassword extends StatelessWidget {
       listener: (context, state) {
         if (state is AuthFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("حدث خطأ: ${state.error.toString()}")),
+            SnackBar(content: Text("حدث خطأ: ${state.error}")),
           );
         } else if (state is AuthSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -28,6 +30,7 @@ class RessetPassword extends StatelessWidget {
                 content: Text(
                     "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني")),
           );
+          MovingNavigation.navTo(context, page: VerificationScreen(email: emailController.text,));
         }
       },
       builder: (context, state) {

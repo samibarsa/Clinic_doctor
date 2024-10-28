@@ -25,6 +25,7 @@ Future<void> main() async {
     signUpUseCase: SignUpUseCase(AuthRepositoryImpl(supabase.client)),
     ressetPasswordUseCase:
         RessetPasswordUseCase(AuthRepositoryImpl(supabase.client)),
+    verifyTokenUseCase: VerifyTokenUseCase(AuthRepositoryImpl(supabase.client)),
   ));
 }
 
@@ -35,12 +36,14 @@ class ClinicDoctor extends StatelessWidget {
     required this.signOutUseCase,
     required this.signUpUseCase,
     required this.ressetPasswordUseCase,
+    required this.verifyTokenUseCase,
   });
 
   final SignInUseCase signInUseCase;
   final SignOutUseCase signOutUseCase;
   final SignUpUseCase signUpUseCase;
   final RessetPasswordUseCase ressetPasswordUseCase;
+  final VerifyTokenUseCase verifyTokenUseCase;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -53,7 +56,8 @@ class ClinicDoctor extends StatelessWidget {
               signInUseCase: signInUseCase,
               signOutUseCase: signOutUseCase,
               signUpUseCase: signUpUseCase,
-              ressetPasswordUseCase: ressetPasswordUseCase),
+              ressetPasswordUseCase: ressetPasswordUseCase,
+              verifyTokenUseCase: verifyTokenUseCase),
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(

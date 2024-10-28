@@ -1,4 +1,6 @@
 import 'package:doctor_app/Features/Auth/Signup/domain/repos/auth_repository.dart';
+import 'package:flutter/widgets.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpUseCase {
   final AuthRepository repository;
@@ -39,5 +41,16 @@ class RessetPasswordUseCase {
 
   Future<void> call(String email) {
     return repository.ressetPassword(email);
+  }
+}
+class VerifyTokenUseCase{
+  final AuthRepository repository;
+
+  VerifyTokenUseCase(this.repository);
+
+  
+
+  Future<void> call(String email,String token,BuildContext context) {
+    return repository.verifyToken(email,token,context);
   }
 }

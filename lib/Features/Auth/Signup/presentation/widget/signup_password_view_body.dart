@@ -19,75 +19,92 @@ class SignUpPasswordView extends StatefulWidget {
   final String doctorName;
 
   @override
-  // ignore: library_private_types_in_public_api
   _SignUpPasswordViewState createState() => _SignUpPasswordViewState();
 }
 
-class _SignUpPasswordViewState extends State<SignUpPasswordView> {
+class _SignUpPasswordViewState extends State<SignUpPasswordView> with SingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
   bool inAsyncCall = false;
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+  late AnimationController _animationController;
+  late Animation<double> _progressAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _progressAnimation = Tween<double>(begin: 2 / 3, end: 3 / 3).animate(_animationController);
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   void submitForm(BuildContext context) {
     if (formKey.currentState!.validate()) {
-      BlocProvider.of<AuthCubit>(context)
-          .signUp(widget.email, passwordController.text);
+      BlocProvider.of<AuthCubit>(context).signUp(widget.email, passwordController.text);
     }
   }
+
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          setState(() {
-            inAsyncCall = false;
-          });
-         
+          setState(() => inAsyncCall = false);
         } else if (state is AuthLoading) {
-          setState(() {
-            inAsyncCall = true;
-          });
+          setState(() => inAsyncCall = true);
         } else if (state is AuthFailure) {
-          setState(() {
-            inAsyncCall = false;
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
-          );
+          setState(() => inAsyncCall = false);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
         }
       },
       builder: (context, state) {
         return ModalProgressHUD(
           inAsyncCall: inAsyncCall,
-          color:const Color(AppColor.primaryColor) ,
+          color: const Color(AppColor.primaryColor),
           child: Scaffold(
             appBar: AppBar(
-              title: const Text("إنشاء حساب"),
-              centerTitle: true,
+              automaticallyImplyLeading: false,
+              title: Directionality(
+                textDirection: TextDirection.rtl,
+                child: AnimatedBuilder(
+                  animation: _progressAnimation,
+                  builder: (context, child) => LinearProgressIndicator(
+                    value: _progressAnimation.value,
+                    minHeight: 5,
+                    color: Colors.green,
+                    backgroundColor: Colors.grey[300],
+                  ),
+                ),
+              ),
             ),
             body: AuthViewBody(
               formKey: formKey,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'لا يمكن أن يكون هذا الحقل فارغا'; // تحقق من أن الحقل ليس فارغًا
+                  return 'لا يمكن أن يكون هذا الحقل فارغا';
                 }
                 if (value != passwordController.text) {
-                  return 'كلمة المرور غير متطابقة'; // تحقق من تطابق الحقول
+                  return 'كلمة المرور غير متطابقة';
                 }
-                return null; // لا يوجد خطأ
+                return null;
               },
+              firstTextEditingFiled: passwordController,
               firstKeyboardType: TextInputType.text,
+              secondTextEditingFiled: confirmPasswordController,
               secondKeyboardType: TextInputType.text,
               onTap: () => submitForm(context),
               firstFiled: "كلمة السر",
               secondFiled: "تأكيد كلمة السر",
-              questestion: "لديك حساب بالغعل؟",
+              questestion: "لديك حساب بالفعل ؟",
               state: "سجل دخول",
-              buttontitle: 'انشىء حساب',
-              firstTextEditingFiled: passwordController,
-              secondTextEditingFiled: confirmPasswordController,
+              buttontitle: 'إنشاء حساب',
             ),
           ),
         );

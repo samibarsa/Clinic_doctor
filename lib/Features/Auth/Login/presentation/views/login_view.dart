@@ -15,8 +15,6 @@ class LoginView extends StatelessWidget {
     final TextEditingController password = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
-  
-
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthFailure) {
@@ -32,11 +30,8 @@ class LoginView extends StatelessWidget {
           ),
           inAsyncCall: state is AuthLoading,
           child: Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: const Text("تسجيل الدخول"),
-            ),
-            body: LoginViewBody(formKey: formKey, email: email, password: password),
+            body: LoginViewBody(
+                formKey: formKey, email: email, password: password),
           ),
         );
       },

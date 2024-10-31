@@ -1,7 +1,6 @@
 // ignore: depend_on_referenced_packages
 import 'package:equatable/equatable.dart';
 
-
 abstract class AuthState extends Equatable {
   @override
   List<Object> get props => [];
@@ -23,3 +22,21 @@ class AuthFailure extends AuthState {
 }
 
 class AuthLoggedOut extends AuthState {}
+
+class VerifyState extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class VerifyInitial extends VerifyState {}
+
+class VerifyLoading extends VerifyState {}
+
+class VerifyFailure extends VerifyState {final String error;
+
+  VerifyFailure(this.error);
+
+  @override
+  List<Object> get props => [error];}
+
+class VerifySuccess extends VerifyState {}

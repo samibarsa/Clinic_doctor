@@ -10,11 +10,12 @@ class ImagesPath {
   static String navbarHistory = 'asset/images/navbar_history.svg';
   static String navbarHome = 'asset/images/navbar_home.svg';
   static String navbarSettings = 'asset/images/navbar_settings.svg';
-  static String navbarSellect = 'asset/images/navbar_sellect.svg';
+  static String creatAccount='asset/images/make_account.svg';
+  static String login='asset/images/login.svg';
 }
 
 class AppColor {
-  static const primaryColor = 0xff90C64A;
+  static const primaryColor =0xff4CAF50;
   static const secondColor = 0xff00AFF3;
 }
 

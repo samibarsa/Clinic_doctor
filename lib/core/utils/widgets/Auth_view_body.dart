@@ -47,6 +47,7 @@ class AuthViewBody extends StatelessWidget {
           key: formKey,
           child: Column(
             children: [
+              SvgPicture.asset(buttontitle=='تسجيل دخول'?ImagesPath.login:ImagesPath.creatAccount),
               SizedBox(
                 height: 52.h,
               ),
@@ -68,11 +69,11 @@ class AuthViewBody extends StatelessWidget {
                 textEditingController: secondTextEditingFiled,
               ),
               SizedBox(
-                height: 174.h,
+                height: 54.5.h,
               ),
               CustomButton(
                   title: buttontitle,
-                  color: 0xff4CAF50,
+                  color: AppColor.primaryColor,
                   onTap: onTap,
                   titleColor: Colors.white),
               SizedBox(

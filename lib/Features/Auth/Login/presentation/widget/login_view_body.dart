@@ -29,32 +29,35 @@ class LoginViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AuthViewBody(
-          formKey: formKey,
-          onTap: () {
-            submitForm(context);
-          },
-          firstTextEditingFiled: email,
-          secondTextEditingFiled: password,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'لا يمكن أن يكون هذا الحقل فارغا';
-            }
-            return null;
-          },
-          firstFiled: "البريد الاكتروني",
-          secondFiled: "كلمة السر",
-          questestion: "ليس لديك حساب ؟",
-          state: "انشىء حساب",
-          buttontitle: 'تسجيل دخول',
-          firstKeyboardType: TextInputType.emailAddress,
-          secondKeyboardType: TextInputType.text,
+        Padding(
+          padding:  EdgeInsets.only(top: 125.h),
+          child: AuthViewBody(
+            formKey: formKey,
+            onTap: () {
+              submitForm(context);
+            },
+            firstTextEditingFiled: email,
+            secondTextEditingFiled: password,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'لا يمكن أن يكون هذا الحقل فارغا';
+              }
+              return null;
+            },
+            firstFiled: "البريد الاكتروني",
+            secondFiled: "كلمة السر",
+            questestion: "ليس لديك حساب ؟",
+            state: "انشىء حساب",
+            buttontitle: 'تسجيل دخول',
+            firstKeyboardType: TextInputType.emailAddress,
+            secondKeyboardType: TextInputType.text,
+          ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 18.w, top: 190.h),
+          padding: EdgeInsets.only(left: 18.w, top: 443.h),
           child: GestureDetector(
             onTap: () {
-              log("message");
+            
               MovingNavigation.navTo(context, page: RessetPassword());
             },
             child: Text(

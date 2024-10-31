@@ -16,13 +16,13 @@ class VerificationScreen extends StatelessWidget {
   VerificationScreen({super.key, required this.email});
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<VerifyCubit, VerifyState>(
       listener: (context, state) {
-        if (state is AuthSuccess) {
+        if (state is VerifySuccess) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text("الرمز صحيح، قم بتحديث كلمة المرور")));
         }
-        else if (state is AuthFailure){
+        else if (state is VerifyFailure){
             ScaffoldMessenger.of(context).showSnackBar( SnackBar(
               content: Text(state.error)));
         }
@@ -30,7 +30,7 @@ class VerificationScreen extends StatelessWidget {
       builder: (context, state) {
         late String token;
         return ModalProgressHUD(
-          inAsyncCall: state is AuthLoading,
+          inAsyncCall: state is VerifyLoading,
           child: Scaffold(
             appBar: AppBar(),
             body: Padding(
@@ -85,7 +85,7 @@ class VerificationScreen extends StatelessWidget {
                       enableActiveFill: true,
                       controller: pinController,
                       onCompleted: (tok) {
-                        BlocProvider.of<AuthCubit>(context)
+                        BlocProvider.of<VerifyCubit>(context)
                             .verifyToken(email, tok,context);
                             token=tok;
                       },
@@ -98,7 +98,7 @@ class VerificationScreen extends StatelessWidget {
                       title: "تحقق",
                       color: AppColor.primaryColor,
                       onTap: () {
-                         BlocProvider.of<AuthCubit>(context)
+                         BlocProvider.of<VerifyCubit>(context)
                             .verifyToken(email, token,context);
                       },
                       titleColor: Colors.white)

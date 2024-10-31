@@ -82,14 +82,19 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> verifyToken(String email, String token,BuildContext context) async {
-    emit(AuthLoading());
+ 
+}
+class VerifyCubit extends Cubit<VerifyState>{
+  final VerifyTokenUseCase verifyTokenUseCase;
+  VerifyCubit({required this.verifyTokenUseCase}): super (VerifyInitial());
+   Future<void> verifyToken(String email, String token,BuildContext context) async {
+    emit(VerifyLoading());
     try {
    await verifyTokenUseCase.call(email, token,context);
-   emit(AuthSuccess());
-   MovingNavigation.navTo(context, page: WellcomeScrean());
+   emit(VerifySuccess());
     } catch (e) {
-      emit(AuthFailure(e.toString()));
+      emit(VerifyFailure(e.toString()));
     }
   }
+  
 }

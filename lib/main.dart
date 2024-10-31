@@ -51,13 +51,20 @@ class ClinicDoctor extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return BlocProvider<AuthCubit>(
-          create: (context) => AuthCubit(
-              signInUseCase: signInUseCase,
-              signOutUseCase: signOutUseCase,
-              signUpUseCase: signUpUseCase,
-              ressetPasswordUseCase: ressetPasswordUseCase,
-              verifyTokenUseCase: verifyTokenUseCase),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<AuthCubit>(
+              create: (context) => AuthCubit(
+                  signInUseCase: signInUseCase,
+                  signOutUseCase: signOutUseCase,
+                  signUpUseCase: signUpUseCase,
+                  ressetPasswordUseCase: ressetPasswordUseCase,
+                  verifyTokenUseCase: verifyTokenUseCase),
+            ),
+            BlocProvider(
+              create: (context) => VerifyCubit(verifyTokenUseCase: verifyTokenUseCase),
+            ),
+          ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(

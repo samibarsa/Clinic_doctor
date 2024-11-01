@@ -8,12 +8,14 @@ class CustomTextField extends StatelessWidget {
       required this.title,
       required this.radius,
       required this.textEditingController,
-      required this.keyboardType});
+      required this.keyboardType, this.prefix, this.suffix});
   final String title;
   final double radius;
   final TextEditingController textEditingController;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
+  final Widget ? prefix;
+  final Widget ? suffix;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -24,7 +26,7 @@ class CustomTextField extends StatelessWidget {
         controller: textEditingController,
         style: const TextStyle(fontSize: 12, height: 1),
         textDirection: TextDirection.rtl,
-        decoration: InputDecoration(
+        decoration: InputDecoration(suffixIcon: suffix,prefixIcon: prefix,
             focusColor: Colors.black,
             hintText: title,
             hintTextDirection: TextDirection.rtl,
@@ -39,9 +41,9 @@ class CustomTextField extends StatelessWidget {
     );
   }
 
-  OutlineInputBorder outLineInputBorder(double width, double radius) {
+  OutlineInputBorder outLineInputBorder(double width, double radius,) {
     return OutlineInputBorder(
         borderRadius: BorderRadius.circular(radius),
-        borderSide: BorderSide(color: Colors.black, width: width));
+        borderSide: BorderSide(color:title!= "مريض,تصوير مقطعي"? Colors.black:Colors.transparent, width: width));
   }
 }

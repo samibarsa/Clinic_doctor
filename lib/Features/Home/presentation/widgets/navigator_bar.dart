@@ -27,7 +27,7 @@ class _NavBarState extends State<NavBar> {
           child: Row(
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 40.w, top: 30.h),
+                padding: EdgeInsets.only(left: 120.w, top: 30.h),
                 child: InkWell(
                   onTap: () {
                     setState(() {
@@ -42,7 +42,7 @@ class _NavBarState extends State<NavBar> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 60.w, top: 30.h),
+                padding: EdgeInsets.only(left: 40.w, top: 30.h),
                 child: InkWell(
                   onTap: () {
                     setState(() {
@@ -57,21 +57,7 @@ class _NavBarState extends State<NavBar> {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 60.w, top: 30.h),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      widget.homeViewBody.pageController.jumpToPage(2);
-                      widget.homeViewBody.animateNavBar(2);
-                    });
-                  },
-                  child: SizedBox(
-                    height: 60.h,
-                    width: 60.w,
-                  ),
-                ),
-              ),
+       
             ],
           ),
         )

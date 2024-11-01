@@ -19,6 +19,7 @@ class UpdatePassword extends StatelessWidget {
 
     void submitForm(BuildContext context) {
       if (formKey.currentState!.validate()) {
+        FocusScope.of(context).unfocus();
         BlocProvider.of<UpdatePasswordCubit>(context)
             .updatePassword(confirmPasswordController.text);
       }

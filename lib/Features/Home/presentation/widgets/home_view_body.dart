@@ -23,15 +23,12 @@ class HomeViewBody extends StatefulWidget {
   );
 
   void animateNavBar(int value) {
-    if (value == 1) {
+    if (value == 0) {
       padding = EdgeInsets.only(right: 220.w);
       imagePath = ImagesPath.navbarHistory;
-    } else if (value == 2) {
-      padding = EdgeInsets.zero;
-      imagePath = ImagesPath.navbarHome;
-    } else if (value == 0) {
+    } else if (value == 1) {
       padding = EdgeInsets.only(left: 220.w);
-      imagePath = ImagesPath.navbarSettings;
+      imagePath = ImagesPath.navbarHome;
     }
   }
 
@@ -54,7 +51,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           controller: widget.pageController,
           children: const [
             Person(),
-            MyCourses(),
             Home(),
           ],
         ),
@@ -112,25 +108,6 @@ class Person extends StatelessWidget {
       children: [
         Container(
           color: Colors.amber,
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-        )
-      ],
-    );
-  }
-}
-
-class MyCourses extends StatelessWidget {
-  const MyCourses({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          color: Colors.red,
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
         )

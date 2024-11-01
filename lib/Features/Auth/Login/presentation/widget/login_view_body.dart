@@ -2,13 +2,11 @@ import 'package:doctor_app/Features/Auth/Login/presentation/widget/resset_passwo
 import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_state.dart';
 import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
-import 'package:doctor_app/Features/Home/presentation/widgets/home_view_body.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LoginViewBody extends StatelessWidget {
   const LoginViewBody({
@@ -24,6 +22,7 @@ class LoginViewBody extends StatelessWidget {
 
   void submitForm(BuildContext context) {
     if (formKey.currentState!.validate()) {
+       FocusScope.of(context).unfocus();
       BlocProvider.of<AuthCubit>(context).signIn(email.text, password.text);
     }
   }
@@ -33,12 +32,12 @@ class LoginViewBody extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          // عرض رسالة النجاح
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('تسجيل الدخول بنجاح')),
-          );
-          // الانتقال إلى الصفحة الرئيسية
-          MovingNavigation.navTo(context, page: const HomeView());
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (context) =>
+                      const HomeView()), // الصفحة الجديدة التي تريد الانتقال إليها
+              (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
+            );
         }
         if (state is AuthFailure) {
           // عرض رسالة الفشل

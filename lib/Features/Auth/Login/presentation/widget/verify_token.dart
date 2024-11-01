@@ -114,6 +114,7 @@ class VerificationScreen extends StatelessWidget {
                     title: "تحقق",
                     color: AppColor.primaryColor,
                     onTap: () {
+                    FocusScope.of(context).unfocus();
                       BlocProvider.of<VerifyCubit>(context)
                           .verifyToken(email, pinController.text, context);
                     },

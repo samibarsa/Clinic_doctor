@@ -84,6 +84,7 @@ class RessetPassword extends StatelessWidget {
                       color: AppColor.primaryColor,
                       onTap: () {
                         if (formKey.currentState!.validate()) {
+                           FocusScope.of(context).unfocus();
                           BlocProvider.of<AuthCubit>(context)
                               .ressetPassword(emailController.text);
                         }

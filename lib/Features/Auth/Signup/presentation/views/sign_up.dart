@@ -40,7 +40,8 @@ class _SignUpViewState extends State<SignUpView> with SingleTickerProviderStateM
 
     void submitForm() {
       if (formKey.currentState!.validate()) {
-        // النموذج صحيح
+       firstName.clear();
+       secondName.clear();
         MovingNavigation.navTo(
           context,
           page: SignUpEmailView(

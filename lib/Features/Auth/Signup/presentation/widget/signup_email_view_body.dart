@@ -33,6 +33,7 @@ class _SignUpEmailViewState extends State<SignUpEmailView> with SingleTickerProv
 
   void submitForm() {
     if (formKey.currentState!.validate()) {
+     FocusScope.of(context).unfocus();
       MovingNavigation.navTo(
         context,
         page: SignUpPasswordView(

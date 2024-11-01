@@ -96,6 +96,31 @@ class Home extends StatelessWidget {
         SizedBox(
           height: 40.h,
         ),
+        Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 20.w),
+          child:  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+               Text("< عرض الكل" ,style: TextStyle(decoration: TextDecoration.underline,decorationColor: const Color(AppColor.primaryColor),fontSize: 11.sp,color: const Color(AppColor.primaryColor,)),),
+              Text("طلبات اليوم",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w500,color:Colors.black)),
+
+            ],
+          ),
+
+        ),
+         Directionality(
+           textDirection: TextDirection.rtl,
+           child: Card(
+             child: ListTile(trailing: const Text("منذ ساعه"),leading: SvgPicture.asset(ImagesPath.xray),title: const Text("د. احمد مروان"),subtitle: const Directionality(
+               textDirection: TextDirection.rtl,
+               child: Column(
+                 children: [
+                   Text("طلب تصوير شعاعي لمريض"),
+                   Text("التفاصيل")
+                 ],
+               ),
+             ),),
+           ),
+         )
       ],
     );
   }

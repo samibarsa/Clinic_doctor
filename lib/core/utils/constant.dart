@@ -12,6 +12,7 @@ class ImagesPath {
   static String navbarSettings = 'asset/images/navbar_settings.svg';
   static String creatAccount='asset/images/make_account.svg';
   static String login='asset/images/login.svg';
+  static String xray='asset/images/xray.svg';
 }
 
 class AppColor {

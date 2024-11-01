@@ -8,6 +8,7 @@ class SignUpEmailView extends StatefulWidget {
   final String doctorName;
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpEmailViewState createState() => _SignUpEmailViewState();
 }
 
@@ -19,7 +20,7 @@ class _SignUpEmailViewState extends State<SignUpEmailView> with SingleTickerProv
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
     _progressAnimation = Tween<double>(begin: 1 / 3, end: 2 / 3).animate(_animationController);
     _animationController.forward();
   }

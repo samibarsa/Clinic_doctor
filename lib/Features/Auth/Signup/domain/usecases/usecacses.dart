@@ -1,6 +1,5 @@
 import 'package:doctor_app/Features/Auth/Signup/domain/repos/auth_repository.dart';
 import 'package:flutter/widgets.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpUseCase {
   final AuthRepository repository;

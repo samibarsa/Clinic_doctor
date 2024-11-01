@@ -1,11 +1,7 @@
 import 'package:doctor_app/Features/Auth/Signup/domain/usecases/usecacses.dart';
-import 'package:doctor_app/Features/Auth/Signup/domain/usecases/usecacses.dart';
-import 'package:doctor_app/Features/wellcome/presentation/views/wellcome.dart';
-import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/usecases/usecacses.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {

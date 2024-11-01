@@ -1,3 +1,6 @@
+import 'package:doctor_app/Features/Auth/Login/data/repo/update_pass_repo_imp.dart';
+import 'package:doctor_app/Features/Auth/Login/domain/usecase/update_pass_usecase.dart';
+import 'package:doctor_app/Features/Auth/Login/presentation/maneger/cubit/update_password_cubit.dart';
 import 'package:doctor_app/Features/Auth/Signup/data/auth_repository_impl.dart';
 import 'package:doctor_app/Features/Auth/Signup/domain/usecases/usecacses.dart';
 import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
@@ -26,6 +29,9 @@ Future<void> main() async {
     ressetPasswordUseCase:
         RessetPasswordUseCase(AuthRepositoryImpl(supabase.client)),
     verifyTokenUseCase: VerifyTokenUseCase(AuthRepositoryImpl(supabase.client)),
+    updatePassUsecase: UpdatePassUsecase(
+        updatePasswordRepoImp:
+            UpdatePasswordRepoImp(supabaseClient: supabase.client)),
   ));
 }
 
@@ -37,6 +43,7 @@ class ClinicDoctor extends StatelessWidget {
     required this.signUpUseCase,
     required this.ressetPasswordUseCase,
     required this.verifyTokenUseCase,
+    required this.updatePassUsecase,
   });
 
   final SignInUseCase signInUseCase;
@@ -44,6 +51,7 @@ class ClinicDoctor extends StatelessWidget {
   final SignUpUseCase signUpUseCase;
   final RessetPasswordUseCase ressetPasswordUseCase;
   final VerifyTokenUseCase verifyTokenUseCase;
+  final UpdatePassUsecase updatePassUsecase;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -61,8 +69,13 @@ class ClinicDoctor extends StatelessWidget {
                   ressetPasswordUseCase: ressetPasswordUseCase,
                   verifyTokenUseCase: verifyTokenUseCase),
             ),
-            BlocProvider(
-              create: (context) => VerifyCubit(verifyTokenUseCase: verifyTokenUseCase),
+            BlocProvider<VerifyCubit>(
+              create: (context) =>
+                  VerifyCubit(verifyTokenUseCase: verifyTokenUseCase),
+            ),
+            BlocProvider<UpdatePasswordCubit>(
+              create: (context) =>
+                  UpdatePasswordCubit(updatePassUsecase: updatePassUsecase),
             ),
           ],
           child: MaterialApp(

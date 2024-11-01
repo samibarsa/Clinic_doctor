@@ -1,5 +1,4 @@
 import 'package:doctor_app/core/utils/constant.dart';
-import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

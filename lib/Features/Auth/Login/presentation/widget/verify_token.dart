@@ -48,7 +48,6 @@ class VerificationScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        late String token;
         return ModalProgressHUD(
           inAsyncCall: state is VerifyLoading,
           child: Scaffold(
@@ -105,7 +104,6 @@ class VerificationScreen extends StatelessWidget {
                       onCompleted: (tok) {
                         BlocProvider.of<VerifyCubit>(context)
                             .verifyToken(email, tok, context);
-                        token = tok;
                       },
                     ),
                   ),

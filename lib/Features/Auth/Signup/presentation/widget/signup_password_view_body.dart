@@ -1,3 +1,4 @@
+import 'package:doctor_app/Features/Auth/Login/presentation/views/login_view.dart';
 import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_state.dart';
 import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
 import 'package:doctor_app/core/utils/constant.dart';
@@ -19,10 +20,12 @@ class SignUpPasswordView extends StatefulWidget {
   final String doctorName;
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpPasswordViewState createState() => _SignUpPasswordViewState();
 }
 
-class _SignUpPasswordViewState extends State<SignUpPasswordView> with SingleTickerProviderStateMixin {
+class _SignUpPasswordViewState extends State<SignUpPasswordView>
+    with SingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
   bool inAsyncCall = false;
   late AnimationController _animationController;
@@ -31,8 +34,10 @@ class _SignUpPasswordViewState extends State<SignUpPasswordView> with SingleTick
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
-    _progressAnimation = Tween<double>(begin: 2 / 3, end: 3 / 3).animate(_animationController);
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _progressAnimation =
+        Tween<double>(begin: 2 / 3, end: 3 / 3).animate(_animationController);
     _animationController.forward();
   }
 
@@ -44,7 +49,8 @@ class _SignUpPasswordViewState extends State<SignUpPasswordView> with SingleTick
 
   void submitForm(BuildContext context) {
     if (formKey.currentState!.validate()) {
-      BlocProvider.of<AuthCubit>(context).signUp(widget.email, passwordController.text);
+      BlocProvider.of<AuthCubit>(context)
+          .signUp(widget.email, passwordController.text);
     }
   }
 
@@ -56,18 +62,26 @@ class _SignUpPasswordViewState extends State<SignUpPasswordView> with SingleTick
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          setState(() => inAsyncCall = false);
+          setState(() {
+            inAsyncCall = false;
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const LoginView(),
+            ));
+          });
         } else if (state is AuthLoading) {
           setState(() => inAsyncCall = true);
         } else if (state is AuthFailure) {
           setState(() => inAsyncCall = false);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.error)));
         }
       },
       builder: (context, state) {
         return ModalProgressHUD(
+          progressIndicator: const CircularProgressIndicator(
+            color: Color(AppColor.primaryColor),
+          ),
           inAsyncCall: inAsyncCall,
-          color: const Color(AppColor.primaryColor),
           child: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -89,6 +103,9 @@ class _SignUpPasswordViewState extends State<SignUpPasswordView> with SingleTick
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'لا يمكن أن يكون هذا الحقل فارغا';
+                }
+                if (value.length < 8) {
+                  return 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل';
                 }
                 if (value != passwordController.text) {
                   return 'كلمة المرور غير متطابقة';

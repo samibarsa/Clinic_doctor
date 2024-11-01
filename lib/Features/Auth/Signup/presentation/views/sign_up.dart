@@ -7,6 +7,7 @@ class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpViewState createState() => _SignUpViewState();
 }
 
@@ -21,7 +22,7 @@ class _SignUpViewState extends State<SignUpView> with SingleTickerProviderStateM
     // إعداد AnimationController
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1), // مدة الأنيميشن
+      duration: const Duration(seconds: 1), // مدة الأنيميشن
     )..forward(); // بدء الأنيميشن تلقائيًا عند التحميل
   }
 

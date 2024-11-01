@@ -72,7 +72,9 @@ class AuthRepositoryImpl implements AuthRepository {
       MovingNavigation.navTo(content, page: const WellcomeScrean());
       log('Provider token: ${response.session?.providerToken}');
     } catch (error) {
+      
       log('Error: $error');
+      throw Exception(error);
     }
   }
 }

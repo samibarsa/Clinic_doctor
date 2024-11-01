@@ -93,7 +93,8 @@ class VerifyCubit extends Cubit<VerifyState>{
    await verifyTokenUseCase.call(email, token,context);
    emit(VerifySuccess());
     } catch (e) {
-      emit(VerifyFailure(e.toString()));
+      e.toString().split(":")[2].split(",")[0]=="Token has expired or is invalid";
+      emit(VerifyFailure("الرمز غير صحيح أو منتهي الصلاحية"));
     }
   }
   

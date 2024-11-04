@@ -5,8 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class TitleListTile extends StatelessWidget {
   const TitleListTile({
     super.key,
+    required this.patientName,
+    required this.type,
   });
-
+  final String patientName;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,8 +18,8 @@ class TitleListTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "اسم المريض",
+          Text(
+            patientName,
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
           ),
@@ -27,7 +30,7 @@ class TitleListTile extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      " طلب تصوير شعاعي",
+                      type,
                       textAlign: TextAlign.start,
                       style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                     ),

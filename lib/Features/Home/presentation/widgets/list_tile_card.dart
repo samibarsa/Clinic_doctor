@@ -8,8 +8,11 @@ import 'package:flutter_svg/svg.dart';
 class ListTileCard extends StatelessWidget {
   const ListTileCard({
     super.key,
+    required this.papatientName,
+    required this.type,
   });
-
+  final String papatientName;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -20,15 +23,14 @@ class ListTileCard extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 16.w),
           color: const Color(0xfffefefe),
           child: ListTile(
-            trailing: const Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text("منذ ساعة"),
-              ],
-            ),
-            leading: SvgPicture.asset(ImagesPath.xray),
-            title: const TitleListTile(),
-          ),
+              trailing: const Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("منذ ساعة"),
+                ],
+              ),
+              leading: SvgPicture.asset(ImagesPath.xray),
+              title: TitleListTile(patientName: papatientName, type: type)),
         ),
       ),
     );

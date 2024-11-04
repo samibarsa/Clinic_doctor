@@ -111,7 +111,10 @@ class Home extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(bottom: 6.h),
-                    child: const ListTileCard(),
+                    child: const ListTileCard(
+                      papatientName: 'aa',
+                      type: 'X-Ray',
+                    ),
                   ),
                   // إضافة padding فقط في آخر عنصر
                   if (index == 9) // تحقق إذا كنا في آخر عنصر

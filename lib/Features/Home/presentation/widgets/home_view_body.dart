@@ -1,9 +1,9 @@
+import 'package:doctor_app/Features/Home/presentation/widgets/home_search_text_filed.dart';
+import 'package:doctor_app/Features/Home/presentation/widgets/list_tile_card.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/navigator_bar.dart';
 import 'package:doctor_app/core/utils/constant.dart';
-import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
 class HomeViewBody extends StatefulWidget {
@@ -77,50 +77,37 @@ class Home extends StatelessWidget {
         SizedBox(
           height: 30.h,
         ),
-        Container(
-          decoration: BoxDecoration(
-              color: const Color(0xffF6F7F7),
-              borderRadius: BorderRadius.all(Radius.circular(12.r))),
-          child: CustomTextField(
-            prefix: SvgPicture.asset(
-              ImagesPath.filter,
-              fit: BoxFit.none,
-            ),
-            suffix: const Icon(Icons.search),
-            title: "مريض,تصوير مقطعي",
-            radius: 12.r,
-            textEditingController: TextEditingController(),
-            keyboardType: TextInputType.text,
-          ),
-        ),
+        const HomeSearchTextFiled(),
         SizedBox(
           height: 40.h,
         ),
         Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 20.w),
-          child:  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               Text("< عرض الكل" ,style: TextStyle(decoration: TextDecoration.underline,decorationColor: const Color(AppColor.primaryColor),fontSize: 11.sp,color: const Color(AppColor.primaryColor,)),),
-              Text("طلبات اليوم",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w500,color:Colors.black)),
-
+              Text(
+                "< عرض الكل",
+                style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    decorationColor: const Color(AppColor.primaryColor),
+                    fontSize: 11.sp,
+                    color: const Color(
+                      AppColor.primaryColor,
+                    )),
+              ),
+              Text("طلبات اليوم",
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black)),
             ],
           ),
-
         ),
-         Directionality(
-           textDirection: TextDirection.rtl,
-           child: Card(
-             child: ListTile(trailing: const Text("منذ ساعه"),leading: SvgPicture.asset(ImagesPath.xray),title: const Text("د. احمد مروان"),subtitle: const Directionality(
-               textDirection: TextDirection.rtl,
-               child: Column(
-                 children: [
-                   Text("طلب تصوير شعاعي لمريض"),
-                   Text("التفاصيل")
-                 ],
-               ),
-             ),),
-           ),
-         )
+        SizedBox(
+          height: 24.h,
+        ),
+        const ListTileCard()
       ],
     );
   }

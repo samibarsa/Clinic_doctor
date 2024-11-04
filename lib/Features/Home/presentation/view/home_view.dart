@@ -13,7 +13,8 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         title: Directionality(
             textDirection: TextDirection.rtl,
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
@@ -31,7 +32,7 @@ class HomeView extends StatelessWidget {
                     ),
                   ],
                 ),
-                IconButton(onPressed: (){}, icon: const Icon(Icons.add))
+                IconButton(onPressed: () {}, icon: const Icon(Icons.add))
               ],
             )),
       ),

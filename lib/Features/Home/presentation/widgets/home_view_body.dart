@@ -74,13 +74,9 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 30.h,
-        ),
+        SizedBox(height: 30.h),
         const HomeSearchTextFiled(),
-        SizedBox(
-          height: 40.h,
-        ),
+        SizedBox(height: 40.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Row(
@@ -89,25 +85,42 @@ class Home extends StatelessWidget {
               Text(
                 "< عرض الكل",
                 style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationColor: const Color(AppColor.primaryColor),
-                    fontSize: 11.sp,
-                    color: const Color(
-                      AppColor.primaryColor,
-                    )),
+                  decoration: TextDecoration.underline,
+                  decorationColor: const Color(AppColor.primaryColor),
+                  fontSize: 11.sp,
+                  color: const Color(AppColor.primaryColor),
+                ),
               ),
-              Text("طلبات اليوم",
-                  style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black)),
+              Text(
+                "طلبات اليوم",
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
         ),
-        SizedBox(
-          height: 24.h,
+        SizedBox(height: 24.h),
+        Expanded(
+          child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 6.h),
+                    child: const ListTileCard(),
+                  ),
+                  // إضافة padding فقط في آخر عنصر
+                  if (index == 9) // تحقق إذا كنا في آخر عنصر
+                    SizedBox(height: 60.h),
+                ],
+              );
+            },
+          ),
         ),
-        const ListTileCard()
       ],
     );
   }

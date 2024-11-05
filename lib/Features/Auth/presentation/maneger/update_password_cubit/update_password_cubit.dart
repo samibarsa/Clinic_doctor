@@ -1,7 +1,6 @@
-
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
-import 'package:doctor_app/Features/Auth/Login/domain/usecase/update_pass_usecase.dart';
+import 'package:doctor_app/Features/Auth/domain/usecase/update_pass_usecase.dart';
 import 'package:equatable/equatable.dart';
 
 part 'update_password_state.dart';

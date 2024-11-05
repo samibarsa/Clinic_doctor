@@ -1,5 +1,5 @@
-import 'package:doctor_app/Features/Auth/Login/presentation/views/login_view.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/views/sign_up.dart';
+import 'package:doctor_app/Features/Auth/presentation/views/login_view.dart';
+import 'package:doctor_app/Features/Auth/presentation/views/sign_up.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
@@ -45,7 +45,8 @@ class WellcomeViewBody extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: const Color(AppColor.primaryColor)),
+                        border: Border.all(
+                            color: const Color(AppColor.primaryColor)),
                         borderRadius: BorderRadius.circular(5.r)),
                     child: CustomButton(
                         titleColor: Colors.black,

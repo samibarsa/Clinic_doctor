@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/Auth/Login/domain/repo/update_pass_repo.dart';
+import 'package:doctor_app/Features/Auth/domain/repo/update_pass_repo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UpdatePasswordRepoImp implements UpdatePasswordRepo {

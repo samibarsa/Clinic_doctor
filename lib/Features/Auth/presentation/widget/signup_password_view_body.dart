@@ -1,5 +1,5 @@
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_state.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_state.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';

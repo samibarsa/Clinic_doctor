@@ -1,9 +1,9 @@
-import 'package:doctor_app/Features/Auth/Login/data/repo/update_pass_repo_imp.dart';
-import 'package:doctor_app/Features/Auth/Login/domain/usecase/update_pass_usecase.dart';
-import 'package:doctor_app/Features/Auth/Login/presentation/maneger/cubit/update_password_cubit.dart';
-import 'package:doctor_app/Features/Auth/Signup/data/auth_repository_impl.dart';
-import 'package:doctor_app/Features/Auth/Signup/domain/usecases/usecacses.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
+import 'package:doctor_app/Features/Auth/data/repo/update_pass_repo_imp.dart';
+import 'package:doctor_app/Features/Auth/domain/usecase/update_pass_usecase.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/update_password_cubit/update_password_cubit.dart';
+import 'package:doctor_app/Features/Auth/data/repo/auth_repository_impl.dart';
+import 'package:doctor_app/Features/Auth/domain/usecase/usecacses.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Home/data/remote/remote_data_source.dart';
 import 'package:doctor_app/Features/Home/data/repos/data_repo_impl.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart';

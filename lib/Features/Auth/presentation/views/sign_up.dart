@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/Auth/Signup/presentation/widget/signup_email_view_body.dart';
+import 'package:doctor_app/Features/Auth/presentation/widget/signup_email_view_body.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,8 @@ class SignUpView extends StatefulWidget {
   _SignUpViewState createState() => _SignUpViewState();
 }
 
-class _SignUpViewState extends State<SignUpView> with SingleTickerProviderStateMixin {
+class _SignUpViewState extends State<SignUpView>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   final int currentStep = 1;
   final int totalSteps = 3;
@@ -40,8 +41,8 @@ class _SignUpViewState extends State<SignUpView> with SingleTickerProviderStateM
 
     void submitForm() {
       if (formKey.currentState!.validate()) {
-       firstName.clear();
-       secondName.clear();
+        firstName.clear();
+        secondName.clear();
         MovingNavigation.navTo(
           context,
           page: SignUpEmailView(

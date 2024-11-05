@@ -1,6 +1,6 @@
-import 'package:doctor_app/Features/Auth/Login/presentation/widget/login_view_body.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_state.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
+import 'package:doctor_app/Features/Auth/presentation/widget/login_view_body.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_state.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

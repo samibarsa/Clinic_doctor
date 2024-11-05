@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/Auth/Signup/domain/usecases/usecacses.dart';
+import 'package:doctor_app/Features/Auth/domain/usecase/usecacses.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -77,21 +77,21 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailure(e.toString().split(":")[3]));
     }
   }
-
- 
 }
-class VerifyCubit extends Cubit<VerifyState>{
+
+class VerifyCubit extends Cubit<VerifyState> {
   final VerifyTokenUseCase verifyTokenUseCase;
-  VerifyCubit({required this.verifyTokenUseCase}): super (VerifyInitial());
-   Future<void> verifyToken(String email, String token,BuildContext context) async {
+  VerifyCubit({required this.verifyTokenUseCase}) : super(VerifyInitial());
+  Future<void> verifyToken(
+      String email, String token, BuildContext context) async {
     emit(VerifyLoading());
     try {
-   await verifyTokenUseCase.call(email, token,context);
-   emit(VerifySuccess());
+      await verifyTokenUseCase.call(email, token, context);
+      emit(VerifySuccess());
     } catch (e) {
-      e.toString().split(":")[2].split(",")[0]=="Token has expired or is invalid";
+      e.toString().split(":")[2].split(",")[0] ==
+          "Token has expired or is invalid";
       emit(VerifyFailure("الرمز غير صحيح أو منتهي الصلاحية"));
     }
   }
-  
 }

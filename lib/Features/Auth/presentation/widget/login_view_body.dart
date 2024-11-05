@@ -1,6 +1,6 @@
-import 'package:doctor_app/Features/Auth/Login/presentation/widget/resset_password.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_state.dart';
+import 'package:doctor_app/Features/Auth/presentation/widget/resset_password.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_state.dart';
 import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
@@ -22,7 +22,7 @@ class LoginViewBody extends StatelessWidget {
 
   void submitForm(BuildContext context) {
     if (formKey.currentState!.validate()) {
-       FocusScope.of(context).unfocus();
+      FocusScope.of(context).unfocus();
       BlocProvider.of<AuthCubit>(context).signIn(email.text, password.text);
     }
   }
@@ -33,11 +33,11 @@ class LoginViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state is AuthSuccess) {
           Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                  builder: (context) =>
-                      const HomeView()), // الصفحة الجديدة التي تريد الانتقال إليها
-              (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
-            );
+            MaterialPageRoute(
+                builder: (context) =>
+                    const HomeView()), // الصفحة الجديدة التي تريد الانتقال إليها
+            (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
+          );
         }
         if (state is AuthFailure) {
           // عرض رسالة الفشل
@@ -77,7 +77,9 @@ class LoginViewBody extends StatelessWidget {
               padding: EdgeInsets.only(left: 18.w, top: 443.h),
               child: GestureDetector(
                 onTap: () {
-                  MovingNavigation.navTo(context, page: RessetPassword()); // تغيير هذا بناءً على صفحة إعادة تعيين كلمة المرور
+                  MovingNavigation.navTo(context,
+                      page:
+                          RessetPassword()); // تغيير هذا بناءً على صفحة إعادة تعيين كلمة المرور
                 },
                 child: Text(
                   "هل نسيت كلمة المرور؟",

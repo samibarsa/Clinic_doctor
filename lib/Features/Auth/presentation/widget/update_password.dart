@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/Auth/Login/presentation/maneger/cubit/update_password_cubit.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/update_password_cubit/update_password_cubit.dart';
 import 'package:doctor_app/Features/wellcome/presentation/views/wellcome.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';

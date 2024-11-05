@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:doctor_app/Features/Auth/Signup/domain/repos/auth_repository.dart';
+import 'package:doctor_app/Features/Auth/domain/repo/auth_repository.dart';
 import 'package:doctor_app/Features/wellcome/presentation/views/wellcome.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/widgets.dart';
@@ -56,7 +56,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> ressetPassword(String email) async {
     try {
-       await supabaseClient.auth.resetPasswordForEmail(email);
+      await supabaseClient.auth.resetPasswordForEmail(email);
     } catch (e) {
       throw Exception('Error during resset password: $e');
     }
@@ -72,7 +72,6 @@ class AuthRepositoryImpl implements AuthRepository {
       MovingNavigation.navTo(content, page: const WellcomeScrean());
       log('Provider token: ${response.session?.providerToken}');
     } catch (error) {
-      
       log('Error: $error');
       throw Exception(error);
     }

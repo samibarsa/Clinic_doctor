@@ -1,6 +1,6 @@
-import 'package:doctor_app/Features/Auth/Login/presentation/widget/verify_token.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_state.dart';
+import 'package:doctor_app/Features/Auth/presentation/widget/verify_token.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_state.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
@@ -21,19 +21,23 @@ class RessetPassword extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthFailure) {
-        
         } else if (state is AuthSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
                 content: Text(
                     "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني")),
           );
-          MovingNavigation.navTo(context, page: VerificationScreen(email: emailController.text,));
+          MovingNavigation.navTo(context,
+              page: VerificationScreen(
+                email: emailController.text,
+              ));
         }
       },
       builder: (context, state) {
         return ModalProgressHUD(
-          progressIndicator: const CircularProgressIndicator(color: Color(AppColor.primaryColor),),
+          progressIndicator: const CircularProgressIndicator(
+            color: Color(AppColor.primaryColor),
+          ),
           inAsyncCall: state is AuthLoading,
           child: Scaffold(
             appBar: AppBar(
@@ -84,7 +88,7 @@ class RessetPassword extends StatelessWidget {
                       color: AppColor.primaryColor,
                       onTap: () {
                         if (formKey.currentState!.validate()) {
-                           FocusScope.of(context).unfocus();
+                          FocusScope.of(context).unfocus();
                           BlocProvider.of<AuthCubit>(context)
                               .ressetPassword(emailController.text);
                         }

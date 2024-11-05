@@ -1,6 +1,6 @@
-import 'package:doctor_app/Features/Auth/Login/presentation/widget/update_password.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
-import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_state.dart';
+import 'package:doctor_app/Features/Auth/presentation/widget/update_password.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
+import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_state.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
@@ -16,7 +16,7 @@ class VerificationScreen extends StatelessWidget {
   final String email;
 
   VerificationScreen({super.key, required this.email});
-  
+
   void showErrorDialog(BuildContext context, String error) {
     showDialog(
       context: context,
@@ -42,7 +42,7 @@ class VerificationScreen extends StatelessWidget {
         if (state is VerifySuccess) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text("الرمز صحيح، قم بتحديث كلمة المرور")));
-              MovingNavigation.navTo(context, page: const UpdatePassword());
+          MovingNavigation.navTo(context, page: const UpdatePassword());
         } else if (state is VerifyFailure) {
           showErrorDialog(context, state.error); // عرض رسالة الخطأ في حوار
         }
@@ -63,7 +63,6 @@ class VerificationScreen extends StatelessWidget {
                     textAlign: TextAlign.end,
                   ),
                   const SizedBox(height: 20),
-
                   Text(
                     "$email :تم إرسال رمز التحقق إلى الإيميل",
                     style: TextStyle(
@@ -73,7 +72,6 @@ class VerificationScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15.w),
                     child: PinCodeTextField(
@@ -107,14 +105,12 @@ class VerificationScreen extends StatelessWidget {
                       },
                     ),
                   ),
-
                   SizedBox(height: 172.h),
-
                   CustomButton(
                     title: "تحقق",
                     color: AppColor.primaryColor,
                     onTap: () {
-                    FocusScope.of(context).unfocus();
+                      FocusScope.of(context).unfocus();
                       BlocProvider.of<VerifyCubit>(context)
                           .verifyToken(email, pinController.text, context);
                     },

@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/Auth/Signup/presentation/widget/signup_password_view_body.dart';
+import 'package:doctor_app/Features/Auth/presentation/widget/signup_password_view_body.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +12,19 @@ class SignUpEmailView extends StatefulWidget {
   _SignUpEmailViewState createState() => _SignUpEmailViewState();
 }
 
-class _SignUpEmailViewState extends State<SignUpEmailView> with SingleTickerProviderStateMixin {
+class _SignUpEmailViewState extends State<SignUpEmailView>
+    with SingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
   late AnimationController _animationController;
   late Animation<double> _progressAnimation;
-  
+
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    _progressAnimation = Tween<double>(begin: 1 / 3, end: 2 / 3).animate(_animationController);
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _progressAnimation =
+        Tween<double>(begin: 1 / 3, end: 2 / 3).animate(_animationController);
     _animationController.forward();
   }
 
@@ -33,7 +36,7 @@ class _SignUpEmailViewState extends State<SignUpEmailView> with SingleTickerProv
 
   void submitForm() {
     if (formKey.currentState!.validate()) {
-     FocusScope.of(context).unfocus();
+      FocusScope.of(context).unfocus();
       MovingNavigation.navTo(
         context,
         page: SignUpPasswordView(
@@ -68,7 +71,9 @@ class _SignUpEmailViewState extends State<SignUpEmailView> with SingleTickerProv
       ),
       body: AuthViewBody(
         formKey: formKey,
-        validator: (value) => value == null || value.isEmpty ? 'لا يمكن أن يكون هذا الحقل فارغا' : null,
+        validator: (value) => value == null || value.isEmpty
+            ? 'لا يمكن أن يكون هذا الحقل فارغا'
+            : null,
         firstTextEditingFiled: emailController,
         firstKeyboardType: TextInputType.emailAddress,
         secondTextEditingFiled: phoneNumberController,

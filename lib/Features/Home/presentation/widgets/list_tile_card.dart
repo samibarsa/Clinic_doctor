@@ -1,4 +1,3 @@
-import 'package:doctor_app/Features/Home/presentation/widgets/home_view_body.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/title_list_tile.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,10 @@ class ListTileCard extends StatelessWidget {
                   Text("منذ ساعة"),
                 ],
               ),
-              leading: SvgPicture.asset(ImagesPath.xray),
+              leading: Padding(
+                padding: EdgeInsets.only(bottom: 16.h),
+                child: SvgPicture.asset(ImagesPath.xray),
+              ),
               title: TitleListTile(patientName: papatientName, type: type)),
         ),
       ),

@@ -2,6 +2,7 @@ class Order {
   final int id; // ID الطلب
   final int doctorId; // ID الطبيب
   final int patientId; // ID المريض
+  final String patientName; // اسم المريض - حقل جديد
   final DateTime date; // تاريخ الطلب
   final int patientAge; // عمر المريض
   final String type; // نوع الفحص
@@ -13,6 +14,7 @@ class Order {
     required this.id,
     required this.doctorId,
     required this.patientId,
+    required this.patientName, // إضافة الحقل الجديد هنا
     required this.date,
     required this.patientAge,
     required this.type,
@@ -26,6 +28,8 @@ class Order {
       id: json['order_id'], // تأكد من تطابق الاسم مع قاعدة البيانات
       doctorId: json['doctor_id'], // تأكد من تطابق الاسم مع قاعدة البيانات
       patientId: json['patient_id'], // تأكد من تطابق الاسم مع قاعدة البيانات
+      patientName: json['patients']['patient_name'] ??
+          'غير معروف', // إضافة اسم المريض - تأكد من تطابق الاسم مع قاعدة البيانات
       date: DateTime.parse(json['date']), // تأكد من أن التاريخ في تنسيق صحيح
       patientAge: json['patient_age'], // تأكد من تطابق الاسم مع قاعدة البيانات
       type: json['type'], // تأكد من تطابق الاسم مع قاعدة البيانات

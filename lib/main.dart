@@ -4,6 +4,10 @@ import 'package:doctor_app/Features/Auth/Login/presentation/maneger/cubit/update
 import 'package:doctor_app/Features/Auth/Signup/data/auth_repository_impl.dart';
 import 'package:doctor_app/Features/Auth/Signup/domain/usecases/usecacses.dart';
 import 'package:doctor_app/Features/Auth/Signup/presentation/maneger/cubit/auth_cubit.dart';
+import 'package:doctor_app/Features/Home/data/remote/remote_data_source.dart';
+import 'package:doctor_app/Features/Home/data/repos/data_repo_impl.dart';
+import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart';
+import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +36,8 @@ Future<void> main() async {
     updatePassUsecase: UpdatePassUsecase(
         updatePasswordRepoImp:
             UpdatePasswordRepoImp(supabaseClient: supabase.client)),
+    fetchOrdersUseCase: FetchOrdersUseCase(
+        (DataRepositoryImpl(RemoteDataSource(supabase.client)))),
   ));
 }
 
@@ -44,9 +50,11 @@ class ClinicDoctor extends StatelessWidget {
     required this.ressetPasswordUseCase,
     required this.verifyTokenUseCase,
     required this.updatePassUsecase,
+    required this.fetchOrdersUseCase,
   });
 
   final SignInUseCase signInUseCase;
+  final FetchOrdersUseCase fetchOrdersUseCase;
   final SignOutUseCase signOutUseCase;
   final SignUpUseCase signUpUseCase;
   final RessetPasswordUseCase ressetPasswordUseCase;
@@ -77,6 +85,10 @@ class ClinicDoctor extends StatelessWidget {
               create: (context) =>
                   UpdatePasswordCubit(updatePassUsecase: updatePassUsecase),
             ),
+            BlocProvider<OrderCubit>(
+              create: (context) =>
+                  OrderCubit(fetchOrdersUseCase)..fetchOrders(),
+            )
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

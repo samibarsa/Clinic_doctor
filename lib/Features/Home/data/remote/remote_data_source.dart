@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doctor_app/Features/Home/domain/Entites/doctor.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/examination.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/note.dart';
@@ -55,7 +57,9 @@ class RemoteDataSource {
 
   Future<List<Order>> fetchAllOrders() async {
     try {
-      final response = await supabase.from('orders').select();
+      final response =
+          await supabase.from('orders').select('*, patients(patient_name)');
+      log(response.toString());
 
       // تأكد من أن البيانات ليست null واحتوائها على قائمة
       final List<dynamic> data = response as List<dynamic>;

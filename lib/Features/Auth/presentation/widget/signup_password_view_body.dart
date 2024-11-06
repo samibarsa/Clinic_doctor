@@ -1,5 +1,6 @@
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_state.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
+import 'package:doctor_app/Features/Auth/presentation/views/login_view.dart';
 import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
@@ -52,6 +53,12 @@ class _SignUpPasswordViewState extends State<SignUpPasswordView>
       FocusScope.of(context).unfocus();
       BlocProvider.of<AuthCubit>(context).signUp(widget.email,
           passwordController.text, widget.doctorName, widget.phone);
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (context) =>
+                const LoginView()), // الصفحة الجديدة التي تريد الانتقال إليها
+        (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
+      );
     }
   }
 
@@ -65,12 +72,6 @@ class _SignUpPasswordViewState extends State<SignUpPasswordView>
         if (state is AuthSuccess) {
           setState(() {
             inAsyncCall = false;
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                  builder: (context) =>
-                      const HomeView()), // الصفحة الجديدة التي تريد الانتقال إليها
-              (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
-            );
           });
         } else if (state is AuthLoading) {
           setState(() => inAsyncCall = true);

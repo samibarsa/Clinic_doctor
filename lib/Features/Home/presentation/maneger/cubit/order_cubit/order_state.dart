@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/Home/domain/Entites/doctor.dart';
+import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 
 abstract class OrderState {}

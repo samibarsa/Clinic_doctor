@@ -1,4 +1,3 @@
-import 'package:doctor_app/Features/Home/domain/Entites/doctor.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_doctor_data.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';

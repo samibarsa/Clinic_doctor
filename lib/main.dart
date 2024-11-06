@@ -14,18 +14,24 @@ import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // تهيئة SharedPreferences
-
-  // تهيئة Supabase مع SharedPreferences كـ asyncStorage
+  // تهيئة Supabase
   final supabase = await Supabase.initialize(
     url: SupabaseKeys.projectUrl,
     anonKey: SupabaseKeys.anonyKey,
   );
+
+  // التحقق من حالة تسجيل الدخول
+  final prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('is_logged_in') ?? false;
+
+  // إذا كان المستخدم قد سجل الدخول من قبل، نعرض الصفحة الرئيسية، وإلا نعرض شاشة البداية
+  bool startWidget = isLoggedIn ? true : false;
 
   runApp(ClinicDoctor(
     signInUseCase: SignInUseCase(AuthRepositoryImpl(supabase.client)),
@@ -38,9 +44,10 @@ Future<void> main() async {
         updatePasswordRepoImp:
             UpdatePasswordRepoImp(supabaseClient: supabase.client)),
     fetchOrdersUseCase: FetchOrdersUseCase(
-        (DataRepositoryImpl(RemoteDataSource(supabase.client)))),
+        DataRepositoryImpl(RemoteDataSource(supabase.client))),
     fetchDoctorDataUseCase: FetchDoctorDataUseCase(
         DataRepositoryImpl(RemoteDataSource(supabase.client))),
+    startWidget: startWidget,
   ));
 }
 
@@ -55,7 +62,9 @@ class ClinicDoctor extends StatelessWidget {
     required this.updatePassUsecase,
     required this.fetchOrdersUseCase,
     required this.fetchDoctorDataUseCase,
+    required this.startWidget,
   });
+  final bool startWidget;
 
   final SignInUseCase signInUseCase;
   final FetchDoctorDataUseCase fetchDoctorDataUseCase;
@@ -105,7 +114,9 @@ class ClinicDoctor extends StatelessWidget {
                 bodyMedium: TextStyle(fontSize: 16.0),
               ),
             ),
-            home: const SplashScreen(),
+            home: SplashScreen(
+              startWidget: startWidget,
+            ),
           ),
         );
       },

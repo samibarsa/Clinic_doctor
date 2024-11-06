@@ -24,6 +24,12 @@ class LoginViewBody extends StatelessWidget {
     if (formKey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
       BlocProvider.of<AuthCubit>(context).signIn(email.text, password.text);
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (context) =>
+                const HomeView()), // الصفحة الجديدة التي تريد الانتقال إليها
+        (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
+      );
     }
   }
 
@@ -31,14 +37,7 @@ class LoginViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthSuccess) {
-          Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-                builder: (context) =>
-                    const HomeView()), // الصفحة الجديدة التي تريد الانتقال إليها
-            (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
-          );
-        }
+        if (state is AuthSuccess) {}
         if (state is AuthFailure) {
           // عرض رسالة الفشل
           ScaffoldMessenger.of(context).showSnackBar(

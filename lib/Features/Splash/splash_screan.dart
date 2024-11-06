@@ -1,11 +1,12 @@
+import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
 import 'package:doctor_app/Features/wellcome/presentation/views/wellcome.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
+  const SplashScreen({super.key, required this.startWidget});
+  final bool startWidget;
   @override
   // ignore: library_private_types_in_public_api
   _SplashScreenState createState() => _SplashScreenState();
@@ -17,8 +18,12 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const WellcomeScrean()));
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => widget.startWidget
+                  ? const HomeView()
+                  : const WellcomeScrean()));
     });
   }
 

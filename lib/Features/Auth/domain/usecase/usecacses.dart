@@ -6,8 +6,9 @@ class SignUpUseCase {
 
   SignUpUseCase(this.repository);
 
-  Future<void> call(String email, String password) {
-    return repository.signUp(email, password);
+  Future<void> call(
+      String email, String password, String doctorName, String phone) {
+    return repository.signUp(email, password, doctorName, phone);
   }
 }
 

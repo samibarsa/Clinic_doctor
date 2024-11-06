@@ -73,6 +73,7 @@ class Home extends StatelessWidget {
             onRefresh: () async {
               // استدعاء دالة جلب البيانات من OrderCubit
               context.read<OrderCubit>().fetchOrders();
+              context.read<OrderCubit>().fetchDoctorDataUseCase();
             },
             color: const Color(AppColor.primaryColor),
             child: Column(

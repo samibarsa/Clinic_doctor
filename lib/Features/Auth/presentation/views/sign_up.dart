@@ -41,8 +41,6 @@ class _SignUpViewState extends State<SignUpView>
 
     void submitForm() {
       if (formKey.currentState!.validate()) {
-        firstName.clear();
-        secondName.clear();
         MovingNavigation.navTo(
           context,
           page: SignUpEmailView(

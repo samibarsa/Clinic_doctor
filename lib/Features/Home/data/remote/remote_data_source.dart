@@ -12,16 +12,17 @@ class RemoteDataSource {
 
   RemoteDataSource(this.supabase);
 
-  Future<List<Doctor>> fetchAllDoctors() async {
-    final response = await supabase
-        .from('doctors')
-        .select(); // استخدم execute() للحصول على بيانات Supabase
+  Future<Doctor> fetchAllDoctors() async {
+    final response = await supabase.from('doctors').select().eq(
+        'user_id',
+        supabase.auth.currentUser!
+            .id); // استعلام عن doctors حيث user_id متساوي مع userId
+// استخدم execute() للحصول على بيانات Supabase
 
     // Cast the data to a List of dynamic
-    final List<dynamic> data = response as List<dynamic>;
 
     // Convert the data to List<Doctor>
-    return data.map((item) => Doctor.fromJson(item)).toList();
+    return Doctor.fromJson(response[0]);
   }
 
   Future<List<Patient>> fetchAllPatients() async {
@@ -57,8 +58,17 @@ class RemoteDataSource {
 
   Future<List<Order>> fetchAllOrders() async {
     try {
-      final response =
-          await supabase.from('orders').select('*, patients(patient_name)');
+      final condition = await supabase
+          .from('doctors')
+          .select('doctor_id') // تم تصحيح الاسم هنا
+          .eq('user_id', supabase.auth.currentUser!.id)
+          .single();
+
+      final response = await supabase
+          .from('orders')
+          .select('*, patients(patient_name), doctors(doctor_id)')
+          .eq('doctor_id', condition['doctor_id']);
+
       log(response.toString());
 
       // تأكد من أن البيانات ليست null واحتوائها على قائمة

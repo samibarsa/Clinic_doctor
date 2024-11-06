@@ -1,5 +1,4 @@
-import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:doctor_app/Features/Home/domain/Entites/doctor.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 
 abstract class OrderState {}
@@ -10,7 +9,8 @@ class OrderLoading extends OrderState {}
 
 class OrderLoaded extends OrderState {
   final List<Order> orders;
-  OrderLoaded(this.orders);
+  final Doctor doctor;
+  OrderLoaded(this.orders, this.doctor);
 }
 
 class OrderError extends OrderState {

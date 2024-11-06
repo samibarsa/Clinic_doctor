@@ -12,7 +12,7 @@ class DataRepositoryImpl implements DataRepository {
   DataRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<List<Doctor>> fetchAllDoctors() async {
+  Future<Doctor> fetchDoctorsData() async {
     return await remoteDataSource.fetchAllDoctors();
   }
 

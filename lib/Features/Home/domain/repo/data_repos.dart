@@ -5,7 +5,7 @@ import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 
 abstract class DataRepository {
-  Future<List<Doctor>> fetchAllDoctors();
+  Future<Doctor> fetchDoctorsData();
   Future<List<Patient>> fetchAllPatients();
   Future<List<Order>> fetchAllOrders();
   Future<List<Examination>> fetchAllExaminations();

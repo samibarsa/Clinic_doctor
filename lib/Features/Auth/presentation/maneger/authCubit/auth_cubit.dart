@@ -20,10 +20,11 @@ class AuthCubit extends Cubit<AuthState> {
   }) : super(AuthInitial());
 
   // عملية التسجيل
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp(
+      String email, String password, String doctorName, String phone) async {
     emit(AuthLoading());
     try {
-      await signUpUseCase.call(email, password);
+      await signUpUseCase.call(email, password, doctorName, phone);
       emit(AuthSuccess());
     } catch (e) {
       String errorMessage = 'حدث خطأ غير متوقع. يرجى المحاولة لاحقًا.';

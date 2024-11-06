@@ -6,10 +6,9 @@ import 'package:doctor_app/Features/Auth/domain/usecase/usecacses.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Home/data/remote/remote_data_source.dart';
 import 'package:doctor_app/Features/Home/data/repos/data_repo_impl.dart';
+import 'package:doctor_app/Features/Home/domain/usecase/fetch_doctor_data.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
-import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
-import 'package:doctor_app/Features/Home/presentation/widgets/home_view_body.dart';
 import 'package:doctor_app/Features/Splash/splash_screan.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +39,8 @@ Future<void> main() async {
             UpdatePasswordRepoImp(supabaseClient: supabase.client)),
     fetchOrdersUseCase: FetchOrdersUseCase(
         (DataRepositoryImpl(RemoteDataSource(supabase.client)))),
+    fetchDoctorDataUseCase: FetchDoctorDataUseCase(
+        DataRepositoryImpl(RemoteDataSource(supabase.client))),
   ));
 }
 
@@ -53,9 +54,11 @@ class ClinicDoctor extends StatelessWidget {
     required this.verifyTokenUseCase,
     required this.updatePassUsecase,
     required this.fetchOrdersUseCase,
+    required this.fetchDoctorDataUseCase,
   });
 
   final SignInUseCase signInUseCase;
+  final FetchDoctorDataUseCase fetchDoctorDataUseCase;
   final FetchOrdersUseCase fetchOrdersUseCase;
   final SignOutUseCase signOutUseCase;
   final SignUpUseCase signUpUseCase;
@@ -89,7 +92,9 @@ class ClinicDoctor extends StatelessWidget {
             ),
             BlocProvider<OrderCubit>(
               create: (context) =>
-                  OrderCubit(fetchOrdersUseCase)..fetchOrders(),
+                  OrderCubit(fetchOrdersUseCase, fetchDoctorDataUseCase)
+                    ..fetchOrders()
+                    ..fetchDoctorDataUseCase(),
             )
           ],
           child: MaterialApp(
@@ -100,7 +105,7 @@ class ClinicDoctor extends StatelessWidget {
                 bodyMedium: TextStyle(fontSize: 16.0),
               ),
             ),
-            home: const HomeView(),
+            home: const SplashScreen(),
           ),
         );
       },

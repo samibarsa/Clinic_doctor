@@ -50,8 +50,8 @@ class _SignUpPasswordViewState extends State<SignUpPasswordView>
   void submitForm(BuildContext context) {
     if (formKey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
-      BlocProvider.of<AuthCubit>(context)
-          .signUp(widget.email, passwordController.text);
+      BlocProvider.of<AuthCubit>(context).signUp(widget.email,
+          passwordController.text, widget.doctorName, widget.phone);
     }
   }
 

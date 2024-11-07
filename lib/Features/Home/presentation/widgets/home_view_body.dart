@@ -1,9 +1,12 @@
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
+import 'package:doctor_app/Features/Home/presentation/view/order_history.dart';
+import 'package:doctor_app/Features/Home/presentation/view/order_view_detiles.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/home_search_text_filed.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/list_tile_card.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/navigator_bar.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,6 +71,12 @@ class Home extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else if (state is OrderLoaded) {
           final orders = state.orders;
+          final today = DateTime.now();
+          final ordersToday = orders.where((order) {
+            return order.date.year == today.year &&
+                order.date.month == today.month &&
+                order.date.day == today.day;
+          }).toList();
 
           return RefreshIndicator(
             onRefresh: () async {
@@ -86,13 +95,19 @@ class Home extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "< عرض الكل",
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          decorationColor: const Color(AppColor.primaryColor),
-                          fontSize: 11.sp,
-                          color: const Color(AppColor.primaryColor),
+                      InkWell(
+                        onTap: () {
+                          MovingNavigation.navTo(context,
+                              page: AllOrdersPage(allOrders: orders));
+                        },
+                        child: Text(
+                          "< عرض الكل",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationColor: const Color(AppColor.primaryColor),
+                            fontSize: 11.sp,
+                            color: const Color(AppColor.primaryColor),
+                          ),
                         ),
                       ),
                       Text(
@@ -116,9 +131,16 @@ class Home extends StatelessWidget {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(bottom: 6.h),
-                            child: ListTileCard(
-                              papatientName: order.patientName,
-                              type: order.type,
+                            child: InkWell(
+                              onTap: () {
+                                MovingNavigation.navTo(context,
+                                    page: OrderDetailes(
+                                        order: order, doctor: state.doctor));
+                              },
+                              child: ListTileCard(
+                                papatientName: order.patientName,
+                                type: order.type,
+                              ),
                             ),
                           ),
                           if (index == orders.length - 1)

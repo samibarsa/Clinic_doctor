@@ -1,43 +1,40 @@
 class Order {
-  final int id; // ID الطلب
-  final int doctorId; // ID الطبيب
-  final int patientId; // ID المريض
-  final String patientName; // اسم المريض - حقل جديد
-  final DateTime date; // تاريخ الطلب
-  final int patientAge; // عمر المريض
-  final String type; // نوع الفحص
-  final String? examinationOptions; // خيارات الفحص (اختياري)
-  final String? outputType; // نوع المخرجات (اختياري)
-  final String? additionalNotes; // ملاحظات إضافية (اختياري)
+  final int id;
+  final int doctorId;
+  final int patientId;
+  final String patientName;
+  final DateTime date;
+  final int patientAge;
+  final String type;
+  final String? examinationOptions;
+  final String? examinationMode;
+  final String? additionalNotes;
 
   Order({
     required this.id,
     required this.doctorId,
     required this.patientId,
-    required this.patientName, // إضافة الحقل الجديد هنا
+    required this.patientName,
     required this.date,
     required this.patientAge,
     required this.type,
     this.examinationOptions,
-    this.outputType,
+    this.examinationMode,
     this.additionalNotes,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
-      id: json['order_id'], // تأكد من تطابق الاسم مع قاعدة البيانات
-      doctorId: json['doctor_id'], // تأكد من تطابق الاسم مع قاعدة البيانات
-      patientId: json['patient_id'], // تأكد من تطابق الاسم مع قاعدة البيانات
-      patientName: json['patients']['patient_name'] ??
-          'غير معروف', // إضافة اسم المريض - تأكد من تطابق الاسم مع قاعدة البيانات
-      date: DateTime.parse(json['date']), // تأكد من أن التاريخ في تنسيق صحيح
-      patientAge: json['patient_age'], // تأكد من تطابق الاسم مع قاعدة البيانات
-      type: json['type'], // تأكد من تطابق الاسم مع قاعدة البيانات
-      examinationOptions:
-          json['examination_options'], // تأكد من تطابق الاسم مع قاعدة البيانات
-      outputType: json['output_type'], // تأكد من تطابق الاسم مع قاعدة البيانات
-      additionalNotes:
-          json['additional_notes'], // تأكد من تطابق الاسم مع قاعدة البيانات
+      id: json['order_id'],
+      doctorId: json['doctor_id'],
+      patientId: json['patient_id'],
+      patientName: json['patients']['patient_name'] ?? 'غير معروف',
+      date: DateTime.parse(json['date']),
+      patientAge: json['patient_age'],
+      type: json['type'],
+      examinationOptions: json['examination_options'],
+      examinationMode: json['examination_mode'],
+      additionalNotes: json['additional_notes'],
     );
   }
 }

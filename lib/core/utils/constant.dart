@@ -10,13 +10,14 @@ class ImagesPath {
   static String navbarHistory = 'asset/images/navbar_history.svg';
   static String navbarHome = 'asset/images/navbar_home.svg';
   static String navbarSettings = 'asset/images/navbar_settings.svg';
-  static String creatAccount='asset/images/make_account.svg';
-  static String login='asset/images/login.svg';
-  static String xray='asset/images/xray.svg';
+  static String creatAccount = 'asset/images/make_account.svg';
+  static String login = 'asset/images/login.svg';
+  static String xray = 'asset/images/xray.svg';
+  static String editIcon = 'asset/images/edit_icon.svg';
 }
 
 class AppColor {
-  static const primaryColor =0xff4CAF50;
+  static const primaryColor = 0xff4CAF50;
   static const secondColor = 0xff00AFF3;
 }
 
@@ -28,9 +29,9 @@ class SupabaseKeys {
   static const projectUrl = 'https://ncbjffnfecycqtlwwgco.supabase.co';
   static const anonyKey =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jYmpmZm5mZWN5Y3F0bHd3Z2NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk1MzIyODIsImV4cCI6MjA0NTEwODI4Mn0.-dCoPEwNB8ov6Lpyg_RMkre27ejO7SjXnJdxgr02F6I';
- 
 }
-class CachedName{
-  static const phone ='phone';
-  static const doctorName ='doctorName';
+
+class CachedName {
+  static const phone = 'phone';
+  static const doctorName = 'doctorName';
 }

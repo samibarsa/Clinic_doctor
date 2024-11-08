@@ -134,7 +134,7 @@ class Home extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 MovingNavigation.navTo(context,
-                                    page: OrderDetailes(
+                                    page: OrderDetails(
                                         order: order, doctor: state.doctor));
                               },
                               child: ListTileCard(

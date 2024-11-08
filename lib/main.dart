@@ -109,6 +109,20 @@ class ClinicDoctor extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              colorScheme: ColorScheme(
+                brightness: Brightness
+                    .light, // السطوع (أو Brightness.dark للوضع الداكن)
+                primary: const Color(AppColor.primaryColor), // اللون الأساسي
+                onPrimary: Colors.white, // لون النص فوق اللون الأساسي
+                secondary: Colors.greenAccent, // اللون الثانوي
+                onSecondary: Colors.black, // لون النص فوق اللون الثانوي
+                error: Colors.red, // لون الخطأ
+                onError: Colors.white, // لون النص فوق لون الخطأ
+                background: Colors.white, // لون الخلفية
+                onBackground: Colors.black, // لون النص فوق الخلفية
+                surface: Colors.grey.shade100, // لون الأسطح مثل بطاقات العرض
+                onSurface: Colors.black, // لون النص فوق الأسطح
+              ),
               fontFamily: AppFont.primaryFont,
               textTheme: const TextTheme(
                 bodyMedium: TextStyle(fontSize: 16.0),

@@ -28,18 +28,14 @@ class _OrderDetailsState extends State<OrderDetails> {
   String selectedImageType = "سيفالومتريك";
   String? selectedExaminationOption;
   String? selectedOutputType;
+
   final Map<String, List<String>> examinationOptions = {
     "سيفالومتريك": ["Full lateral جانبية", "Carpus العمر العظمي"],
-    "c.b.c.t": [
-      "كامل الجمجمة",
-      "ساحة 5×5 مميزة للبية",
-      "إجراء دراسة للمقطع",
-      "نصف فك"
-    ],
+    "c.b.c.t": ["الفكين معاً", "الفك السفلي", "الفك العلوي"],
     "بانوراما": ["وضعية Bite Wing", "مفصل TMJ"],
   };
 
-  final Map<String, List<String>> examinationOption = {
+  final Map<String, List<String>> examinationMode = {
     "سيفالومتريك": ["Forntal جبهية", "SMV وضعية"],
     "c.b.c.t": [
       "كامل الجمجمة",
@@ -48,7 +44,6 @@ class _OrderDetailsState extends State<OrderDetails> {
       "نصف فك"
     ],
   };
-
   @override
   void initState() {
     super.initState();
@@ -70,10 +65,16 @@ class _OrderDetailsState extends State<OrderDetails> {
     selectedExaminationOption = widget.order.examinationOptions;
 
     // تحقق من أنه تم تعيين القيمة بشكل صحيح (إذا كانت غير موجودة، اختر أول خيار في القائمة)
-    if (!examinationOptions[selectedImageType]!
-        .contains(selectedExaminationOption)) {
+    if (examinationOptions[selectedImageType] != null &&
+        !examinationOptions[selectedImageType]!
+            .contains(selectedExaminationOption)) {
       selectedExaminationOption = examinationOptions[selectedImageType]!.first;
     }
+
+    // إعادة تعيين selectedOutputType إلى القيمة الصحيحة بناءً على selectedImageType
+    selectedOutputType = (examinationMode[selectedImageType] ?? []).isNotEmpty
+        ? examinationMode[selectedImageType]!.first
+        : null;
   }
 
   @override
@@ -134,7 +135,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     examinationOptions[selectedImageType]
                                         ?.first;
                                 selectedOutputType =
-                                    null; // إعادة تعيين وضعية الصورة عند تغيير نوع الصورة
+                                    examinationMode[selectedImageType]!.first;
                               });
                             }
                           },
@@ -144,14 +145,16 @@ class _OrderDetailsState extends State<OrderDetails> {
                           hint: const Text('نوع الصورة'),
                         ),
                       ),
+                      // القائمة المنسدلة ل "الجزء المراد تصويره"
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0.h),
                         child: DropdownButton<String>(
                           value: selectedExaminationOption,
-                          items: examinationOptions[selectedImageType]!
-                              .map((option) => DropdownMenuItem(
-                                  value: option, child: Text(option)))
-                              .toList(),
+                          items: (examinationOptions[selectedImageType] ?? [])
+                              .map((option) {
+                            return DropdownMenuItem(
+                                value: option, child: Text(option));
+                          }).toList(),
                           onChanged: (value) {
                             setState(() {
                               selectedExaminationOption = value;
@@ -160,31 +163,34 @@ class _OrderDetailsState extends State<OrderDetails> {
                           isExpanded: true,
                           underline: Container(),
                           dropdownColor: Colors.white,
-                          hint: const Text('الجزء المراد تصويره'),
+                          hint: selectedExaminationOption != null
+                              ? Text(selectedExaminationOption!)
+                              : const Text('اختار الجزء المراد تصويره'),
                         ),
                       ),
-                      // إظهار "وضعية الصورة" فقط إذا كان نوع الصورة سيفالومتريك أو c.b.c.t
-                      if (selectedImageType != 'بانوراما')
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0.h),
-                          child: DropdownButton<String>(
-                            value: selectedOutputType,
-                            items: examinationOption[selectedImageType]!
-                                .map((option) => DropdownMenuItem(
-                                    value: option, child: Text(option)))
-                                .toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                selectedOutputType = value;
-                              });
-                            },
-                            isExpanded: true,
-                            underline: Container(),
-                            dropdownColor: Colors.white,
-                            hint: Text(widget.order.examinationOptions ??
-                                'وضعية الصورة'),
-                          ),
+                      // القائمة المنسدلة ل "وضعية الصورة"
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0.h),
+                        child: DropdownButton<String>(
+                          value: selectedOutputType,
+                          items: (examinationMode[selectedImageType] ?? [])
+                              .map((option) {
+                            return DropdownMenuItem(
+                                value: option, child: Text(option));
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedOutputType = value;
+                            });
+                          },
+                          isExpanded: true,
+                          underline: Container(),
+                          dropdownColor: Colors.white,
+                          hint: selectedOutputType != null
+                              ? Text(selectedOutputType!)
+                              : const Text('اختار وضعية الصورة'),
                         ),
+                      ),
 
                       _buildNonEditableTextField('التاريخ', date),
                       _buildNonEditableTextField('التوقيت', time),
@@ -234,6 +240,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

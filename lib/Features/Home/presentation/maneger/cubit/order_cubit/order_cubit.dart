@@ -12,7 +12,7 @@ class OrderCubit extends Cubit<OrderState> {
   Future<void> fetchOrders() async {
     emit(OrderLoading());
     try {
-      final orders = await fetchOrdersUseCase();
+      final orders = await fetchOrdersUseCase.repository.fetchAllOrders();
       final doctor = await fetchDoctorDataUseCase();
 
       emit(OrderLoaded(orders, doctor));

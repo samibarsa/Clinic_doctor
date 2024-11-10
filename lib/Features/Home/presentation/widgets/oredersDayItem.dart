@@ -43,8 +43,8 @@ class OredersDayItem extends StatelessWidget {
                 ),
               ),
               title: TitleListTile(
-                patientName: order.patientName,
-                type: order.type,
+                patientName: order.patientId.toString(),
+                type: order.detail.type.typeName,
               ),
             ),
           ),

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/examination.dart';
-import 'package:doctor_app/Features/Home/domain/Entites/note.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -13,15 +12,11 @@ class RemoteDataSource {
   RemoteDataSource(this.supabase);
 
   Future<Doctor> fetchAllDoctors() async {
-    final response = await supabase.from('doctors').select().eq(
-        'user_id',
-        supabase.auth.currentUser!
-            .id); // استعلام عن doctors حيث user_id متساوي مع userId
-// استخدم execute() للحصول على بيانات Supabase
+    final response = await supabase
+        .from('doctors')
+        .select()
+        .eq('user_id', supabase.auth.currentUser!.id);
 
-    // Cast the data to a List of dynamic
-
-    // Convert the data to List<Doctor>
     return Doctor.fromJson(response[0]);
   }
 
@@ -33,65 +28,70 @@ class RemoteDataSource {
     } catch (e) {
       throw Exception('Failed to load patients: ${e.toString()}');
     }
-    // استخدم execute() للحصول على بيانات Supabase
-
-    // Handle the response to check for errors
-
-    // Cast the data to a List of dynamic
-
-    // Convert the data to List<Patient>
-  }
-
-  Future<List<Note>> fetchAllNotes() async {
-    try {
-      final response = await supabase.from('notes').select();
-
-      // تأكد من أن البيانات ليست null واحتوائها على قائمة
-      final List<dynamic> data = response as List<dynamic>;
-
-      // تحويل البيانات إلى List<Note>
-      return data.map((item) => Note.fromJson(item)).toList();
-    } catch (e) {
-      throw Exception('Failed to load notes: ${e.toString()}');
-    }
   }
 
   Future<List<Order>> fetchAllOrders() async {
-    try {
-      final condition = await supabase
-          .from('doctors')
-          .select('doctor_id') // تم تصحيح الاسم هنا
-          .eq('user_id', supabase.auth.currentUser!.id)
-          .single();
+    // التحقق من الـ doctor_id باستخدام user_id
+    final condition = await Supabase.instance.client
+        .from('doctors')
+        .select('doctor_id')
+        .eq('user_id', Supabase.instance.client.auth.currentUser!.id)
+        .single();
 
-      final response = await supabase
-          .from('orders')
-          .select('*, patients(patient_name), doctors(doctor_id)')
-          .eq('doctor_id', condition['doctor_id']);
-
-      log(response.toString());
-
-      // تأكد من أن البيانات ليست null واحتوائها على قائمة
-      final List<dynamic> data = response as List<dynamic>;
-
-      // تحويل البيانات إلى List<Order>
-      return data.map((item) => Order.fromJson(item)).toList();
-    } catch (e) {
-      throw Exception('Failed to load orders: ${e.toString()}');
+    // التحقق إذا كانت البيانات قد استُرجعت بنجاح
+    if (condition == null || condition['doctor_id'] == null) {
+      throw Exception('Doctor not found');
     }
+
+    // استرجاع الطلبات باستخدام doctor_id واسترجاع التفاصيل المطلوبة
+    final response = await Supabase.instance.client.from('orders').select('''
+        order_id,
+        doctor_id,
+        patient_id,
+        date,
+        patient_age,
+        additional_notes,
+        patients(patient_name),
+        examinationdetails!inner(
+          detail_id,
+          mode:examinationmodes(mode_id, mode_name),
+          option:examinationoptions(option_id, option_name),
+          type:examinationtypes(examination_type_id, type_name)
+        )
+      ''').eq('doctor_id', condition['doctor_id']);
+
+    // التأكد إذا كانت البيانات موجودة
+    if (response == null || response.isEmpty) {
+      throw Exception('No orders found for this doctor');
+    }
+
+    // تحويل البيانات المسترجعة إلى قائمة من كائنات Order باستخدام fromJson
+    final orders = response.map((item) => Order.fromJson(item)).toList();
+
+    log(orders.toString());
+    return orders;
   }
 
-  Future<List<Examination>> fetchAllExaminations() async {
+  Future<Order> getOrderDetails(int orderId) async {
     try {
-      final response = await supabase.from('examinations').select();
+      final response = await supabase.from('orders').select('''
+      order_id,
+      doctor_id,
+      patient_id,
+      date,
+      patient_age,
+      additional_notes,
+      examinationdetails!inner(
+        detail_id,
+        mode:examinationmodes(mode_id, mode_name),
+        option:examinationoptions(option_id, option_name),
+        type:examinationtypes(examination_type_id, type_name)
+      )
+    ''').eq('order_id', orderId).single();
 
-      // تأكد من أن البيانات ليست null واحتوائها على قائمة
-      final List<dynamic> data = response as List<dynamic>;
-
-      // تحويل البيانات إلى List<Examination>
-      return data.map((item) => Examination.fromJson(item)).toList();
+      return Order.fromJson(response);
     } catch (e) {
-      throw Exception('Failed to load examinations: ${e.toString()}');
+      throw Exception(e);
     }
   }
 }

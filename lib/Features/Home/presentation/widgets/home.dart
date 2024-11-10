@@ -64,8 +64,8 @@ class Home extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(bottom: 6.h),
                 child: ListTileCard(
-                  papatientName: order.patientName,
-                  type: order.type,
+                  papatientName: order.patientAge.toString(),
+                  type: order.detail.type.typeName,
                 ),
               );
             },

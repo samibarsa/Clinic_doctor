@@ -138,8 +138,8 @@ class Home extends StatelessWidget {
                                         order: order, doctor: state.doctor));
                               },
                               child: ListTileCard(
-                                papatientName: order.patientName,
-                                type: order.type,
+                                papatientName: order.patientId.toString(),
+                                type: order.detail.type.typeName,
                               ),
                             ),
                           ),

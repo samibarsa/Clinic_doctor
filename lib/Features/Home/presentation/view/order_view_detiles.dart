@@ -49,9 +49,9 @@ class _OrderDetailsState extends State<OrderDetails> {
     super.initState();
 
     patientNameController =
-        TextEditingController(text: widget.order.patientName);
-    outputTypeController =
-        TextEditingController(text: widget.order.examinationMode ?? "لا يوجد");
+        TextEditingController(text: widget.order.patientId.toString());
+    outputTypeController = TextEditingController(
+        text: widget.order.detail.mode!.modeName ?? "لا يوجد");
     additionalNotesController =
         TextEditingController(text: widget.order.additionalNotes ?? "لا يوجد");
 
@@ -59,10 +59,10 @@ class _OrderDetailsState extends State<OrderDetails> {
     patientAge = widget.order.patientAge.toString();
     date = widget.order.date.toString().split(' ')[0];
     time = widget.order.date.toString().split(' ')[1].split('.')[0];
-    selectedImageType = widget.order.type;
+    selectedImageType = widget.order.detail.type.typeName;
 
     // تأكد من أن selectedExaminationOption يحتوي على قيمة صحيحة
-    selectedExaminationOption = widget.order.examinationOptions;
+    selectedExaminationOption = widget.order.detail.option.optionName;
 
     // تحقق من أنه تم تعيين القيمة بشكل صحيح (إذا كانت غير موجودة، اختر أول خيار في القائمة)
     if (examinationOptions[selectedImageType] != null &&
@@ -282,15 +282,15 @@ class _OrderDetailsState extends State<OrderDetails> {
             ),
             TableItem(
               title: 'الجزء المراد تصويره',
-              value: widget.order.examinationOptions ?? "",
+              value: widget.order.detail.option.optionName ?? "",
               topradius: 0,
               buttomradius: 0,
             ),
             selectedImageType != 'بانوراما' &&
-                    widget.order.examinationMode != null
+                    widget.order.detail.mode!.modeName == ""
                 ? TableItem(
                     title: 'وضعية الصورة',
-                    value: widget.order.examinationMode!,
+                    value: widget.order.detail.mode!.modeName,
                     topradius: 0,
                     buttomradius: 0,
                   )

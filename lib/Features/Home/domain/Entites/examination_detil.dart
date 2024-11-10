@@ -4,7 +4,7 @@ import 'package:doctor_app/Features/Home/domain/Entites/examinaton_type.dart';
 
 class ExaminationDetail {
   final int detailId;
-  final ExaminationMode? mode;
+  final ExaminationMode mode;
   final ExaminationOption option;
   final ExaminationType type;
 

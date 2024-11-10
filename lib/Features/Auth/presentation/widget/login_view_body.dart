@@ -1,8 +1,6 @@
-import 'package:doctor_app/Features/Auth/presentation/widget/resset_password.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_state.dart';
 import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
-import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,12 +22,6 @@ class LoginViewBody extends StatelessWidget {
     if (formKey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
       BlocProvider.of<AuthCubit>(context).signIn(email.text, password.text);
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (context) =>
-                const HomeView()), // الصفحة الجديدة التي تريد الانتقال إليها
-        (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
-      );
     }
   }
 
@@ -37,9 +29,15 @@ class LoginViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthSuccess) {}
+        if (state is AuthSuccess) {
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) =>
+                    const HomeView()), // الصفحة الجديدة التي تريد الانتقال إليها
+            (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
+          );
+        }
         if (state is AuthFailure) {
-          // عرض رسالة الفشل
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error)),
           );
@@ -70,23 +68,6 @@ class LoginViewBody extends StatelessWidget {
                 buttontitle: 'تسجيل دخول',
                 firstKeyboardType: TextInputType.emailAddress,
                 secondKeyboardType: TextInputType.text,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 18.w, top: 443.h),
-              child: GestureDetector(
-                onTap: () {
-                  MovingNavigation.navTo(context,
-                      page:
-                          RessetPassword()); // تغيير هذا بناءً على صفحة إعادة تعيين كلمة المرور
-                },
-                child: Text(
-                  "هل نسيت كلمة المرور؟",
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: const Color(0xff898A8F),
-                  ),
-                ),
               ),
             ),
           ],

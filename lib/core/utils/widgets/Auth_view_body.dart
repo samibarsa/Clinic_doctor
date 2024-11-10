@@ -1,6 +1,8 @@
 // ignore_for_file: file_names
 
+import 'package:doctor_app/Features/Auth/presentation/widget/resset_password.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
 import 'package:doctor_app/core/utils/widgets/google_button.dart';
@@ -9,7 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AuthViewBody extends StatelessWidget {
- const AuthViewBody(
+  const AuthViewBody(
       {super.key,
       required this.firstFiled,
       required this.secondFiled,
@@ -20,10 +22,12 @@ class AuthViewBody extends StatelessWidget {
       required this.firstTextEditingFiled,
       required this.secondTextEditingFiled,
       required this.firstKeyboardType,
-      required this.secondKeyboardType,  this.formKey, this.validator});
+      required this.secondKeyboardType,
+      this.formKey,
+      this.validator});
 
   final String firstFiled;
- final String? Function(String?)? validator;
+  final String? Function(String?)? validator;
   final String secondFiled;
   final TextEditingController firstTextEditingFiled;
   final TextEditingController secondTextEditingFiled;
@@ -33,7 +37,7 @@ class AuthViewBody extends StatelessWidget {
   final String questestion;
   final void Function()? onTap;
   final String buttontitle;
-  final Key? formKey ; //
+  final Key? formKey; //
   void dispose() {
     firstTextEditingFiled.dispose();
     secondTextEditingFiled.dispose();
@@ -47,7 +51,9 @@ class AuthViewBody extends StatelessWidget {
           key: formKey,
           child: Column(
             children: [
-              SvgPicture.asset(buttontitle=='تسجيل دخول'?ImagesPath.login:ImagesPath.creatAccount),
+              SvgPicture.asset(buttontitle == 'تسجيل دخول'
+                  ? ImagesPath.login
+                  : ImagesPath.creatAccount),
               SizedBox(
                 height: 52.h,
               ),
@@ -62,12 +68,31 @@ class AuthViewBody extends StatelessWidget {
                 height: 24.h,
               ),
               CustomTextField(
-                validator:validator,
+                validator: validator,
                 keyboardType: secondKeyboardType,
                 radius: 12,
                 title: secondFiled,
                 textEditingController: secondTextEditingFiled,
               ),
+              buttontitle == 'تسجيل دخول'
+                  ? Padding(
+                      padding: EdgeInsets.only(right: 220.w, top: 10.h),
+                      child: GestureDetector(
+                        onTap: () {
+                          MovingNavigation.navTo(context,
+                              page:
+                                  RessetPassword()); // تغيير هذا بناءً على صفحة إعادة تعيين كلمة المرور
+                        },
+                        child: Text(
+                          "هل نسيت كلمة المرور؟",
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: const Color(0xff898A8F),
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
               SizedBox(
                 height: 54.5.h,
               ),
@@ -107,6 +132,4 @@ class AuthViewBody extends StatelessWidget {
       ),
     );
   }
-
- 
 }

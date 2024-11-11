@@ -26,13 +26,16 @@ class DataRepositoryImpl implements DataRepository {
 
   @override
   Future<void> editOrder(
-      {required String? selectedOutputType,
+      {required int orderId,
+      required String? selectedOutputType,
       required String selectedImageType,
       required String? selectedExaminationOption,
-      String? additionalNotesController}) async {
+      required String additionalNotes}) async {
     await remoteDataSource.editOrder(
+        orderId: orderId,
         selectedOutputType: selectedOutputType,
         selectedImageType: selectedImageType,
-        selectedExaminationOption: selectedExaminationOption);
+        selectedExaminationOption: selectedExaminationOption,
+        additionalNotes: additionalNotes);
   }
 }

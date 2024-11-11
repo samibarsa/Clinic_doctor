@@ -6,12 +6,15 @@ class EditOrderUsecase {
   EditOrderUsecase({required this.dataRepository});
   Future<void> editOrder(
       {required String? selectedOutputType,
+      required int orderId,
       required String selectedImageType,
       required String? selectedExaminationOption,
-      String? additionalNotesController}) async {
+      required String additionalNotes}) async {
     dataRepository.editOrder(
+        orderId: orderId,
         selectedOutputType: selectedOutputType,
         selectedImageType: selectedImageType,
-        selectedExaminationOption: selectedExaminationOption);
+        selectedExaminationOption: selectedExaminationOption,
+        additionalNotes: additionalNotes);
   }
 }

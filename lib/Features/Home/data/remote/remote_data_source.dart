@@ -1,12 +1,12 @@
-import 'dart:convert';
+// ignore_for_file: avoid_print
+
 import 'dart:developer';
 
 import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
 import 'package:doctor_app/Features/Home/data/local/local_data_source.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
-import 'package:doctor_app/core/utils/constant.dart';
-import 'package:flutter/services.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RemoteDataSource {
@@ -99,13 +99,20 @@ class RemoteDataSource {
       {required String? selectedOutputType,
       required String selectedImageType,
       required String? selectedExaminationOption,
-      String? additionalNotesController}) async {
-    final detilId = await LocalDataSource.getDetailId(
-        selectedOutputType ?? "لا يوجد",
-        selectedImageType,
-        selectedExaminationOption!);
-
-    updateOrderFields(2,
-        {'additional_notes': additionalNotesController, 'detiles_id': detilId});
+      required int orderId,
+      required String additionalNotes}) async {
+    try {
+      final detilId = await LocalDataSource.getDetailId(
+          selectedOutputType ?? "لا يوجد",
+          selectedImageType,
+          selectedExaminationOption!);
+      Map<String, dynamic> newData = {
+        'additional_notes': additionalNotes,
+        'detiles_id': detilId
+      };
+      await updateOrderFields(orderId, newData);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

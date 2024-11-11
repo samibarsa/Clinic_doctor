@@ -13,4 +13,8 @@ final class EditOrderLoading extends EditOrderState {}
 
 final class EditOrderLoaded extends EditOrderState {}
 
-final class EditOrderError extends EditOrderState {}
+final class EditOrderError extends EditOrderState {
+  final String errMessage;
+
+  const EditOrderError({required this.errMessage});
+}

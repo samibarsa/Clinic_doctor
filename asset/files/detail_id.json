@@ -1,0 +1,218 @@
+[
+    {
+        "detail_id": 3,
+        "examinationtypes": {
+            "type_name": "سيفالوماتريك"
+        },
+        "examinationoptions": {
+            "option_name": "Full lateral جانبية"
+        },
+        "examinationmodes": {
+            "mode_name": "Forntal جبهية"
+        }
+    },
+    {
+        "detail_id": 4,
+        "examinationtypes": {
+            "type_name": "سيفالوماتريك"
+        },
+        "examinationoptions": {
+            "option_name": "Full lateral جانبية"
+        },
+        "examinationmodes": {
+            "mode_name": "SMV وضعية"
+        }
+    },
+    {
+        "detail_id": 5,
+        "examinationtypes": {
+            "type_name": "سيفالوماتريك"
+        },
+        "examinationoptions": {
+            "option_name": "Carpus العمر العظمي"
+        },
+        "examinationmodes": {
+            "mode_name": "Forntal جبهية"
+        }
+    },
+    {
+        "detail_id": 6,
+        "examinationtypes": {
+            "type_name": "سيفالوماتريك"
+        },
+        "examinationoptions": {
+            "option_name": "Carpus العمر العظمي"
+        },
+        "examinationmodes": {
+            "mode_name": "SMV وضعية"
+        }
+    },
+    {
+        "detail_id": 7,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفك العلوي"
+        },
+        "examinationmodes": {
+            "mode_name": "كامل الجمجمة"
+        }
+    },
+    {
+        "detail_id": 8,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفك العلوي"
+        },
+        "examinationmodes": {
+            "mode_name": "إجراء دراسة كاملة للمقطع"
+        }
+    },
+    {
+        "detail_id": 9,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفك العلوي"
+        },
+        "examinationmodes": {
+            "mode_name": "ساحة 5*5 مميزة للبية"
+        }
+    },
+    {
+        "detail_id": 10,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفك العلوي"
+        },
+        "examinationmodes": {
+            "mode_name": "نصف فك"
+        }
+    },
+    {
+        "detail_id": 11,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفك السفلي"
+        },
+        "examinationmodes": {
+            "mode_name": "كامل الجمجمة"
+        }
+    },
+    {
+        "detail_id": 12,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفك السفلي"
+        },
+        "examinationmodes": {
+            "mode_name": "إجراء دراسة كاملة للمقطع"
+        }
+    },
+    {
+        "detail_id": 13,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفك السفلي"
+        },
+        "examinationmodes": {
+            "mode_name": "ساحة 5*5 مميزة للبية"
+        }
+    },
+    {
+        "detail_id": 14,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفك السفلي"
+        },
+        "examinationmodes": {
+            "mode_name": "نصف فك"
+        }
+    },
+    {
+        "detail_id": 15,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفكين معا"
+        },
+        "examinationmodes": {
+            "mode_name": "كامل الجمجمة"
+        }
+    },
+    {
+        "detail_id": 16,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفكين معا"
+        },
+        "examinationmodes": {
+            "mode_name": "إجراء دراسة كاملة للمقطع"
+        }
+    },
+    {
+        "detail_id": 17,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفكين معا"
+        },
+        "examinationmodes": {
+            "mode_name": "ساحة 5*5 مميزة للبية"
+        }
+    },
+    {
+        "detail_id": 18,
+        "examinationtypes": {
+            "type_name": "C.B.C.T"
+        },
+        "examinationoptions": {
+            "option_name": "الفكين معا"
+        },
+        "examinationmodes": {
+            "mode_name": "نصف فك"
+        }
+    },
+    {
+        "detail_id": 1,
+        "examinationtypes": {
+            "type_name": "بانوراما"
+        },
+        "examinationoptions": {
+            "option_name": "مفصل TMJ"
+        },
+        "examinationmodes": {
+            "mode_name": "لا يوجد"
+        }
+    },
+    {
+        "detail_id": 2,
+        "examinationtypes": {
+            "type_name": "بانوراما"
+        },
+        "examinationoptions": {
+            "option_name": "وضعية Bite Wing"
+        },
+        "examinationmodes": {
+            "mode_name": "لا يوجد"
+        }
+    }
+]

@@ -35,3 +35,7 @@ class CachedName {
   static const phone = 'phone';
   static const doctorName = 'doctorName';
 }
+
+class FilesPath {
+  static const detilesJson = 'asset/files/detail_id.json';
+}

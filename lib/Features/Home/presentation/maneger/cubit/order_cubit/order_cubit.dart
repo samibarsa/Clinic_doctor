@@ -1,4 +1,3 @@
-import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_doctor_data.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_patient_usecase.dart';
@@ -19,6 +18,7 @@ class OrderCubit extends Cubit<OrderState> {
       final orders = await fetchOrdersUseCase.repository.fetchAllOrders();
       final doctor = await fetchDoctorDataUseCase();
       final patient = await patientUsecase.call();
+
       emit(OrderLoaded(orders, doctor, patient));
     } catch (e) {
       emit(OrderError(e.toString()));

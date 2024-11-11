@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
-import 'package:doctor_app/Features/Home/domain/Entites/examination.dart';
+import 'package:doctor_app/Features/Home/data/local/local_data_source.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
+import 'package:doctor_app/core/utils/constant.dart';
+import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RemoteDataSource {
@@ -31,14 +34,13 @@ class RemoteDataSource {
   }
 
   Future<List<Order>> fetchAllOrders() async {
-    try {} catch (e) {} // التحقق من الـ doctor_id باستخدام user_id
     final condition = await Supabase.instance.client
         .from('doctors')
         .select('doctor_id')
         .eq('user_id', Supabase.instance.client.auth.currentUser!.id)
         .single();
-
     // التحقق إذا كانت البيانات قد استُرجعت بنجاح
+    // ignore: unnecessary_null_comparison
     if (condition == null || condition['doctor_id'] == null) {
       throw Exception('Doctor not found');
     }
@@ -51,7 +53,6 @@ class RemoteDataSource {
         date,
         patient_age,
         additional_notes,
-        patients(patient_name),
         examinationdetails!inner(
           detail_id,
           mode:examinationmodes(mode_id, mode_name),
@@ -61,6 +62,7 @@ class RemoteDataSource {
       ''').eq('doctor_id', condition['doctor_id']);
 
     // التأكد إذا كانت البيانات موجودة
+    // ignore: unnecessary_null_comparison
     if (response == null || response.isEmpty) {
       throw Exception('No orders found for this doctor');
     }
@@ -72,26 +74,38 @@ class RemoteDataSource {
     return orders;
   }
 
-  Future<Order> getOrderDetails(int orderId) async {
-    try {
-      final response = await supabase.from('orders').select('''
-      order_id,
-      doctor_id,
-      patient_id,
-      date,
-      patient_age,
-      additional_notes,
-      examinationdetails!inner(
-        detail_id,
-        mode:examinationmodes(mode_id, mode_name),
-        option:examinationoptions(option_id, option_name),
-        type:examinationtypes(examination_type_id, type_name)
-      )
-    ''').eq('order_id', orderId).single();
+  Future<void> updateOrderFields(
+      int orderId, Map<String, dynamic> fieldsToUpdate) async {
+    final supabase = Supabase.instance.client;
 
-      return Order.fromJson(response);
-    } catch (e) {
-      throw Exception(e);
+    try {
+      final updateResult = await supabase
+          .from('orders')
+          .update(fieldsToUpdate)
+          .eq('order_id', orderId);
+
+      if (updateResult.error != null) {
+        throw Exception(
+            'Failed to update fields: ${updateResult.error!.message}');
+      } else {
+        print('Fields updated successfully');
+      }
+    } catch (error) {
+      print('Error updating fields: $error');
     }
+  }
+
+  Future<void> editOrder(
+      {required String? selectedOutputType,
+      required String selectedImageType,
+      required String? selectedExaminationOption,
+      String? additionalNotesController}) async {
+    final detilId = await LocalDataSource.getDetailId(
+        selectedOutputType ?? "لا يوجد",
+        selectedImageType,
+        selectedExaminationOption!);
+
+    updateOrderFields(2,
+        {'additional_notes': additionalNotesController, 'detiles_id': detilId});
   }
 }

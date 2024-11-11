@@ -1,9 +1,5 @@
-import 'dart:developer';
-
 import 'package:doctor_app/Features/Auth/domain/Entities/user.dart' as u;
 import 'package:doctor_app/Features/Auth/domain/repo/auth_repository.dart';
-import 'package:doctor_app/Features/wellcome/presentation/views/wellcome.dart';
-import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -110,6 +106,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> verifyToken(
       String email, String token, BuildContext context) async {
     try {
+      // ignore: unused_local_variable
       final response = await supabaseClient.auth
           .verifyOTP(type: OtpType.magiclink, email: email, token: token);
       // ignore: use_build_context_synchronously

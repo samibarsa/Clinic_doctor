@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -44,7 +43,7 @@ class MyWidget extends StatelessWidget {
 
               await getModeOptionAndTypeName(44);
             },
-            child: Icon(Icons.add)),
+            child: const Icon(Icons.add)),
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
 import 'package:doctor_app/Features/Home/data/remote/remote_data_source.dart';
-import 'package:doctor_app/Features/Home/domain/Entites/examination.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/domain/repo/data_repos.dart';
@@ -26,7 +25,14 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Future<Order> getOrderDetails() async {
-    return await remoteDataSource.getOrderDetails(3);
+  Future<void> editOrder(
+      {required String? selectedOutputType,
+      required String selectedImageType,
+      required String? selectedExaminationOption,
+      String? additionalNotesController}) async {
+    await remoteDataSource.editOrder(
+        selectedOutputType: selectedOutputType,
+        selectedImageType: selectedImageType,
+        selectedExaminationOption: selectedExaminationOption);
   }
 }

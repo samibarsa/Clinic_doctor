@@ -6,6 +6,7 @@ import 'package:doctor_app/Features/Auth/domain/usecase/usecacses.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Home/data/remote/remote_data_source.dart';
 import 'package:doctor_app/Features/Home/data/repos/data_repo_impl.dart';
+import 'package:doctor_app/Features/Home/domain/usecase/edit_order_usecase.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_doctor_data.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_patient_usecase.dart';
@@ -26,7 +27,8 @@ Future<void> main() async {
     url: SupabaseKeys.projectUrl,
     anonKey: SupabaseKeys.anonyKey,
   );
-
+  final dataRepoImpl = DataRepositoryImpl(RemoteDataSource(supabase.client));
+  final authRepositoryImpl = AuthRepositoryImpl(supabase.client);
   // التحقق من حالة تسجيل الدخول
   final prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('is_logged_in') ?? false;
@@ -35,23 +37,19 @@ Future<void> main() async {
   bool startWidget = isLoggedIn ? true : false;
 
   runApp(ClinicDoctor(
-    signInUseCase: SignInUseCase(AuthRepositoryImpl(supabase.client)),
-    signOutUseCase: SignOutUseCase(AuthRepositoryImpl(supabase.client)),
-    signUpUseCase: SignUpUseCase(AuthRepositoryImpl(supabase.client)),
-    ressetPasswordUseCase:
-        RessetPasswordUseCase(AuthRepositoryImpl(supabase.client)),
-    verifyTokenUseCase: VerifyTokenUseCase(AuthRepositoryImpl(supabase.client)),
+    signInUseCase: SignInUseCase(authRepositoryImpl),
+    signOutUseCase: SignOutUseCase(authRepositoryImpl),
+    signUpUseCase: SignUpUseCase(authRepositoryImpl),
+    ressetPasswordUseCase: RessetPasswordUseCase(authRepositoryImpl),
+    verifyTokenUseCase: VerifyTokenUseCase(authRepositoryImpl),
     updatePassUsecase: UpdatePassUsecase(
         updatePasswordRepoImp:
             UpdatePasswordRepoImp(supabaseClient: supabase.client)),
-    fetchOrdersUseCase: FetchOrdersUseCase(
-        DataRepositoryImpl(RemoteDataSource(supabase.client))),
-    fetchDoctorDataUseCase: FetchDoctorDataUseCase(
-        DataRepositoryImpl(RemoteDataSource(supabase.client))),
+    fetchOrdersUseCase: FetchOrdersUseCase(dataRepoImpl),
+    fetchDoctorDataUseCase: FetchDoctorDataUseCase(dataRepoImpl),
     startWidget: startWidget,
-    fetchPatientUsecase: FetchPatientUsecase(
-        dataRepositoryImpl:
-            DataRepositoryImpl(RemoteDataSource(supabase.client))),
+    fetchPatientUsecase: FetchPatientUsecase(dataRepositoryImpl: dataRepoImpl),
+    editOrderUsecase: EditOrderUsecase(dataRepository: dataRepoImpl),
   ));
 }
 
@@ -68,6 +66,7 @@ class ClinicDoctor extends StatelessWidget {
     required this.fetchDoctorDataUseCase,
     required this.startWidget,
     required this.fetchPatientUsecase,
+    required this.editOrderUsecase,
   });
   final bool startWidget;
 
@@ -80,6 +79,7 @@ class ClinicDoctor extends StatelessWidget {
   final VerifyTokenUseCase verifyTokenUseCase;
   final UpdatePassUsecase updatePassUsecase;
   final FetchPatientUsecase fetchPatientUsecase;
+  final EditOrderUsecase editOrderUsecase;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -123,9 +123,7 @@ class ClinicDoctor extends StatelessWidget {
                 secondary: Colors.greenAccent, // اللون الثانوي
                 onSecondary: Colors.black, // لون النص فوق اللون الثانوي
                 error: Colors.red, // لون الخطأ
-                onError: Colors.white, // لون النص فوق لون الخطأ
-                background: Colors.white, // لون الخلفية
-                onBackground: Colors.black, // لون النص فوق الخلفية
+                onError: Colors.white, // لون النص فوق الخلفية
                 surface: Colors.grey.shade100, // لون الأسطح مثل بطاقات العرض
                 onSurface: Colors.black, // لون النص فوق الأسطح
               ),

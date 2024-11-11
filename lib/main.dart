@@ -8,9 +8,9 @@ import 'package:doctor_app/Features/Home/data/remote/remote_data_source.dart';
 import 'package:doctor_app/Features/Home/data/repos/data_repo_impl.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_doctor_data.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart';
+import 'package:doctor_app/Features/Home/domain/usecase/fetch_patient_usecase.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Splash/splash_screan.dart';
-import 'package:doctor_app/Features/upsert/test.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,6 +49,9 @@ Future<void> main() async {
     fetchDoctorDataUseCase: FetchDoctorDataUseCase(
         DataRepositoryImpl(RemoteDataSource(supabase.client))),
     startWidget: startWidget,
+    fetchPatientUsecase: FetchPatientUsecase(
+        dataRepositoryImpl:
+            DataRepositoryImpl(RemoteDataSource(supabase.client))),
   ));
 }
 
@@ -64,6 +67,7 @@ class ClinicDoctor extends StatelessWidget {
     required this.fetchOrdersUseCase,
     required this.fetchDoctorDataUseCase,
     required this.startWidget,
+    required this.fetchPatientUsecase,
   });
   final bool startWidget;
 
@@ -75,6 +79,7 @@ class ClinicDoctor extends StatelessWidget {
   final RessetPasswordUseCase ressetPasswordUseCase;
   final VerifyTokenUseCase verifyTokenUseCase;
   final UpdatePassUsecase updatePassUsecase;
+  final FetchPatientUsecase fetchPatientUsecase;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -101,10 +106,10 @@ class ClinicDoctor extends StatelessWidget {
                   UpdatePasswordCubit(updatePassUsecase: updatePassUsecase),
             ),
             BlocProvider<OrderCubit>(
-              create: (context) =>
-                  OrderCubit(fetchOrdersUseCase, fetchDoctorDataUseCase)
-                    ..fetchOrders()
-                    ..fetchDoctorDataUseCase(),
+              create: (context) => OrderCubit(fetchOrdersUseCase,
+                  fetchDoctorDataUseCase, fetchPatientUsecase)
+                ..fetchOrders()
+                ..fetchDoctorDataUseCase(),
             )
           ],
           child: MaterialApp(

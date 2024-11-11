@@ -1,5 +1,6 @@
 import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
+import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/table_item.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class OrderDetails extends StatefulWidget {
-  const OrderDetails({super.key, required this.order, required this.doctor});
+  const OrderDetails(
+      {super.key,
+      required this.order,
+      required this.doctor,
+      required this.patient});
   final Order order;
   final Doctor doctor;
+  final Patient patient;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -48,8 +54,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   void initState() {
     super.initState();
 
-    patientNameController =
-        TextEditingController(text: widget.order.patientId.toString());
+    patientNameController = TextEditingController(text: widget.patient.name);
     outputTypeController = TextEditingController(
         text: widget.order.detail.mode!.modeName ?? "لا يوجد");
     additionalNotesController =
@@ -282,7 +287,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             ),
             TableItem(
               title: 'الجزء المراد تصويره',
-              value: widget.order.detail.option.optionName ?? "",
+              value: widget.order.detail.option.optionName,
               topradius: 0,
               buttomradius: 0,
             ),

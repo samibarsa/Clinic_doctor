@@ -31,7 +31,7 @@ class RemoteDataSource {
   }
 
   Future<List<Order>> fetchAllOrders() async {
-    // التحقق من الـ doctor_id باستخدام user_id
+    try {} catch (e) {} // التحقق من الـ doctor_id باستخدام user_id
     final condition = await Supabase.instance.client
         .from('doctors')
         .select('doctor_id')

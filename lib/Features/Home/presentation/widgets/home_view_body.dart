@@ -1,3 +1,4 @@
+import 'package:doctor_app/Features/AddOrder/presentation/widgets/add_oreder_view_body.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/home.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/navigator_bar.dart';
 import 'package:doctor_app/core/utils/constant.dart';
@@ -41,29 +42,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           },
           controller: widget.pageController,
           children: const [
-            Person(),
+            AddOrederViewBody(),
             Home(),
           ],
         ),
-        NavBar(homeViewBody: widget),
+        NavBar(homeView: widget),
         SizedBox(height: 21.h),
-      ],
-    );
-  }
-}
-
-class Person extends StatelessWidget {
-  const Person({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          color: Colors.amber,
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-        )
       ],
     );
   }

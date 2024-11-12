@@ -14,6 +14,7 @@ class ImagesPath {
   static String login = 'asset/images/login.svg';
   static String xray = 'asset/images/xray.svg';
   static String editIcon = 'asset/images/edit_icon.svg';
+  static String nextButton = 'asset/images/next_button.svg';
 }
 
 class AppColor {

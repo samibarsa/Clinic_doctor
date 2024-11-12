@@ -1,18 +1,16 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
-import 'package:doctor_app/Features/Home/presentation/maneger/cubit/edit_order_cubit/edit_order_cubit.dart';
+import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
+import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
+import 'package:doctor_app/Features/Home/presentation/widgets/home.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/table_item.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class OrderDetails extends StatefulWidget {
   const OrderDetails({
@@ -103,106 +101,6 @@ class _OrderDetailsState extends State<OrderDetails> {
     super.dispose();
   }
 
-  void _showEditFieldsBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return _buildBottomSheetContent(setState);
-          },
-        );
-      },
-    );
-  }
-
-  Widget _buildBottomSheetContent(void Function(void Function()) setState) {
-    return BlocBuilder<EditOrderCubit, EditOrderState>(
-      builder: (context, state) {
-        if (state is EditOrderLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is EditOrderError) {
-          return Center(
-            child: Text("حصل خطأ${state.errMessage}"),
-          );
-        }
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-              left: 16.w,
-              right: 16.w,
-              top: 16.h,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'تعديل معلومات الطلب',
-                    style:
-                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10.h),
-                  _buildEditableTextField('اسم المريض', patientNameController),
-                  _buildNonEditableTextField('اسم الطبيب', doctorName),
-                  _buildDropdownField(
-                    label: 'نوع الصورة',
-                    setState: setState,
-                    value: selectedImageType,
-                    items: examinationOptions.keys.toList(),
-                    onChanged: (value) => _onImageTypeChanged(value),
-                  ),
-                  if (examinationOptions[selectedImageType] != null)
-                    _buildDropdownField(
-                      label: 'اختار الجزء المراد تصويره',
-                      value: selectedExaminationOption,
-                      items: examinationOptions[selectedImageType]!,
-                      onChanged: (value) => setState(() {
-                        selectedExaminationOption = value;
-                      }),
-                      setState: setState,
-                    ),
-                  if (selectedImageType != 'بانوراما' &&
-                      examinationMode[selectedImageType] != null)
-                    _buildDropdownField(
-                        label: 'اختار وضعية الصورة',
-                        value: selectedOutputType,
-                        items: examinationMode[selectedImageType]!,
-                        onChanged: (value) => setState(() {
-                              selectedOutputType = value;
-                            }),
-                        setState: setState),
-                  _buildNonEditableTextField('التاريخ', date),
-                  _buildNonEditableTextField('التوقيت', time),
-                  _buildEditableTextField('ملاحظات', additionalNotesController),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () async {
-                      BlocProvider.of<EditOrderCubit>(context).editOrder(
-                          orderId: widget.order.orderId,
-                          selectedOutputType: selectedOutputType,
-                          selectedImageType: selectedImageType ?? "",
-                          selectedExaminationOption: selectedExaminationOption,
-                          additionalNotes: additionalNotesController.text);
-                      // ignore: use_build_context_synchronously
-                    },
-                    child: const Text('حفظ التغييرات'),
-                  ),
-                  const SizedBox(height: 10),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   void _onImageTypeChanged(String? value) {
     if (value != null && value != selectedImageType) {
       setState(() {
@@ -263,40 +161,23 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EditOrderCubit, EditOrderState>(
-      builder: (context, state) {
-        if (state is EditOrderLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is EditOrderError) {
-          return Center(
-            child: Text(state.errMessage),
-          );
-        }
-        return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: const Text(
-              'معلومات الطلب',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 34.h),
-                _buildOrderDetailTable(),
-              ],
-            ),
-          ),
-          floatingActionButton: IconButton(
-            onPressed: _showEditFieldsBottomSheet,
-            icon: SvgPicture.asset(ImagesPath.editIcon),
-          ),
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          'معلومات الطلب',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 34.h),
+            _buildOrderDetailTable(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -323,20 +204,20 @@ class _OrderDetailsState extends State<OrderDetails> {
         ),
         TableItem(
           title: 'نوع الصورة',
-          value: selectedImageType ?? "",
+          value: widget.order.detail.type.typeName,
           topradius: 0,
           buttomradius: 0,
         ),
         TableItem(
           title: 'الجزء المراد تصويره',
-          value: selectedExaminationOption ?? 'غير محدد',
+          value: widget.order.detail.option.optionName,
           topradius: 0,
           buttomradius: 0,
         ),
         if (selectedImageType != 'بانوراما')
           TableItem(
             title: 'وضعية الصورة',
-            value: selectedOutputType ?? 'غير محدد',
+            value: widget.order.detail.mode!.modeName,
             topradius: 0,
             buttomradius: 0,
           ),

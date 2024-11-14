@@ -33,7 +33,6 @@ Future<void> main() async {
   final prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('is_logged_in') ?? false;
 
-  // إذا كان المستخدم قد سجل الدخول من قبل، نعرض الصفحة الرئيسية، وإلا نعرض شاشة البداية
   bool startWidget = isLoggedIn ? true : false;
 
   runApp(ClinicDoctor(

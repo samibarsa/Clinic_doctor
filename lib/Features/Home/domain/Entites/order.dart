@@ -8,8 +8,10 @@ class Order {
   final int patientAge;
   final ExaminationDetail detail;
   final String additionalNotes;
+  final int price;
 
-  Order({
+  Order( {
+    required this.price,
     required this.orderId,
     required this.doctorId,
     required this.patientId,
@@ -28,7 +30,7 @@ class Order {
       date: DateTime.parse(json['date']),
       patientAge: json['patient_age'],
       detail: ExaminationDetail.fromJson(json['examinationdetails']),
-      additionalNotes: json['additional_notes'] ?? '',
+      additionalNotes: json['additional_notes'] ?? '', price: json['order_price'],
     );
   }
 }

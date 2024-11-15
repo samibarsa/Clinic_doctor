@@ -17,4 +17,8 @@ final class AddPatientError extends AddPatientState {
   const AddPatientError({required this.errMessage});
 }
 
-final class AddPatientSucsess extends AddPatientState {}
+final class AddPatientSucsess extends AddPatientState {
+  final int patientId;
+
+  const AddPatientSucsess({required this.patientId});
+}

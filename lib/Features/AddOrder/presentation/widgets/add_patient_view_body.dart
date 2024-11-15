@@ -1,5 +1,5 @@
-import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/cubit/add_patient_cubit.dart';
-import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/cubit/add_patient_state.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddPatient/add_patient_cubit.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddPatient/add_patient_state.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';

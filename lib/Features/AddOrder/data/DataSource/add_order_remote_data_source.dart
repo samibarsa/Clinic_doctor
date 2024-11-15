@@ -7,9 +7,15 @@ class AddOrderRemoteDataSource {
 
   AddOrderRemoteDataSource({required this.supabase});
 
-  Future<void> addPatient(Map<String, dynamic> json) async {
+  Future<int> addPatient(Map<String, dynamic> json) async {
     try {
-      await supabase.from('patients').upsert(json);
+      final response = await supabase
+          .from('patients')
+          .insert(json)
+          .select('*') // تحديد الـ patient_id لاسترجاعه بعد الإدراج
+          .single();
+      return response['patient_id'] as int; // استرجاع سجل واحد فقط
+      // إرجاع الـ patient_id بعد الإدراج
     } catch (e) {
       if (e is PostgrestException && e.code == '23505') {
         throw Exception('اسم المريض موجود بالفعل. يرجى اختيار اسم آخر.');

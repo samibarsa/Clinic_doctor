@@ -6,7 +6,7 @@ class AddPatientRepoImpl implements AddPatientRepo {
 
   AddPatientRepoImpl({required this.addOrderRemoteDataSource});
   @override
-  Future<void> addPatient(Map<String, dynamic> json) async {
-    await addOrderRemoteDataSource.addPatient(json);
+  Future<int> addPatient(Map<String, dynamic> json) async {
+    return await addOrderRemoteDataSource.addPatient(json);
   }
 }

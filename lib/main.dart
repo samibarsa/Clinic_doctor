@@ -1,7 +1,7 @@
 import 'package:doctor_app/Features/AddOrder/data/DataSource/add_order_remote_data_source.dart';
 import 'package:doctor_app/Features/AddOrder/data/repos/add_patient_repo_impl.dart';
 import 'package:doctor_app/Features/AddOrder/domain/usecase/add_patient_usecase.dart';
-import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/cubit/add_patient_cubit.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddPatient/add_patient_cubit.dart';
 import 'package:doctor_app/Features/Auth/data/repo/update_pass_repo_imp.dart';
 import 'package:doctor_app/Features/Auth/domain/usecase/update_pass_usecase.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/update_password_cubit/update_password_cubit.dart';

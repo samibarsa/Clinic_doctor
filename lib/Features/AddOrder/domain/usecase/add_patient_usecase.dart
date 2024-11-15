@@ -4,7 +4,7 @@ class AddPatientUsecase {
   final AddPatientRepoImpl addPatientRepoImpl;
 
   AddPatientUsecase({required this.addPatientRepoImpl});
-  Future<void> call(Map<String, dynamic> json) async {
+  Future<int> call(Map<String, dynamic> json) async {
     return await addPatientRepoImpl.addPatient(json);
   }
 }

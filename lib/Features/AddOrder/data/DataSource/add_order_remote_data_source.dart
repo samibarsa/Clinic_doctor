@@ -3,18 +3,18 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AddOrderRemoteDataSource {
-  final Supabase supabase;
+  final SupabaseClient supabase;
 
   AddOrderRemoteDataSource({required this.supabase});
+
   Future<void> addPatient(Map<String, dynamic> json) async {
     try {
-      await supabase.client.from('patients').upsert(json);
+      await supabase.from('patients').upsert(json);
     } catch (e) {
       if (e is PostgrestException && e.code == '23505') {
-        throw Exception(
-            'Patient name already exists. Please choose a different name.');
+        throw Exception('اسم المريض موجود بالفعل. يرجى اختيار اسم آخر.');
       } else {
-        throw Exception('An unexpected error occurred: ${e.toString()}');
+        throw Exception('حدث خطأ غير متوقع: ${e.toString()}');
       }
     }
   }

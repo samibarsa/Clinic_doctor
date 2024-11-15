@@ -1,4 +1,4 @@
-part of 'add_patient_cubit.dart';
+import 'package:equatable/equatable.dart';
 
 sealed class AddPatientState extends Equatable {
   const AddPatientState();
@@ -9,7 +9,7 @@ sealed class AddPatientState extends Equatable {
 
 final class AddPatientInitial extends AddPatientState {}
 
-final class AddPatientSucsess extends AddPatientState {}
+final class AddPatientLoading extends AddPatientState {}
 
 final class AddPatientError extends AddPatientState {
   final String errMessage;
@@ -17,4 +17,4 @@ final class AddPatientError extends AddPatientState {
   const AddPatientError({required this.errMessage});
 }
 
-final class AddPatientLoading extends AddPatientState {}
+final class AddPatientSucsess extends AddPatientState {}

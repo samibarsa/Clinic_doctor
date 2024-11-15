@@ -6,10 +6,5 @@ abstract class DataRepository {
   Future<Doctor> fetchDoctorsData();
   Future<List<Patient>> fetchAllPatients();
   Future<List<Order>> fetchAllOrders();
-  Future<void> editOrder(
-      {required int orderId,
-      required String? selectedOutputType,
-      required String selectedImageType,
-      required String? selectedExaminationOption,
-      required String additionalNotes});
+
 }

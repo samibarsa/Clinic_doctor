@@ -1,13 +1,30 @@
-import 'package:doctor_app/Features/Home/presentation/widgets/home_view_body.dart';
+import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key, required this.homeView});
-  final HomeViewBody homeView;
+  const NavBar({
+    super.key,
+    required this.pageController,
+  });
+  final PageController pageController;
   @override
   State<NavBar> createState() => _NavBarState();
+}
+
+int currentIndex = 0;
+EdgeInsetsGeometry padding = const EdgeInsets.only();
+String imagePath = ImagesPath.navbarHome;
+
+void animateNavBar(int value) {
+  if (value == 0) {
+    padding = EdgeInsets.only(right: 220.w);
+    imagePath = ImagesPath.navbarHistory;
+  } else if (value == 1) {
+    padding = EdgeInsets.only(left: 220.w);
+    imagePath = ImagesPath.navbarHome;
+  }
 }
 
 class _NavBarState extends State<NavBar> {
@@ -18,7 +35,7 @@ class _NavBarState extends State<NavBar> {
       children: [
         Padding(
           padding: EdgeInsets.only(bottom: 21.h),
-          child: SvgPicture.asset(fit: BoxFit.fill, widget.homeView.imagePath),
+          child: SvgPicture.asset(fit: BoxFit.fill, imagePath),
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 25.h),
@@ -27,30 +44,32 @@ class _NavBarState extends State<NavBar> {
               Padding(
                 padding: EdgeInsets.only(left: 120.w, top: 30.h),
                 child: InkWell(
+                  splashColor: Colors.transparent,
+                  splashFactory: NoSplash.splashFactory,
                   onTap: () {
                     setState(() {
-                      widget.homeView.pageController.jumpToPage(0);
-                      widget.homeView.animateNavBar(0);
+                      widget.pageController.jumpToPage(0);
                     });
                   },
                   child: SizedBox(
-                    height: 60.h,
-                    width: 60.w,
+                    height: 30.h,
+                    width: 45.w,
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 40.w, top: 30.h),
+                padding: EdgeInsets.only(left: 45.w, top: 15.h),
                 child: InkWell(
+                  splashColor: Colors.transparent,
+                  splashFactory: NoSplash.splashFactory,
                   onTap: () {
                     setState(() {
-                      widget.homeView.pageController.jumpToPage(1);
-                      widget.homeView.animateNavBar(1);
+                      widget.pageController.jumpToPage(1);
                     });
                   },
                   child: SizedBox(
-                    height: 60.h,
-                    width: 60.w,
+                    height: 30.h,
+                    width: 45.w,
                   ),
                 ),
               ),

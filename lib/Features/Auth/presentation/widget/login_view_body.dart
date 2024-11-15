@@ -1,6 +1,6 @@
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_state.dart';
-import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
+import 'package:doctor_app/Features/Home/presentation/view/homePageViewWidget.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +33,7 @@ class LoginViewBody extends StatelessWidget {
           Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) =>
-                    const HomeView()), // الصفحة الجديدة التي تريد الانتقال إليها
+                    const HomePageViewWidget()), // الصفحة الجديدة التي تريد الانتقال إليها
             (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
           );
         }

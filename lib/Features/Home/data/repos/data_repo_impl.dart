@@ -23,19 +23,4 @@ class DataRepositoryImpl implements DataRepository {
   Future<List<Patient>> fetchAllPatients() async {
     return await remoteDataSource.fetchAllPatients();
   }
-
-  @override
-  Future<void> editOrder(
-      {required int orderId,
-      required String? selectedOutputType,
-      required String selectedImageType,
-      required String? selectedExaminationOption,
-      required String additionalNotes}) async {
-    await remoteDataSource.editOrder(
-        orderId: orderId,
-        selectedOutputType: selectedOutputType,
-        selectedImageType: selectedImageType,
-        selectedExaminationOption: selectedExaminationOption,
-        additionalNotes: additionalNotes);
-  }
 }

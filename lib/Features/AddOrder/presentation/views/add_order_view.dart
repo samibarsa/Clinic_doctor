@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/AddOrder/presentation/widgets/add_oreder_view_body.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/widgets/add_patient_view_body.dart';
 import 'package:flutter/material.dart';
 
 class AddOrderView extends StatelessWidget {

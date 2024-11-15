@@ -1,3 +1,7 @@
+import 'package:doctor_app/Features/AddOrder/data/DataSource/add_order_remote_data_source.dart';
+import 'package:doctor_app/Features/AddOrder/data/repos/add_patient_repo_impl.dart';
+import 'package:doctor_app/Features/AddOrder/domain/usecase/add_patient_usecase.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddPatient/add_patient_cubit.dart';
 import 'package:doctor_app/Features/Auth/data/repo/update_pass_repo_imp.dart';
 import 'package:doctor_app/Features/Auth/domain/usecase/update_pass_usecase.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/update_password_cubit/update_password_cubit.dart';
@@ -6,7 +10,6 @@ import 'package:doctor_app/Features/Auth/domain/usecase/usecacses.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Home/data/remote/remote_data_source.dart';
 import 'package:doctor_app/Features/Home/data/repos/data_repo_impl.dart';
-import 'package:doctor_app/Features/Home/domain/usecase/edit_order_usecase.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_doctor_data.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_patient_usecase.dart';
@@ -48,7 +51,10 @@ Future<void> main() async {
     fetchDoctorDataUseCase: FetchDoctorDataUseCase(dataRepoImpl),
     startWidget: startWidget,
     fetchPatientUsecase: FetchPatientUsecase(dataRepositoryImpl: dataRepoImpl),
-    editOrderUsecase: EditOrderUsecase(dataRepository: dataRepoImpl),
+    addPatientUsecase: AddPatientUsecase(
+        addPatientRepoImpl: AddPatientRepoImpl(
+            addOrderRemoteDataSource:
+                AddOrderRemoteDataSource(supabase: supabase))),
   ));
 }
 
@@ -65,11 +71,12 @@ class ClinicDoctor extends StatelessWidget {
     required this.fetchDoctorDataUseCase,
     required this.startWidget,
     required this.fetchPatientUsecase,
-    required this.editOrderUsecase,
+    required this.addPatientUsecase,
   });
   final bool startWidget;
 
   final SignInUseCase signInUseCase;
+  final AddPatientUsecase addPatientUsecase;
   final FetchDoctorDataUseCase fetchDoctorDataUseCase;
   final FetchOrdersUseCase fetchOrdersUseCase;
   final SignOutUseCase signOutUseCase;
@@ -78,7 +85,6 @@ class ClinicDoctor extends StatelessWidget {
   final VerifyTokenUseCase verifyTokenUseCase;
   final UpdatePassUsecase updatePassUsecase;
   final FetchPatientUsecase fetchPatientUsecase;
-  final EditOrderUsecase editOrderUsecase;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -110,6 +116,8 @@ class ClinicDoctor extends StatelessWidget {
                 ..fetchOrders()
                 ..fetchDoctorDataUseCase(),
             ),
+            BlocProvider<AddPatientCubit>(
+                create: (context) => AddPatientCubit(addPatientUsecase)),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

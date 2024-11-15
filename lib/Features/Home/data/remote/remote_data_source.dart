@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
-import 'package:doctor_app/Features/Home/data/local/local_data_source.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 
@@ -50,6 +49,7 @@ class RemoteDataSource {
         order_id,
         doctor_id,
         patient_id,
+        order_price,
         date,
         patient_age,
         additional_notes,
@@ -92,27 +92,6 @@ class RemoteDataSource {
       }
     } catch (error) {
       print('Error updating fields: $error');
-    }
-  }
-
-  Future<void> editOrder(
-      {required String? selectedOutputType,
-      required String selectedImageType,
-      required String? selectedExaminationOption,
-      required int orderId,
-      required String additionalNotes}) async {
-    try {
-      final detilId = await LocalDataSource.getDetailId(
-          selectedOutputType ?? "لا يوجد",
-          selectedImageType,
-          selectedExaminationOption!);
-      Map<String, dynamic> newData = {
-        'additional_notes': additionalNotes,
-        'detiles_id': detilId
-      };
-      await updateOrderFields(orderId, newData);
-    } catch (e) {
-      throw Exception(e.toString());
     }
   }
 }

@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/Home/presentation/view/home_view.dart';
+import 'package:doctor_app/Features/Home/presentation/view/homePageViewWidget.dart';
 import 'package:doctor_app/Features/wellcome/presentation/views/wellcome.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context,
           MaterialPageRoute(
               builder: (context) => widget.startWidget
-                  ? const HomeView()
+                  ? const HomePageViewWidget()
                   : const WellcomeScrean()));
     });
   }

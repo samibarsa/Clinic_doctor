@@ -14,6 +14,7 @@ class OrderDetailTable extends StatelessWidget {
     required this.date,
     required this.time,
     required this.additionalNotesController,
+    required this.price,
   });
 
   final TextEditingController patientNameController;
@@ -24,6 +25,7 @@ class OrderDetailTable extends StatelessWidget {
   final String date;
   final String time;
   final TextEditingController additionalNotesController;
+  final int price;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +77,12 @@ class OrderDetailTable extends StatelessWidget {
         TableItem(
           title: 'التوقيت',
           value: time,
+          topradius: 0,
+          buttomradius: 0,
+        ),
+        TableItem(
+          title: 'الفاتورة',
+          value: "$price ل.س",
           topradius: 0,
           buttomradius: 0,
         ),

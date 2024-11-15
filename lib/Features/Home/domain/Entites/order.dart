@@ -21,7 +21,7 @@ class Order {
     required this.additionalNotes,
   });
 
-  // تحويل JSON إلى كائن Dart
+
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
       orderId: json['order_id'],
@@ -30,7 +30,8 @@ class Order {
       date: DateTime.parse(json['date']),
       patientAge: json['patient_age'],
       detail: ExaminationDetail.fromJson(json['examinationdetails']),
-      additionalNotes: json['additional_notes'] ?? '', price: json['order_price'],
+      additionalNotes: json['additional_notes'] ?? '',
+      price: json['order_price'],
     );
   }
 }

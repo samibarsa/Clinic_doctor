@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/AddOrder/data/repos/add_patient_repo_impl.dart';
+import 'package:doctor_app/Features/AddPatient/data/repos/add_patient_repo_impl.dart';
 
 class AddPatientUsecase {
   final AddPatientRepoImpl addPatientRepoImpl;

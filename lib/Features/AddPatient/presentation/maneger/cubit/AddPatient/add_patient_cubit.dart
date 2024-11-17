@@ -3,8 +3,8 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:doctor_app/Features/AddOrder/domain/usecase/add_patient_usecase.dart';
-import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddPatient/add_patient_state.dart';
+import 'package:doctor_app/Features/AddPatient/domain/usecase/add_patient_usecase.dart';
+import 'package:doctor_app/Features/AddPatient/presentation/maneger/cubit/AddPatient/add_patient_state.dart';
 
 class AddPatientCubit extends Cubit<AddPatientState> {
   AddPatientCubit(this.addPatientUsecase) : super(AddPatientInitial());

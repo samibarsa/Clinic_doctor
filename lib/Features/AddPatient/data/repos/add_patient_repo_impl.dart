@@ -1,8 +1,8 @@
-import 'package:doctor_app/Features/AddOrder/data/DataSource/add_order_remote_data_source.dart';
-import 'package:doctor_app/Features/AddOrder/domain/repos/add_patient_repo.dart';
+import 'package:doctor_app/Features/AddPatient/data/DataSource/add_Patient_remote_data_source.dart';
+import 'package:doctor_app/Features/AddPatient/domain/repos/add_patient_repo.dart';
 
 class AddPatientRepoImpl implements AddPatientRepo {
-  final AddOrderRemoteDataSource addOrderRemoteDataSource;
+  final AddPatientRemoteDataSource addOrderRemoteDataSource;
 
   AddPatientRepoImpl({required this.addOrderRemoteDataSource});
   @override

@@ -15,11 +15,14 @@ class ImagesPath {
   static String xray = 'asset/images/xray.svg';
   static String editIcon = 'asset/images/edit_icon.svg';
   static String nextButton = 'asset/images/next_button.svg';
+  static String arrow = 'asset/images/arrow.svg';
+  static String done = 'asset/images/done.svg';
 }
 
 class AppColor {
   static const primaryColor = 0xff4CAF50;
   static const secondColor = 0xff00AFF3;
+  static const greenActive = 0xffC8E6C9;
 }
 
 class AppFont {

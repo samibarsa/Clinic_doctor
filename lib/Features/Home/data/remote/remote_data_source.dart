@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -18,7 +19,8 @@ class RemoteDataSource {
         .from('doctors')
         .select()
         .eq('user_id', supabase.auth.currentUser!.id);
-
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('doctorId', response[0]['doctor_id']);
     return Doctor.fromJson(response[0]);
   }
 
@@ -44,22 +46,25 @@ class RemoteDataSource {
       throw Exception('Doctor not found');
     }
 
-    // استرجاع الطلبات باستخدام doctor_id واسترجاع التفاصيل المطلوبة
     final response = await Supabase.instance.client.from('orders').select('''
-        order_id,
-        doctor_id,
-        patient_id,
-        order_price,
-        date,
-        patient_age,
-        additional_notes,
-        examinationdetails!inner(
-          detail_id,
-          mode:examinationmodes(mode_id, mode_name),
-          option:examinationoptions(option_id, option_name),
-          type:examinationtypes(examination_type_id, type_name)
-        )
-      ''').eq('doctor_id', condition['doctor_id']);
+  order_id,
+  doctor_id,
+  patient_id,
+  order_price,
+  date,
+  additional_notes,
+  output:order_output(
+    id,
+    output_type,
+    price
+  ),
+  examinationdetails!inner(
+    detail_id,
+    mode:examinationmodes(mode_id, mode_name),
+    option:examinationoptions(option_id, option_name),
+    type:examinationtypes(examination_type_id, type_name)
+  )
+''').eq('doctor_id', condition['doctor_id']);
 
     // التأكد إذا كانت البيانات موجودة
     // ignore: unnecessary_null_comparison

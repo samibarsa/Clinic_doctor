@@ -1,11 +1,16 @@
-import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddPatient/add_patient_cubit.dart';
-import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddPatient/add_patient_state.dart';
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:doctor_app/Features/AddOrder/presentation/pages/add_order_view.dart';
+import 'package:doctor_app/Features/AddPatient/presentation/maneger/cubit/AddPatient/add_patient_cubit.dart';
+import 'package:doctor_app/Features/AddPatient/presentation/maneger/cubit/AddPatient/add_patient_state.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AddOrederViewBody extends StatelessWidget {
   const AddOrederViewBody({
@@ -18,6 +23,7 @@ class AddOrederViewBody extends StatelessWidget {
     TextEditingController phone = TextEditingController();
     TextEditingController age = TextEditingController();
     final formKey = GlobalKey<FormState>();
+
     void submitForm(BuildContext context) {
       if (formKey.currentState!.validate()) {
         FocusScope.of(context).unfocus();
@@ -30,25 +36,12 @@ class AddOrederViewBody extends StatelessWidget {
       }
     }
 
-    return BlocBuilder<AddPatientCubit, AddPatientState>(
+    return BlocConsumer<AddPatientCubit, AddPatientState>(
       builder: (context, state) {
         if (state is AddPatientLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is AddPatientSucsess) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('! تم إضافة المريض بنجاح')),
-            );
-          });
-        } else if (state is AddPatientError) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errMessage)),
-            );
-          });
         }
 
-        // Form UI code continues here...
         return Form(
           key: formKey,
           child: SingleChildScrollView(
@@ -110,6 +103,18 @@ class AddOrederViewBody extends StatelessWidget {
             ),
           ),
         );
+      },
+      listener: (BuildContext context, AddPatientState state) {
+        if (state is AddPatientSucsess) {
+          MovingNavigation.navTo(context,
+              page: AddOrderView(
+                patientId: state.patientId,
+              ));
+        } else if (state is AddPatientError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.errMessage)),
+          );
+        }
       },
     );
   }

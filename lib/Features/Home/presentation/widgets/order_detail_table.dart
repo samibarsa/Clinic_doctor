@@ -19,7 +19,7 @@ class OrderDetailTable extends StatelessWidget {
 
   final TextEditingController patientNameController;
   final String doctorName;
-  final String patientAge;
+  final int patientAge;
   final OrderDetails widget;
   final String? selectedImageType;
   final String date;
@@ -45,7 +45,7 @@ class OrderDetailTable extends StatelessWidget {
         ),
         TableItem(
           title: 'العمر',
-          value: patientAge,
+          value: patientAge.toString(),
           topradius: 0,
           buttomradius: 0,
         ),

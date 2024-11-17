@@ -28,7 +28,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   late final TextEditingController additionalNotesController;
 
   late final String doctorName;
-  late final String patientAge;
+  late final int patientAge;
   late final String date;
   late final String time;
 
@@ -55,9 +55,9 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   void _initializeOrderDetails() {
     doctorName = widget.doctor.name;
-    patientAge = widget.order.patientAge.toString();
     date = widget.order.date.toString().split(' ')[0];
     time = widget.order.date.toString().split(' ')[1].split('.')[0];
+    patientAge = widget.patient.age;
   }
 
   @override
@@ -84,15 +84,16 @@ class _OrderDetailsState extends State<OrderDetails> {
           children: [
             SizedBox(height: 34.h),
             OrderDetailTable(
-                patientNameController: patientNameController,
-                doctorName: doctorName,
-                patientAge: patientAge,
-                widget: widget,
-                selectedImageType: selectedImageType,
-                date: date,
-                time: time,
-                additionalNotesController: additionalNotesController,
-              price:widget.order.price ,),
+              patientNameController: patientNameController,
+              doctorName: doctorName,
+              patientAge: patientAge,
+              widget: widget,
+              selectedImageType: selectedImageType,
+              date: date,
+              time: time,
+              additionalNotesController: additionalNotesController,
+              price: widget.order.price,
+            ),
           ],
         ),
       ),

@@ -1,8 +1,8 @@
-import 'package:doctor_app/Features/AddOrder/presentation/widgets/add_patient_view_body.dart';
+import 'package:doctor_app/Features/AddPatient/presentation/widgets/add_patient_view_body.dart';
 import 'package:flutter/material.dart';
 
-class AddOrderView extends StatelessWidget {
-  const AddOrderView({super.key});
+class AddPatientView extends StatelessWidget {
+  const AddPatientView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,10 +2,10 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AddOrderRemoteDataSource {
+class AddPatientRemoteDataSource {
   final SupabaseClient supabase;
 
-  AddOrderRemoteDataSource({required this.supabase});
+  AddPatientRemoteDataSource({required this.supabase});
 
   Future<int> addPatient(Map<String, dynamic> json) async {
     try {

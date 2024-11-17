@@ -1,7 +1,12 @@
-import 'package:doctor_app/Features/AddOrder/data/DataSource/add_order_remote_data_source.dart';
-import 'package:doctor_app/Features/AddOrder/data/repos/add_patient_repo_impl.dart';
-import 'package:doctor_app/Features/AddOrder/domain/usecase/add_patient_usecase.dart';
-import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddPatient/add_patient_cubit.dart';
+import 'package:doctor_app/Features/AddOrder/data/datasources/add_order_data_source.dart';
+import 'package:doctor_app/Features/AddOrder/data/repositories/add_order_repo_impl.dart';
+import 'package:doctor_app/Features/AddOrder/domain/usecases/add_order_usecase.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddOrder/addorder_cubit.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/GetPrice/get_price_cubit.dart';
+import 'package:doctor_app/Features/AddPatient/data/DataSource/add_Patient_remote_data_source.dart';
+import 'package:doctor_app/Features/AddPatient/data/repos/add_patient_repo_impl.dart';
+import 'package:doctor_app/Features/AddPatient/domain/usecase/add_patient_usecase.dart';
+import 'package:doctor_app/Features/AddPatient/presentation/maneger/cubit/AddPatient/add_patient_cubit.dart';
 import 'package:doctor_app/Features/Auth/data/repo/update_pass_repo_imp.dart';
 import 'package:doctor_app/Features/Auth/domain/usecase/update_pass_usecase.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/update_password_cubit/update_password_cubit.dart';
@@ -32,7 +37,10 @@ Future<void> main() async {
   );
   final dataRepoImpl = DataRepositoryImpl(RemoteDataSource(supabase.client));
   final authRepositoryImpl = AuthRepositoryImpl(supabase.client);
-  // التحقق من حالة تسجيل الدخول
+  final addOrderUsecase = AddOrderUsecase(
+      addOrderRepoImpl: AddOrderRepoImpl(
+          addOrderRemoteDataSource: AddOrderRemoteDataSource(
+              supabaseClient: supabase.client))); // التحقق من حالة تسجيل الدخول
   final prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('is_logged_in') ?? false;
 
@@ -54,7 +62,8 @@ Future<void> main() async {
     addPatientUsecase: AddPatientUsecase(
         addPatientRepoImpl: AddPatientRepoImpl(
             addOrderRemoteDataSource:
-                AddOrderRemoteDataSource(supabase: supabase.client))),
+                AddPatientRemoteDataSource(supabase: supabase.client))),
+    addOrderUsecase: addOrderUsecase,
   ));
 }
 
@@ -72,10 +81,12 @@ class ClinicDoctor extends StatelessWidget {
     required this.startWidget,
     required this.fetchPatientUsecase,
     required this.addPatientUsecase,
+    required this.addOrderUsecase,
   });
   final bool startWidget;
 
   final SignInUseCase signInUseCase;
+  final AddOrderUsecase addOrderUsecase;
   final AddPatientUsecase addPatientUsecase;
   final FetchDoctorDataUseCase fetchDoctorDataUseCase;
   final FetchOrdersUseCase fetchOrdersUseCase;
@@ -118,6 +129,12 @@ class ClinicDoctor extends StatelessWidget {
             ),
             BlocProvider<AddPatientCubit>(
                 create: (context) => AddPatientCubit(addPatientUsecase)),
+            BlocProvider<GetPriceCubit>(
+              create: (context) => GetPriceCubit(addOrderUsecase),
+            ),
+            BlocProvider<AddorderCubit>(
+              create: (context) => AddorderCubit(addOrderUsecase),
+            ),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

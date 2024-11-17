@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:doctor_app/Features/AddOrder/presentation/views/add_order_view.dart';
+import 'package:doctor_app/Features/AddPatient/presentation/views/add_order_view.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/home.dart';
@@ -47,7 +47,7 @@ class _HomePageViewWidgetState extends State<HomePageViewWidget> {
             },
             controller: pageController,
             children: const [
-              AddOrderView(),
+              AddPatientView(),
               HomePage(),
             ],
           ),

@@ -30,7 +30,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
         } else if (state is OrderLoaded) {
           final orders = state.orders;
           final today = DateTime.now();
-          orders.where((order) {
+          final orderToday = orders.where((order) {
             return order.date.year == today.year &&
                 order.date.month == today.month &&
                 order.date.day == today.day;
@@ -56,7 +56,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                       InkWell(
                         onTap: () {
                           MovingNavigation.navTo(context,
-                              page: AllOrdersPage(allOrders: orders));
+                              page: AllOrdersPage(
+                                allOrders: orders,
+                                state: state,
+                              ));
                         },
                         child: Text(
                           "< عرض الكل",
@@ -75,7 +78,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                   ),
                 ),
                 SizedBox(height: 24.h),
-                BuildListView(orders: orders, state: state),
+                BuildListView(orders: orderToday, state: state),
               ],
             ),
           );

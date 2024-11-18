@@ -19,22 +19,14 @@ class BuildListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final today = DateTime.now();
-
-    // تصفية الطلبات الخاصة باليوم الحالي فقط
-    final ordersToday = orders.where((order) {
-      return order.date.year == today.year &&
-          order.date.month == today.month &&
-          order.date.day == today.day;
-    }).toList();
     // تسجيل الرسائل المحلية للغة العربية
     timeago.setLocaleMessages('ar', timeago.ArMessages());
-
     return Expanded(
       child: ListView.builder(
-        itemCount: ordersToday.length,
+        itemCount: orders.length,
         itemBuilder: (context, index) {
-          final order = ordersToday[index];
+          orders.sort((a, b) => b.date.compareTo(a.date));
+          final order = orders[index];
           var timeZoneOffset = const Duration(hours: -3);
           var dateInTimeZone = order.date.add(
               timeZoneOffset); // إضافة التوقيت المحلي إذا كان وقت الطلب غير مطابق لمنطقتك
@@ -62,7 +54,7 @@ class BuildListView extends StatelessWidget {
                   ),
                 ),
               ),
-              if (index == ordersToday.length - 1) SizedBox(height: 75.h),
+              if (index == orders.length - 1) SizedBox(height: 75.h),
             ],
           );
         },

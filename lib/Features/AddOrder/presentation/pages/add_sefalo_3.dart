@@ -8,18 +8,22 @@ import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddPanoView2 extends StatefulWidget {
-  const AddPanoView2(
-      {super.key, required this.examinationOption, required this.patientId});
+class AddSefaloView3 extends StatefulWidget {
+  const AddSefaloView3(
+      {super.key,
+      required this.examinationOption,
+      required this.patientId,
+      required this.examinationMode});
 
   final String examinationOption;
+  final String examinationMode;
   final int patientId;
 
   @override
-  State<AddPanoView2> createState() => _AddPanoView2State();
+  State<AddSefaloView3> createState() => _AddPanoView2State();
 }
 
-class _AddPanoView2State extends State<AddPanoView2> {
+class _AddPanoView2State extends State<AddSefaloView3> {
   String? selectedOption;
 
   @override
@@ -41,20 +45,20 @@ class _AddPanoView2State extends State<AddPanoView2> {
                   MovingNavigation.navTo(
                     context,
                     page: ConfirmAddOrder(
-                      appBarTitle: "صورة ماجيك بانوراما",
+                      appBarTitle: "صورة سيفالومتريك",
                       value1: widget.examinationOption,
-                      value2: selectedOption!,
-                      value3: "${state.price.toString()} ل.س",
+                      value3: selectedOption!,
+                      value4: "${state.price.toString()} ل.س",
                       patientId: widget.patientId,
-                      value4: '',
+                      value2: widget.examinationMode,
                       onTap: () async {
                         await BlocProvider.of<AddOrderCubit>(context).addOrder(
                             state,
                             selectedOption!,
                             widget.examinationOption,
                             widget.patientId,
-                            "لا يوجد",
-                            "بانوراما");
+                            widget.examinationMode,
+                            "سيفالوماتريك");
                         // ignore: use_build_context_synchronously
                         BlocProvider.of<OrderCubit>(context).fetchOrders();
                       },
@@ -72,7 +76,7 @@ class _AddPanoView2State extends State<AddPanoView2> {
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: const Text("صورة ماجيك بانوراما"),
+            title: const Text("صورة سيفالومتريك"),
           ),
           body: AddRadioBody(
             patientId: widget.patientId,
@@ -88,8 +92,8 @@ class _AddPanoView2State extends State<AddPanoView2> {
               if (selectedOption != null) {
                 try {
                   int? detailId = await LocalDataSource.getDetailId(
-                    "لا يوجد",
-                    "بانوراما",
+                    widget.examinationMode,
+                    "سيفالوماتريك",
                     widget.examinationOption,
                   );
 

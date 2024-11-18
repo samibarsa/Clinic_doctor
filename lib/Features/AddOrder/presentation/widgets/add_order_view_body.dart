@@ -1,4 +1,5 @@
 import 'package:doctor_app/Features/AddOrder/presentation/pages/add_pano_view_1.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/pages/add_sefalo_1.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,10 @@ class AddOrderViewBody extends StatelessWidget {
                   patientId: patientId,
                 ));
           }),
-          _buildCarrlListTile("تصوير سيفالومتريك", () {}),
+          _buildCarrlListTile("تصوير سيفالومتريك", () {
+            MovingNavigation.navTo(context,
+                page: AddSefaloView1(patientId: patientId));
+          }),
           _buildCarrlListTile("تصوير مقطعي C.B.C.T", () {}),
         ],
       ),

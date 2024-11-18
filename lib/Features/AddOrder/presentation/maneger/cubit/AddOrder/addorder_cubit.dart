@@ -11,14 +11,19 @@ part 'addorder_state.dart';
 class AddOrderCubit extends Cubit<AddorderState> {
   final AddOrderUsecase addOrderUsecase;
   AddOrderCubit(this.addOrderUsecase) : super(AddorderInitial());
-  Future<void> addOrder(GetPriceLoaded state, String selectedOption,
-      String examinationOption, int patientId) async {
+  Future<void> addOrder(
+      GetPriceLoaded state,
+      String selectedOption,
+      String examinationOption,
+      int patientId,
+      String examinationMode,
+      String type) async {
     emit(AddorderLoading());
     try {
       final prefs = await SharedPreferences.getInstance();
       final doctorId = prefs.getInt("doctorId");
       int? detailId = await LocalDataSource.getDetailId(
-          "لا يوجد", "بانوراما", examinationOption);
+          examinationMode, type, examinationOption);
       var outputId = 0;
       if (selectedOption == 'CD') {
         outputId = 1;

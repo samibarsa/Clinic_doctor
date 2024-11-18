@@ -24,17 +24,23 @@ class ListTileCard extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 16.w),
           color: const Color(0xfffefefe),
           child: ListTile(
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(date),
-                ],
+              trailing: Padding(
+                padding: EdgeInsets.only(
+                  bottom: 15.h,
+                ),
+                child: SvgPicture.asset(
+                  ImagesPath.arrowListTile,
+                ),
               ),
               leading: Padding(
                 padding: EdgeInsets.only(bottom: 16.h),
                 child: SvgPicture.asset(ImagesPath.xray),
               ),
-              title: TitleListTile(patientName: papatientName, type: type)),
+              title: TitleListTile(
+                patientName: papatientName,
+                type: type,
+                date: date,
+              )),
         ),
       ),
     );

@@ -19,7 +19,6 @@ class BuildListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // تسجيل الرسائل المحلية للغة العربية
     timeago.setLocaleMessages('ar', timeago.ArMessages());
     return Expanded(
       child: ListView.builder(
@@ -28,8 +27,7 @@ class BuildListView extends StatelessWidget {
           orders.sort((a, b) => b.date.compareTo(a.date));
           final order = orders[index];
           var timeZoneOffset = const Duration(hours: -3);
-          var dateInTimeZone = order.date.add(
-              timeZoneOffset); // إضافة التوقيت المحلي إذا كان وقت الطلب غير مطابق لمنطقتك
+          var dateInTimeZone = order.date.add(timeZoneOffset);
           final localDate = dateInTimeZone.toLocal();
           final ago = timeago.format(localDate, locale: 'ar');
           final patientThis =

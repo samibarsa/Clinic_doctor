@@ -17,6 +17,7 @@ class ImagesPath {
   static String nextButton = 'asset/images/next_button.svg';
   static String arrow = 'asset/images/arrow.svg';
   static String done = 'asset/images/done.svg';
+  static String arrowListTile = 'asset/images/arrow_listTile.svg';
 }
 
 class AppColor {

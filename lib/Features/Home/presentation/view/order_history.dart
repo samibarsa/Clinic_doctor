@@ -1,7 +1,6 @@
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/build_list_view.dart';
-import 'package:doctor_app/Features/Home/presentation/widgets/oredersDayItem.dart';
 import 'package:flutter/material.dart';
 
 class AllOrdersPage extends StatelessWidget {

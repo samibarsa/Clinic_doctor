@@ -7,9 +7,11 @@ class TitleListTile extends StatelessWidget {
     super.key,
     required this.patientName,
     required this.type,
+    required this.date,
   });
   final String patientName;
   final String type;
+  final String date;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,22 +43,14 @@ class TitleListTile extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        "التفاصيل",
+                        date,
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontSize: 11.sp,
                           color: const Color(AppColor.primaryColor),
-                          decoration: TextDecoration.underline,
                           decorationColor: const Color(AppColor.primaryColor),
                         ),
                       ),
-                      Text(
-                        " >",
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: const Color(AppColor.primaryColor),
-                        ),
-                      )
                     ],
                   ),
                 )

@@ -5,6 +5,7 @@ import 'package:doctor_app/Features/AddPatient/presentation/maneger/cubit/AddPat
 import 'package:doctor_app/Features/AddPatient/presentation/maneger/cubit/AddPatient/add_patient_state.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
+import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,13 +94,17 @@ class AddOrederViewBody extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        submitForm(context);
-                      },
-                      child: SvgPicture.asset(ImagesPath.nextButton),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6.r),
+                          border: Border.all(
+                              color: const Color(AppColor.primaryColor))),
+                      child: CustomButton(
+                          title: " <  التالي",
+                          color: 0xffFFFF,
+                          onTap: () => submitForm(context),
+                          titleColor: Colors.black),
                     ),
-                    const Text("الخطوة 1/4"),
                   ],
                 ),
               ],

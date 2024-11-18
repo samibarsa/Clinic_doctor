@@ -36,12 +36,19 @@ class ConfirmAddOrder extends StatelessWidget {
       title2 = "شكل الصورة:";
       title3 = "الفاتورة :";
     } else if (appBarTitle == "صورة سيفالومتريك") {
-      title1 = ":الجزء المراد تصويره";
-      title2 = ":وضعية الصورة";
-      title3 = ":اختر شكل الصورة";
-      title4 = ":الفاتورة";
-    }
+      title1 = "الجزء المراد تصويره:";
 
+      title2 = "شكل الصورة:";
+
+      title3 = "شكل الصورة:";
+
+      title4 = ":الفاتورة";
+    } else if (appBarTitle == "صورة تصوير مقطعيC.B.C.T") {
+      title1 = "الجزء المراد تصويره:";
+      title2 = "وضعية الصورة";
+      title3 = "شكل الصورة:";
+      title4 = "الفاتورة :";
+    }
     return Directionality(
       textDirection: TextDirection.rtl,
       child: BlocConsumer<AddOrderCubit, AddorderState>(

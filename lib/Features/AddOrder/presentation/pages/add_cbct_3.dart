@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddOrder/addorder_cubit.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/GetPrice/get_price_cubit.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/pages/cnofirm_add_order.dart';
@@ -8,8 +10,8 @@ import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddSefaloView3 extends StatefulWidget {
-  const AddSefaloView3(
+class AddCBCTView3 extends StatefulWidget {
+  const AddCBCTView3(
       {super.key,
       required this.examinationOption,
       required this.patientId,
@@ -20,10 +22,10 @@ class AddSefaloView3 extends StatefulWidget {
   final int patientId;
 
   @override
-  State<AddSefaloView3> createState() => _AddPanoView2State();
+  State<AddCBCTView3> createState() => _AddPanoView2State();
 }
 
-class _AddPanoView2State extends State<AddSefaloView3> {
+class _AddPanoView2State extends State<AddCBCTView3> {
   String? selectedOption;
 
   @override
@@ -45,7 +47,7 @@ class _AddPanoView2State extends State<AddSefaloView3> {
                   MovingNavigation.navTo(
                     context,
                     page: ConfirmAddOrder(
-                      appBarTitle: "صورة سيفالومتريك",
+                      appBarTitle: "صورة تصوير مقطعيC.B.C.T",
                       value1: widget.examinationOption,
                       value3: selectedOption!,
                       value4: "${state.price.toString()} ل.س",
@@ -58,8 +60,7 @@ class _AddPanoView2State extends State<AddSefaloView3> {
                             widget.examinationOption,
                             widget.patientId,
                             widget.examinationMode,
-                            "سيفالوماتريك");
-                        // ignore: use_build_context_synchronously
+                            "C.B.C.T");
                         BlocProvider.of<OrderCubit>(context).fetchOrders();
                       },
                     ),
@@ -85,7 +86,7 @@ class _AddPanoView2State extends State<AddSefaloView3> {
             return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: const Text("صورة سيفالومتريك"),
+                title: const Text("صورة تصوير مقطعيC.B.C.T"),
               ),
               body: AddRadioBody(
                 patientId: widget.patientId,
@@ -102,7 +103,7 @@ class _AddPanoView2State extends State<AddSefaloView3> {
                     try {
                       int? detailId = await LocalDataSource.getDetailId(
                         widget.examinationMode,
-                        "سيفالوماتريك",
+                        "C.B.C.T",
                         widget.examinationOption,
                       );
 

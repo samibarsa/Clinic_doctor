@@ -6,13 +6,7 @@ AppBar buildAppBar(OrderState state) {
   return AppBar(
     title: Directionality(
       textDirection: TextDirection.rtl,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          buildDoctorInfo(state),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.add))
-        ],
-      ),
+      child: buildDoctorInfo(state),
     ),
   );
 }

@@ -9,7 +9,9 @@ class ListTileCard extends StatelessWidget {
     super.key,
     required this.papatientName,
     required this.type,
+    required this.date,
   });
+  final String date;
   final String papatientName;
   final String type;
   @override
@@ -22,10 +24,10 @@ class ListTileCard extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 16.w),
           color: const Color(0xfffefefe),
           child: ListTile(
-              trailing: const Column(
+              trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("منذ ساعة"),
+                  Text(date),
                 ],
               ),
               leading: Padding(

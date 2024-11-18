@@ -5,6 +5,7 @@ import 'package:doctor_app/Features/Home/presentation/widgets/list_tile_card.dar
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class BuildListView extends StatelessWidget {
   const BuildListView({
@@ -18,11 +19,27 @@ class BuildListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final today = DateTime.now();
+
+    // تصفية الطلبات الخاصة باليوم الحالي فقط
+    final ordersToday = orders.where((order) {
+      return order.date.year == today.year &&
+          order.date.month == today.month &&
+          order.date.day == today.day;
+    }).toList();
+    // تسجيل الرسائل المحلية للغة العربية
+    timeago.setLocaleMessages('ar', timeago.ArMessages());
+
     return Expanded(
       child: ListView.builder(
-        itemCount: orders.length,
+        itemCount: ordersToday.length,
         itemBuilder: (context, index) {
-          final order = orders[index];
+          final order = ordersToday[index];
+          var timeZoneOffset = const Duration(hours: -3);
+          var dateInTimeZone = order.date.add(
+              timeZoneOffset); // إضافة التوقيت المحلي إذا كان وقت الطلب غير مطابق لمنطقتك
+          final localDate = dateInTimeZone.toLocal();
+          final ago = timeago.format(localDate, locale: 'ar');
           final patientThis =
               state.patient.where((patient) => order.patientId == patient.id);
           return Column(
@@ -41,10 +58,11 @@ class BuildListView extends StatelessWidget {
                   child: ListTileCard(
                     papatientName: patientThis.first.name,
                     type: order.detail.type.typeName,
+                    date: ago,
                   ),
                 ),
               ),
-              if (index == orders.length - 1) SizedBox(height: 75.h),
+              if (index == ordersToday.length - 1) SizedBox(height: 75.h),
             ],
           );
         },

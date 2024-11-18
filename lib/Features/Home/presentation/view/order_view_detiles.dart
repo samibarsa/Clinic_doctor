@@ -4,6 +4,7 @@ import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/order_detail_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class OrderDetails extends StatefulWidget {
   const OrderDetails({
@@ -90,7 +91,7 @@ class _OrderDetailsState extends State<OrderDetails> {
               widget: widget,
               selectedImageType: selectedImageType,
               date: date,
-              time: time,
+              time: DateFormat('hh:mm a').format(widget.order.date),
               additionalNotesController: additionalNotesController,
               price: widget.order.price,
             ),

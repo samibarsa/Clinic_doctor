@@ -8,9 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'addorder_state.dart';
 
-class AddorderCubit extends Cubit<AddorderState> {
+class AddOrderCubit extends Cubit<AddorderState> {
   final AddOrderUsecase addOrderUsecase;
-  AddorderCubit(this.addOrderUsecase) : super(AddorderInitial());
+  AddOrderCubit(this.addOrderUsecase) : super(AddorderInitial());
   Future<void> addOrder(GetPriceLoaded state, String selectedOption,
       String examinationOption, int patientId) async {
     emit(AddorderLoading());

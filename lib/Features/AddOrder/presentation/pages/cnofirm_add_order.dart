@@ -44,7 +44,7 @@ class ConfirmAddOrder extends StatelessWidget {
 
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: BlocConsumer<AddorderCubit, AddorderState>(
+      child: BlocConsumer<AddOrderCubit, AddorderState>(
         listener: (BuildContext context, AddorderState state) {
           if (state is AddorderFailure) {
             ScaffoldMessenger.of(context)
@@ -70,8 +70,10 @@ class ConfirmAddOrder extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is AddorderLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           } else if (state is AddorderFailure) {
             return Center(

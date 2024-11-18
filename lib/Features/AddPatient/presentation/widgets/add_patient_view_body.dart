@@ -39,7 +39,11 @@ class AddOrederViewBody extends StatelessWidget {
     return BlocConsumer<AddPatientCubit, AddPatientState>(
       builder: (context, state) {
         if (state is AddPatientLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         }
 
         return Form(

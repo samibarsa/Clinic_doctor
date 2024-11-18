@@ -132,8 +132,8 @@ class ClinicDoctor extends StatelessWidget {
             BlocProvider<GetPriceCubit>(
               create: (context) => GetPriceCubit(addOrderUsecase),
             ),
-            BlocProvider<AddorderCubit>(
-              create: (context) => AddorderCubit(addOrderUsecase),
+            BlocProvider<AddOrderCubit>(
+              create: (context) => AddOrderCubit(addOrderUsecase),
             ),
           ],
           child: MaterialApp(

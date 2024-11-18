@@ -35,10 +35,22 @@ class _HomePageViewWidgetState extends State<HomePageViewWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<OrderCubit, OrderState>(
       builder: (context, state) {
+        if (state is OrderLoading) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
         return Scaffold(
-          bottomNavigationBar: NavBar(
-            pageController: pageController,
+          floatingActionButton: Visibility(
+            visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+            child: NavBar(
+              pageController: pageController,
+            ),
           ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           body: PageView(
             onPageChanged: (value) {
               setState(() {

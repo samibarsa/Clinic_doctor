@@ -5,6 +5,7 @@ import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/
 import 'package:doctor_app/Features/Home/presentation/view/order_history.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/build_list_view.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/home_view_error.dart';
+import 'package:doctor_app/Features/Home/presentation/widgets/search_bar.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
@@ -55,7 +56,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             orElse: () => Patient(
               name: '',
               id: 0,
-              age: 0, /* other fields with default values */
+              age: 0, // Other fields with default values
             ),
           );
           final patientName = patient.name.toLowerCase();
@@ -70,9 +71,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     return BlocBuilder<OrderCubit, OrderState>(
       builder: (context, state) {
         if (state is OrderLoading) {
-          return Container(
-              color: Colors.white,
-              child: const Center(child: CircularProgressIndicator()));
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         } else if (state is OrderLoaded) {
           final today = DateTime.now();
           final ordersToday =
@@ -93,22 +94,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             child: Column(
               children: [
                 SizedBox(height: 30.h),
-                Container(
-                  decoration: BoxDecoration(
-                      color: const Color(0xffF6F7F7),
-                      borderRadius: BorderRadius.all(Radius.circular(12.r))),
-                  child: CustomTextField(
-                    prefix: SvgPicture.asset(
-                      ImagesPath.filter,
-                      fit: BoxFit.none,
-                    ),
-                    suffix: const Icon(Icons.search),
-                    title: "مريض,تصوير مقطعي",
-                    radius: 12.r,
-                    textEditingController: searchController,
-                    keyboardType: TextInputType.text,
-                  ),
-                ),
+                CustomSearchBar(searchController: searchController),
                 SizedBox(height: 40.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -117,11 +103,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     children: [
                       InkWell(
                         onTap: () {
-                          MovingNavigation.navTo(context,
-                              page: AllOrdersPage(
-                                allOrders: state.orders,
-                                state: state,
-                              ));
+                          MovingNavigation.navTo(
+                            context,
+                            page: AllOrdersPage(
+                              allOrders: state.orders,
+                              state: state,
+                            ),
+                          );
                         },
                         child: Text(
                           "< عرض الكل",
@@ -152,13 +140,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       },
     );
   }
-}
 
-TextStyle _textStyle() {
-  return TextStyle(
-    decoration: TextDecoration.underline,
-    decorationColor: const Color(AppColor.primaryColor),
-    fontSize: 11.sp,
-    color: const Color(AppColor.primaryColor),
-  );
+  TextStyle _textStyle() {
+    return TextStyle(
+      decoration: TextDecoration.underline,
+      decorationColor: const Color(AppColor.primaryColor),
+      fontSize: 11.sp,
+      color: const Color(AppColor.primaryColor),
+    );
+  }
 }

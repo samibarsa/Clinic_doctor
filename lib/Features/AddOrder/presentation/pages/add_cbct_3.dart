@@ -49,20 +49,11 @@ class _AddPanoView2State extends State<AddCBCTView3> {
                     page: ConfirmAddOrder(
                       appBarTitle: "صورة تصوير مقطعيC.B.C.T",
                       value1: widget.examinationOption,
+                      value2: widget.examinationMode,
                       value3: selectedOption!,
                       value4: "${state.price.toString()} ل.س",
                       patientId: widget.patientId,
-                      value2: widget.examinationMode,
-                      onTap: () async {
-                        await BlocProvider.of<AddOrderCubit>(context).addOrder(
-                            state,
-                            selectedOption!,
-                            widget.examinationOption,
-                            widget.patientId,
-                            widget.examinationMode,
-                            "C.B.C.T");
-                        BlocProvider.of<OrderCubit>(context).fetchOrders();
-                      },
+                      getPriceLoaded: state,
                     ),
                   );
                 }

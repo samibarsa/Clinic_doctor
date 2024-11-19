@@ -47,18 +47,9 @@ class _AddPanoView2State extends State<AddPanoView2> {
                       value1: widget.examinationOption,
                       value2: selectedOption!,
                       value3: "${state.price.toString()} ل.س",
-                      patientId: widget.patientId,
                       value4: '',
-                      onTap: () async {
-                        await BlocProvider.of<AddOrderCubit>(context).addOrder(
-                            state,
-                            selectedOption!,
-                            widget.examinationOption,
-                            widget.patientId,
-                            "لا يوجد",
-                            "بانوراما");
-                        BlocProvider.of<OrderCubit>(context).fetchOrders();
-                      },
+                      patientId: widget.patientId,
+                      getPriceLoaded: state,
                     ),
                   );
                 }

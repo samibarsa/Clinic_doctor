@@ -13,11 +13,12 @@ class AddOrderCubit extends Cubit<AddorderState> {
   AddOrderCubit(this.addOrderUsecase) : super(AddorderInitial());
   Future<void> addOrder(
       GetPriceLoaded state,
-      String selectedOption,
+      String outPut,
       String examinationOption,
       int patientId,
       String examinationMode,
-      String type) async {
+      String type,
+      String notes) async {
     emit(AddorderLoading());
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -25,11 +26,11 @@ class AddOrderCubit extends Cubit<AddorderState> {
       int? detailId = await LocalDataSource.getDetailId(
           examinationMode, type, examinationOption);
       var outputId = 0;
-      if (selectedOption == 'CD') {
+      if (outPut == 'CD') {
         outputId = 1;
-      } else if (selectedOption == 'Film') {
+      } else if (outPut == 'Film') {
         outputId = 2;
-      } else if (selectedOption == 'CD+Film') {
+      } else if (outPut == 'CD+Film') {
         outputId = 3;
       }
       final data = {
@@ -37,9 +38,9 @@ class AddOrderCubit extends Cubit<AddorderState> {
         'detiles_id': detailId,
         'order_price': state.price,
         'order_output': outputId,
-        'additional_notes': "",
+        'additional_notes': notes,
         'date': DateTime.now().toString(),
-        'patient_id': patientId
+        'patient_id': patientId,
       };
       final respone = await addOrderUsecase.addOrder(data);
       emit(AddorderSucses());

@@ -49,20 +49,11 @@ class _AddPanoView2State extends State<AddSefaloView3> {
                     page: ConfirmAddOrder(
                       appBarTitle: "صورة سيفالومتريك",
                       value1: widget.examinationOption,
-                      value3: selectedOption!,
-                      value4: "${state.price.toString()} ل.س",
-                      patientId: widget.patientId,
                       value2: widget.examinationMode,
-                      onTap: () async {
-                        await BlocProvider.of<AddOrderCubit>(context).addOrder(
-                            state,
-                            selectedOption!,
-                            widget.examinationOption,
-                            widget.patientId,
-                            widget.examinationMode,
-                            "سيفالوماتريك");
-                        BlocProvider.of<OrderCubit>(context).fetchOrders();
-                      },
+                      value3: selectedOption!,
+                      value4: "${state.price} ل.س",
+                      patientId: widget.patientId,
+                      getPriceLoaded: state,
                     ),
                   );
                 }

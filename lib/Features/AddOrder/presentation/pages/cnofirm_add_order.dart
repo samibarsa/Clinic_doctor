@@ -1,8 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddOrder/addorder_cubit.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/GetPrice/get_price_cubit.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/widgets/section_title.dart';
+import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/view/homePageViewWidget.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
+import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,38 +21,56 @@ class ConfirmAddOrder extends StatelessWidget {
       required this.value2,
       required this.value3,
       required this.value4,
-      required this.onTap,
-      required this.patientId});
+      required this.patientId,
+      required this.getPriceLoaded});
   final String appBarTitle;
   final String value1;
   final String value2;
   final String value3;
   final String value4;
   final int patientId;
-  final void Function() onTap;
+  final GetPriceLoaded getPriceLoaded;
   @override
   Widget build(BuildContext context) {
+    TextEditingController notes = TextEditingController();
+    var examinationOption = "";
+    var examinationMode = "";
+    var outPut = "";
+    var price;
     var title1 = "الجزء المراد تصويره:";
     var title2 = "وضعية الصورة";
     var title3 = "";
     var title4 = "";
+    var type = "";
     if (appBarTitle == "صورة ماجيك بانوراما") {
       title1 = "الجزء المراد تصويره:";
+      examinationOption = value1;
       title2 = "شكل الصورة:";
+      outPut = value2;
       title3 = "الفاتورة :";
-    } else if (appBarTitle == "صورة سيفالومتريك") {
-      title1 = "الجزء المراد تصويره:";
-
-      title2 = "شكل الصورة:";
-
-      title3 = "شكل الصورة:";
-
-      title4 = ":الفاتورة";
+      price = value3;
+      examinationMode = "لا يوجد";
+      type = "بانوراما";
     } else if (appBarTitle == "صورة تصوير مقطعيC.B.C.T") {
       title1 = "الجزء المراد تصويره:";
+      examinationOption = value1;
       title2 = "وضعية الصورة";
+      examinationMode = value2;
       title3 = "شكل الصورة:";
+      outPut = "لا شيء";
       title4 = "الفاتورة :";
+      price = value3;
+      type = "C.B.C.T";
+    } else if (appBarTitle == "صورة سيفالومتريك") {
+      title1 = "الجزء المراد تصويره:";
+      examinationOption = value1;
+      title2 = "وضعية الصورة";
+      examinationMode = value2;
+      title3 = "شكل الصورة:";
+      outPut = value3;
+      title4 = "الفاتورة :";
+      price = value4;
+      type = "سيفالوماتريك";
     }
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -89,13 +112,13 @@ class ConfirmAddOrder extends StatelessWidget {
           }
           return Scaffold(
             appBar: AppBar(
+              forceMaterialTransparency: true,
               centerTitle: true,
               title: Text(appBarTitle),
             ),
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 18.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
                 children: [
                   SizedBox(
                     height: 34.h,
@@ -137,11 +160,13 @@ class ConfirmAddOrder extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SectionTitle(
-                        title: title3,
-                        style: TextStyle(
-                            fontSize: 20.sp, fontWeight: FontWeight.w500),
-                      ),
+                      appBarTitle != "صورة تصوير مقطعيC.B.C.T"
+                          ? SectionTitle(
+                              title: title3,
+                              style: TextStyle(
+                                  fontSize: 20.sp, fontWeight: FontWeight.w500),
+                            )
+                          : const SizedBox(),
                       SizedBox(
                         height: 30.h,
                       ),
@@ -170,7 +195,15 @@ class ConfirmAddOrder extends StatelessWidget {
                           ],
                         )
                       : const SizedBox(),
-                  const Spacer(),
+                  CustomTextField(
+                    title: 'ملاحظات',
+                    radius: 6.sp,
+                    textEditingController: notes,
+                    keyboardType: TextInputType.text,
+                  ),
+                  SizedBox(
+                    height: 40.h,
+                  ),
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(6.r)),
@@ -179,12 +212,22 @@ class ConfirmAddOrder extends StatelessWidget {
                     child: CustomButton(
                       title: "تأكيد",
                       color: 0xffFFFF,
-                      onTap: onTap,
+                      onTap: () async {
+                        await BlocProvider.of<AddOrderCubit>(context).addOrder(
+                            getPriceLoaded,
+                            outPut,
+                            examinationOption,
+                            patientId,
+                            examinationMode,
+                            type,
+                            notes.text);
+                        BlocProvider.of<OrderCubit>(context).fetchOrders();
+                      },
                       titleColor: Colors.black,
                     ),
                   ),
                   SizedBox(
-                    height: 146.h,
+                    height: 120.h,
                   )
                 ],
               ),

@@ -4,6 +4,7 @@ import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
 import 'package:doctor_app/Features/Home/presentation/view/order_history.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/build_list_view.dart';
+import 'package:doctor_app/Features/Home/presentation/widgets/filter_dialog.dart'; // تأكد من استيراد FilterDialog
 import 'package:doctor_app/Features/Home/presentation/widgets/home_view_error.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/search_bar.dart';
 import 'package:doctor_app/core/utils/constant.dart';
@@ -23,6 +24,8 @@ class HomeViewBody extends StatefulWidget {
 class _HomeViewBodyState extends State<HomeViewBody> {
   TextEditingController searchController = TextEditingController();
   List<Order> filteredOrders = [];
+
+  // متغيرات الفلاتر
   bool isPanorama = false;
   bool isCephalometric = false;
   bool isCBCT = false;
@@ -85,31 +88,22 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     _filterOrders();
   }
 
+  void _showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => FilterDialog(
+        isPanorama: isPanorama,
+        isCephalometric: isCephalometric,
+        isCBCT: isCBCT,
+        onFilterChanged: _updateFilter,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('جميع الطلبات'),
-        actions: [
-          IconButton(
-            icon: SvgPicture.asset(
-              ImagesPath.filter,
-              fit: BoxFit.none,
-            ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => FilterDialog(
-                  isPanorama: isPanorama,
-                  isCephalometric: isCephalometric,
-                  isCBCT: isCBCT,
-                  onFilterChanged: _updateFilter,
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      // إذا كنت ترغب في إضافة زر الفلترة في AppBar، قد تحتاج إلى نقل بعض الكود هنا
       body: BlocBuilder<OrderCubit, OrderState>(
         builder: (context, state) {
           if (state is OrderLoading) {
@@ -136,7 +130,24 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               child: Column(
                 children: [
                   SizedBox(height: 30.h),
-                  CustomSearchBar(searchController: searchController),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: SvgPicture.asset(
+                          ImagesPath.filter,
+                          fit: BoxFit.none,
+                        ),
+                        onPressed: _showFilterDialog,
+                      ),
+                      // زر البحث
+                      Expanded(
+                        child:
+                            CustomSearchBar(searchController: searchController),
+                      ),
+                      // زر الفلترة
+                    ],
+                  ),
                   SizedBox(height: 40.h),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -154,8 +165,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                             );
                           },
                           child: Text(
-                            "< عرض الكل",
-                            style: _textStyle(),
+                            "< عرض كل الطلبات",
+                            style: _textStyle().copyWith(fontSize: 14.sp),
                           ),
                         ),
                         Text(
@@ -170,7 +181,17 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     ),
                   ),
                   SizedBox(height: 24.h),
-                  BuildListView(orders: ordersToday, state: state),
+                  Expanded(
+                    child: filteredOrders.isEmpty
+                        ? BuildListView(
+                            orders: ordersToday,
+                            state: state,
+                          )
+                        : BuildListView(
+                            orders: filteredOrders,
+                            state: state,
+                          ),
+                  ),
                 ],
               ),
             );
@@ -190,94 +211,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       decorationColor: const Color(AppColor.primaryColor),
       fontSize: 11.sp,
       color: const Color(AppColor.primaryColor),
-    );
-  }
-}
-
-class FilterDialog extends StatefulWidget {
-  final bool isPanorama;
-  final bool isCephalometric;
-  final bool isCBCT;
-  final Function(bool, bool, bool) onFilterChanged;
-
-  const FilterDialog({
-    super.key,
-    required this.isPanorama,
-    required this.isCephalometric,
-    required this.isCBCT,
-    required this.onFilterChanged,
-  });
-
-  @override
-  _FilterDialogState createState() => _FilterDialogState();
-}
-
-class _FilterDialogState extends State<FilterDialog> {
-  late bool isPanorama;
-  late bool isCephalometric;
-  late bool isCBCT;
-
-  @override
-  void initState() {
-    super.initState();
-    isPanorama = widget.isPanorama;
-    isCephalometric = widget.isCephalometric;
-    isCBCT = widget.isCBCT;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      elevation: 8,
-      backgroundColor: Colors.white,
-      child: Container(
-        padding: EdgeInsets.all(16.r),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildSwitchOption("بانوراما", isPanorama, (value) {
-              setState(() {
-                isPanorama = value;
-              });
-            }),
-            _buildSwitchOption("سيفالوماتريك", isCephalometric, (value) {
-              setState(() {
-                isCephalometric = value;
-              });
-            }),
-            _buildSwitchOption("C.B.C.T", isCBCT, (value) {
-              setState(() {
-                isCBCT = value;
-              });
-            }),
-            SizedBox(height: 16.h),
-            ElevatedButton(
-              onPressed: () {
-                widget.onFilterChanged(isPanorama, isCephalometric, isCBCT);
-                Navigator.of(context).pop();
-              },
-              child: Text('تطبيق'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSwitchOption(
-      String title, bool value, ValueChanged<bool> onChanged) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(title),
-        Switch(
-          value: value,
-          onChanged: onChanged,
-        ),
-      ],
     );
   }
 }

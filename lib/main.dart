@@ -99,7 +99,8 @@ class ClinicDoctor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(393, 852),
+      designSize: Size(MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {

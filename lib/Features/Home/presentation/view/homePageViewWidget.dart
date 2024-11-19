@@ -1,6 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:doctor_app/Features/AddPatient/presentation/views/add_order_view.dart';
+import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
+import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/home.dart';
@@ -31,6 +33,70 @@ class HomePageViewWidget extends StatefulWidget {
 var pageController = PageController(initialPage: 1);
 
 class _HomePageViewWidgetState extends State<HomePageViewWidget> {
+  TextEditingController searchController = TextEditingController();
+  List<Order> filteredOrders = [];
+  bool isPanorama = false;
+  bool isCephalometric = false;
+  bool isCBCT = false;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(_filterOrders);
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(_filterOrders);
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterOrders() {
+    final query = searchController.text.toLowerCase();
+    final state = context.read<OrderCubit>().state;
+    if (state is OrderLoaded) {
+      final today = DateTime.now();
+      final ordersToday = state.orders.where((order) {
+        return order.date.year == today.year &&
+            order.date.month == today.month &&
+            order.date.day == today.day;
+      }).toList();
+
+      setState(() {
+        filteredOrders = ordersToday.where((order) {
+          final patient = state.patient.firstWhere(
+            (patient) => patient.id == order.patientId,
+            orElse: () => Patient(
+              name: '',
+              id: 0,
+              age: 0, // Other fields with default values
+            ),
+          );
+          final patientName = patient.name.toLowerCase();
+          final orderType = order.detail.type.typeName.toLowerCase();
+
+          bool matchesType = false;
+          if (isPanorama && orderType.contains('بانوراما')) matchesType = true;
+          if (isCephalometric && orderType.contains('سيفالوماتريك'))
+            matchesType = true;
+          if (isCBCT && orderType.contains('c.b.c.t')) matchesType = true;
+
+          return patientName.contains(query) && matchesType;
+        }).toList();
+      });
+    }
+  }
+
+  void _updateFilter(bool panorama, bool cephalometric, bool cbct) {
+    setState(() {
+      isPanorama = panorama;
+      isCephalometric = cephalometric;
+      isCBCT = cbct;
+    });
+    _filterOrders();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrderCubit, OrderState>(

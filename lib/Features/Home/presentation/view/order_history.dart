@@ -3,10 +3,8 @@ import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/build_list_view.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/search_bar.dart';
-import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class AllOrdersPage extends StatefulWidget {
   final List<Order> allOrders;

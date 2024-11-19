@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
           }).toList();
 
           return Scaffold(
-              appBar: buildAppBar(state), body: const HomeViewBody());
+              appBar: buildAppBar(context, state), body: const HomeViewBody());
         } else if (state is OrderError) {
           return HomeViewError(
             state: state,

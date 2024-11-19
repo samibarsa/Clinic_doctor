@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'dart:developer';
-
 import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
@@ -40,7 +38,6 @@ class RemoteDataSource {
         .select('doctor_id')
         .eq('user_id', Supabase.instance.client.auth.currentUser!.id)
         .single();
-    // التحقق إذا كانت البيانات قد استُرجعت بنجاح
     // ignore: unnecessary_null_comparison
     if (condition == null || condition['doctor_id'] == null) {
       throw Exception('Doctor not found');
@@ -66,7 +63,6 @@ class RemoteDataSource {
   )
 ''').eq('doctor_id', condition['doctor_id']);
 
-    // التأكد إذا كانت البيانات موجودة
     // ignore: unnecessary_null_comparison
     if (response == null || response.isEmpty) {
       throw Exception('No orders found for this doctor');
@@ -75,28 +71,6 @@ class RemoteDataSource {
     // تحويل البيانات المسترجعة إلى قائمة من كائنات Order باستخدام fromJson
     final orders = response.map((item) => Order.fromJson(item)).toList();
 
-    log(orders.toString());
     return orders;
-  }
-
-  Future<void> updateOrderFields(
-      int orderId, Map<String, dynamic> fieldsToUpdate) async {
-    final supabase = Supabase.instance.client;
-
-    try {
-      final updateResult = await supabase
-          .from('orders')
-          .update(fieldsToUpdate)
-          .eq('order_id', orderId);
-
-      if (updateResult.error != null) {
-        throw Exception(
-            'Failed to update fields: ${updateResult.error!.message}');
-      } else {
-        print('Fields updated successfully');
-      }
-    } catch (error) {
-      print('Error updating fields: $error');
-    }
   }
 }

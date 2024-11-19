@@ -14,20 +14,26 @@ class HomeViewError extends StatelessWidget {
   final OrderError state;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('حدث خطأ: ${state.message}'),
-          SizedBox(height: 20.h),
-          CustomButton(
-              title: "إعادة تحميل",
-              color: AppColor.primaryColor,
-              onTap: () async {
-                context.read<OrderCubit>().fetchOrders();
-              },
-              titleColor: Colors.white)
-        ],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
+              child: Text(' ${state.message}'),
+            ),
+            SizedBox(height: 20.h),
+            CustomButton(
+                title: "إعادة تحميل",
+                color: AppColor.primaryColor,
+                onTap: () async {
+                  context.read<OrderCubit>().fetchOrders();
+                },
+                titleColor: Colors.white)
+          ],
+        ),
       ),
     );
   }

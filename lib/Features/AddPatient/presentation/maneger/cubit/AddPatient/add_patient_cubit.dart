@@ -18,7 +18,7 @@ class AddPatientCubit extends Cubit<AddPatientState> {
       emit(AddPatientSucsess(patientId: response));
       return response;
     } catch (e) {
-      emit(AddPatientError(errMessage: e.toString()));
+      emit(AddPatientError(errMessage: e.toString().split(':')[1]));
       return 0;
     }
   }

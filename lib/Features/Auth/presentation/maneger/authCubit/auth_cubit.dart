@@ -50,7 +50,7 @@ class AuthCubit extends Cubit<AuthState> {
         errorMessage =
             'بيانات تسجيل الدخول غير صحيحة. يرجى التحقق من البريد الإلكتروني وكلمة المرور.';
       } else if (e.toString().contains('Network request failed')) {
-        errorMessage = 'لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك.';
+        errorMessage = 'لا يوجد اتصال بالإنترنت';
       }
       emit(AuthFailure(errorMessage));
     }

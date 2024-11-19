@@ -7,6 +7,7 @@ import 'package:doctor_app/Features/Home/presentation/widgets/filter_dialog.dart
 import 'package:doctor_app/Features/Home/presentation/widgets/home_view_body.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/search_bar.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -117,9 +118,25 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
           ),
           Expanded(
             child: filteredOrders.isEmpty
-                ? BuildListView(
-                    orders: widget.allOrders,
-                    state: widget.state,
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Center(
+                          child: Text("لا يوجد بيانات حاليا"),
+                        ),
+                        SizedBox(
+                          height: 40.h,
+                        ),
+                        CustomButton(
+                            title: "إعادة تحميل",
+                            color: AppColor.primaryColor,
+                            onTap: () async {
+                              context.read<OrderCubit>().fetchOrders();
+                            },
+                            titleColor: Colors.white)
+                      ],
+                    ),
                   )
                 : BuildListView(
                     orders: filteredOrders,

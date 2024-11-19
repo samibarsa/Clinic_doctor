@@ -15,7 +15,7 @@ class GetPriceCubit extends Cubit<GetPriceState> {
       emit(GetPriceLoaded(price: price));
       return price;
     } catch (e) {
-      emit(GetPriceError(errMessage: e.toString()));
+      emit(GetPriceError(errMessage: e.toString().split(':')[1]));
       rethrow;
     }
   }

@@ -161,19 +161,25 @@ class ConfirmAddOrder extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       appBarTitle != "صورة تصوير مقطعيC.B.C.T"
-                          ? SectionTitle(
-                              title: title3,
-                              style: TextStyle(
-                                  fontSize: 20.sp, fontWeight: FontWeight.w500),
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SectionTitle(
+                                  title: title3,
+                                  style: TextStyle(
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 30.h,
+                                ),
+                                InfoBeforDone(value: value3),
+                                SizedBox(
+                                  height: 36.h,
+                                )
+                              ],
                             )
-                          : const SizedBox(),
-                      SizedBox(
-                        height: 30.h,
-                      ),
-                      InfoBeforDone(value: value3),
-                      SizedBox(
-                        height: 36.h,
-                      )
+                          : const SizedBox()
                     ],
                   ),
                   appBarTitle != "صورة ماجيك بانوراما"

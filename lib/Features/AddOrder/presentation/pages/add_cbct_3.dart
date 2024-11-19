@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddCBCTView3 extends StatefulWidget {
-  const AddCBCTView3(
-      {super.key,
-      required this.examinationOption,
-      required this.patientId,
-      required this.examinationMode});
+  const AddCBCTView3({
+    super.key,
+    required this.examinationOption,
+    required this.patientId,
+  });
 
   final String examinationOption;
-  final String examinationMode;
+
   final int patientId;
 
   @override
@@ -30,8 +30,12 @@ class _AddPanoView2State extends State<AddCBCTView3> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> options = ['لا شيء', 'CD', 'Film', 'CD+Film'];
-
+    final List<String> options = [
+      'كامل الجمجمة',
+      'ساحة 5*5 مميزة للبية',
+      'إجراء دراسة كاملة للمقطع',
+      'نصف فك'
+    ];
     return Directionality(
       textDirection: TextDirection.rtl,
       child: MultiBlocListener(
@@ -49,8 +53,8 @@ class _AddPanoView2State extends State<AddCBCTView3> {
                     page: ConfirmAddOrder(
                       appBarTitle: "صورة تصوير مقطعيC.B.C.T",
                       value1: widget.examinationOption,
-                      value2: widget.examinationMode,
-                      value3: selectedOption!,
+                      value2: selectedOption!,
+                      value3: "لا شيء",
                       value4: "${state.price.toString()} ل.س",
                       patientId: widget.patientId,
                       getPriceLoaded: state,
@@ -93,14 +97,14 @@ class _AddPanoView2State extends State<AddCBCTView3> {
                   if (selectedOption != null) {
                     try {
                       int? detailId = await LocalDataSource.getDetailId(
-                        widget.examinationMode,
+                        selectedOption!,
                         "C.B.C.T",
                         widget.examinationOption,
                       );
 
                       if (detailId != null) {
                         BlocProvider.of<GetPriceCubit>(context)
-                            .getPrice(detailId, selectedOption!);
+                            .getPrice(detailId, "لا شيء");
                       }
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(

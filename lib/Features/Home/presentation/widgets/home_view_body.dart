@@ -9,6 +9,7 @@ import 'package:doctor_app/Features/Home/presentation/widgets/home_view_error.da
 import 'package:doctor_app/Features/Home/presentation/widgets/search_bar.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
+import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,6 +35,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   void initState() {
     super.initState();
     searchController.addListener(_filterOrders);
+    _updateFilter(isPanorama, isCephalometric, isCBCT);
   }
 
   @override
@@ -183,9 +185,25 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                   SizedBox(height: 24.h),
                   Expanded(
                     child: filteredOrders.isEmpty
-                        ? BuildListView(
-                            orders: ordersToday,
-                            state: state,
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Center(
+                                  child: Text("لا يوجد بيانات حاليا"),
+                                ),
+                                SizedBox(
+                                  height: 40.h,
+                                ),
+                                CustomButton(
+                                    title: "إعادة تحميل",
+                                    color: AppColor.primaryColor,
+                                    onTap: () async {
+                                      context.read<OrderCubit>().fetchOrders();
+                                    },
+                                    titleColor: Colors.white)
+                              ],
+                            ),
                           )
                         : BuildListView(
                             orders: filteredOrders,

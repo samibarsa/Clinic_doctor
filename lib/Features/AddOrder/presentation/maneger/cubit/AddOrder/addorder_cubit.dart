@@ -46,7 +46,7 @@ class AddOrderCubit extends Cubit<AddorderState> {
       emit(AddorderSucses());
       return respone;
     } catch (e) {
-      emit(AddorderFailure(errMessage: e.toString()));
+      emit(AddorderFailure(errMessage: e.toString().split(':')[1]));
     }
   }
 }

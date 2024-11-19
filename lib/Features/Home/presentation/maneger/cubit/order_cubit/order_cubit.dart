@@ -21,7 +21,7 @@ class OrderCubit extends Cubit<OrderState> {
 
       emit(OrderLoaded(orders, doctor, patient));
     } catch (e) {
-      emit(OrderError(e.toString()));
+      emit(OrderError(e.toString().split(':')[1]));
     }
   }
 }

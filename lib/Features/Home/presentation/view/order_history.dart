@@ -27,9 +27,9 @@ class AllOrdersPage extends StatefulWidget {
 class _AllOrdersPageState extends State<AllOrdersPage> {
   TextEditingController searchController = TextEditingController();
   List<Order> filteredOrders = [];
-  bool isPanorama = false;
-  bool isCephalometric = false;
-  bool isCBCT = false;
+  bool isPanorama = true;
+  bool isCephalometric = true;
+  bool isCBCT = true;
 
   @override
   void initState() {
@@ -87,6 +87,7 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         title: const Text('جميع الطلبات'),
         actions: [
           IconButton(

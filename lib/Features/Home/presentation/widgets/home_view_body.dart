@@ -26,9 +26,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   List<Order> filteredOrders = [];
 
   // متغيرات الفلاتر
-  bool isPanorama = false;
-  bool isCephalometric = false;
-  bool isCBCT = false;
+  bool isPanorama = true;
+  bool isCephalometric = true;
+  bool isCBCT = true;
 
   @override
   void initState() {

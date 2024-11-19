@@ -4,6 +4,7 @@ import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/order_detail_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 class OrderDetails extends StatefulWidget {

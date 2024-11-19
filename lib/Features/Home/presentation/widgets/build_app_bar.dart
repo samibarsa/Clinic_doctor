@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 AppBar buildAppBar(BuildContext context, OrderState state) {
   return AppBar(
+    forceMaterialTransparency: true,
     title: Directionality(
       textDirection: TextDirection.rtl,
       child: buildDoctorInfo(context, state),

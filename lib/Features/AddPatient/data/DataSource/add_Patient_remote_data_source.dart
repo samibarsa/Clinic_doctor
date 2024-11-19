@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: file_names
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 

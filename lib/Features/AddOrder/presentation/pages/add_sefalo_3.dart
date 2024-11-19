@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddOrder/addorder_cubit.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/GetPrice/get_price_cubit.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/pages/cnofirm_add_order.dart';
@@ -59,7 +61,6 @@ class _AddPanoView2State extends State<AddSefaloView3> {
                             widget.patientId,
                             widget.examinationMode,
                             "سيفالوماتريك");
-                        // ignore: use_build_context_synchronously
                         BlocProvider.of<OrderCubit>(context).fetchOrders();
                       },
                     ),

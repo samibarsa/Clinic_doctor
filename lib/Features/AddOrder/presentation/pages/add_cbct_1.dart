@@ -1,4 +1,4 @@
-import 'package:doctor_app/Features/AddOrder/presentation/pages/add_cbct_3.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/pages/add_cbct_2.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/widgets/add_radio_body.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class _AddPanoView1State extends State<AddCBCTView1> {
           onTap: () {
             if (selectedOption != null) {
               MovingNavigation.navTo(context,
-                  page: AddCBCTView3(
+                  page: AddCBCTView2(
                     patientId: widget.patientId,
                     examinationOption: selectedOption!,
                   ));

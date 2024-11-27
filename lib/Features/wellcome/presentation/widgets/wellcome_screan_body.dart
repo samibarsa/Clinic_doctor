@@ -24,6 +24,9 @@ class WellcomeViewBody extends StatelessWidget {
               height: 217.8.h,
               width: 263.w,
             ),
+            SizedBox(
+              height: 205.h,
+            ),
             Stack(
               alignment: Alignment.center,
               children: [

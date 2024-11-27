@@ -48,6 +48,7 @@ class RessetPassword extends StatelessWidget {
               child: Form(
                 key: formKey,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: 34.h,

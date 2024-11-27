@@ -99,38 +99,26 @@ class _HomePageViewWidgetState extends State<HomePageViewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OrderCubit, OrderState>(
-      builder: (context, state) {
-        if (state is OrderLoading) {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
-        return Scaffold(
-          floatingActionButton: Visibility(
-            visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-            child: NavBar(
-              pageController: pageController,
-            ),
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          body: PageView(
-            onPageChanged: (value) {
-              setState(() {
-                animateNavBar(value);
-              });
-            },
-            controller: pageController,
-            children: const [
-              AddPatientView(),
-              HomePage(),
-            ],
-          ),
-        );
-      },
+    return Scaffold(
+      floatingActionButton: Visibility(
+        visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+        child: NavBar(
+          pageController: pageController,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: PageView(
+        onPageChanged: (value) {
+          setState(() {
+            animateNavBar(value);
+          });
+        },
+        controller: pageController,
+        children: const [
+          AddPatientView(),
+          HomePage(),
+        ],
+      ),
     );
   }
 }

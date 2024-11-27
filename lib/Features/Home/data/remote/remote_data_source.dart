@@ -46,6 +46,7 @@ class RemoteDataSource {
           .select('doctor_id')
           .eq('user_id', Supabase.instance.client.auth.currentUser!.id)
           .single();
+      // ignore: unnecessary_null_comparison
       if (condition == null || condition['doctor_id'] == null) {
         throw Exception('لم يتم العثور على الطبيب.');
       }

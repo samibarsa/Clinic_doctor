@@ -1,7 +1,6 @@
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class CustomSearchBar extends StatefulWidget {
   final TextEditingController searchController;

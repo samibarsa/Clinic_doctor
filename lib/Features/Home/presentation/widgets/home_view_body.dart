@@ -4,7 +4,7 @@ import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
 import 'package:doctor_app/Features/Home/presentation/view/order_history.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/build_list_view.dart';
-import 'package:doctor_app/Features/Home/presentation/widgets/filter_dialog.dart'; // تأكد من استيراد FilterDialog
+import 'package:doctor_app/Features/Home/presentation/widgets/filter_dialog.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/home_view_error.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/search_bar.dart';
 import 'package:doctor_app/core/utils/constant.dart';
@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeViewBody extends StatefulWidget {
   const HomeViewBody({super.key});
@@ -26,7 +27,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   TextEditingController searchController = TextEditingController();
   List<Order> filteredOrders = [];
 
-  // متغيرات الفلاتر
   bool isPanorama = true;
   bool isCephalometric = true;
   bool isCBCT = true;
@@ -63,7 +63,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             orElse: () => Patient(
               name: '',
               id: 0,
-              age: 0, // Other fields with default values
+              age: 0,
             ),
           );
           final patientName = patient.name.toLowerCase();
@@ -71,8 +71,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
           bool matchesType = false;
           if (isPanorama && orderType.contains('بانوراما')) matchesType = true;
-          if (isCephalometric && orderType.contains('سيفالوماتريك'))
+          if (isCephalometric && orderType.contains('سيفالوماتريك')) {
             matchesType = true;
+          }
           if (isCBCT && orderType.contains('c.b.c.t')) matchesType = true;
 
           return patientName.contains(query) && matchesType;
@@ -105,24 +106,29 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // إذا كنت ترغب في إضافة زر الفلترة في AppBar، قد تحتاج إلى نقل بعض الكود هنا
       body: BlocBuilder<OrderCubit, OrderState>(
         builder: (context, state) {
           if (state is OrderLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Directionality(
+              textDirection: TextDirection.rtl,
+              child: Column(
+                children: [
+                  SizedBox(height: 30.h),
+                  _buildHeader(),
+                  SizedBox(height: 70.h),
+                  Expanded(child: _buildShimmer()),
+                ],
+              ),
             );
           } else if (state is OrderLoaded) {
             final today = DateTime.now();
-            final ordersToday =
-                filteredOrders.isEmpty && searchController.text.isEmpty
-                    ? state.orders.where((order) {
-                        return order.date.year == today.year &&
-                            order.date.month == today.month &&
-                            order.date.day == today.day;
-                      }).toList()
-                    : filteredOrders;
+            final ordersToday = state.orders.where((order) {
+              return order.date.year == today.year &&
+                  order.date.month == today.month &&
+                  order.date.day == today.day;
+            }).toList();
 
+            const Duration(microseconds: 50000);
             return RefreshIndicator(
               onRefresh: () async {
                 context.read<OrderCubit>().fetchOrders();
@@ -132,24 +138,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               child: Column(
                 children: [
                   SizedBox(height: 30.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: SvgPicture.asset(
-                          ImagesPath.filter,
-                          fit: BoxFit.none,
-                        ),
-                        onPressed: _showFilterDialog,
-                      ),
-                      // زر البحث
-                      Expanded(
-                        child:
-                            CustomSearchBar(searchController: searchController),
-                      ),
-                      // زر الفلترة
-                    ],
-                  ),
+                  _buildHeader(),
+                  SizedBox(height: 24.h),
                   SizedBox(height: 40.h),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -184,31 +174,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                   ),
                   SizedBox(height: 24.h),
                   Expanded(
-                    child: filteredOrders.isEmpty
-                        ? Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Center(
-                                  child: Text("لا يوجد بيانات حاليا"),
-                                ),
-                                SizedBox(
-                                  height: 40.h,
-                                ),
-                                CustomButton(
-                                    title: "إعادة تحميل",
-                                    color: AppColor.primaryColor,
-                                    onTap: () async {
-                                      context.read<OrderCubit>().fetchOrders();
-                                    },
-                                    titleColor: Colors.white)
-                              ],
-                            ),
-                          )
-                        : BuildListView(
-                            orders: filteredOrders,
-                            state: state,
-                          ),
+                    child: BuildListView(
+                      orders: filteredOrders.isEmpty == true
+                          ? ordersToday
+                          : filteredOrders,
+                      state: state,
+                    ),
                   ),
                 ],
               ),
@@ -223,12 +194,203 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     );
   }
 
-  TextStyle _textStyle() {
-    return TextStyle(
-      decoration: TextDecoration.underline,
-      decorationColor: const Color(AppColor.primaryColor),
-      fontSize: 11.sp,
-      color: const Color(AppColor.primaryColor),
+  Widget _buildHeader() {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: SvgPicture.asset(
+                ImagesPath.filter,
+                fit: BoxFit.none,
+              ),
+              onPressed: _showFilterDialog,
+            ),
+            Expanded(
+              child: CustomSearchBar(searchController: searchController),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShimmer() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 35.h,
+            color: Colors.white,
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (context, index) => Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 24.w),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 50.w,
+                      height: 50.h,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 16.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 16.h,
+                            color: Colors.white,
+                          ),
+                          SizedBox(height: 8.h),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            height: 14.h,
+                            color: Colors.white,
+                          ),
+                          SizedBox(height: 8.h),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            height: 12.h,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            height: 45.h,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ignore: unused_element
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Center(
+            child: Text("لا يوجد بيانات حاليا"),
+          ),
+          SizedBox(height: 40.h),
+          CustomButton(
+            title: "إعادة تحميل",
+            color: AppColor.primaryColor,
+            onTap: () async {
+              context.read<OrderCubit>().fetchOrders();
+            },
+            titleColor: Colors.white,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+TextStyle _textStyle() {
+  return TextStyle(
+    decoration: TextDecoration.underline,
+    decorationColor: const Color(AppColor.primaryColor),
+    fontSize: 11.sp,
+    color: const Color(AppColor.primaryColor),
+  );
+}
+
+class ShimmerListTileCard extends StatelessWidget {
+  const ShimmerListTileCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: SizedBox(
+        height: 80.h,
+        child: Card(
+          margin: EdgeInsets.symmetric(horizontal: 16.w),
+          color: const Color(0xfffefefe),
+          child: ListTile(
+            trailing: Padding(
+              padding: EdgeInsets.only(
+                bottom: 15.h,
+              ),
+              child: Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  width: 24.w,
+                  height: 24.h,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            leading: Padding(
+              padding: EdgeInsets.only(bottom: 16.h),
+              child: Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  width: 40.w,
+                  height: 40.h,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    height: 16.h,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: 14.h,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: 12.h,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

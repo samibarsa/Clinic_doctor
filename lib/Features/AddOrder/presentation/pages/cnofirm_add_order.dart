@@ -220,6 +220,9 @@ class ConfirmAddOrder extends StatelessWidget {
                       title: "تأكيد",
                       color: 0xffFFFF,
                       onTap: () async {
+                        final now = DateTime.now();
+                        final startOfMonth = DateTime(now.year, now.month, 1);
+                        final endOfMonth = DateTime(now.year, now.month + 1, 0);
                         await BlocProvider.of<AddOrderCubit>(context).addOrder(
                             getPriceLoaded,
                             outPut,
@@ -228,7 +231,8 @@ class ConfirmAddOrder extends StatelessWidget {
                             examinationMode,
                             type,
                             notes.text);
-                        BlocProvider.of<OrderCubit>(context).fetchOrders();
+                        BlocProvider.of<OrderCubit>(context).fetchOrders(
+                            startDate: startOfMonth, endDate: endOfMonth);
                       },
                       titleColor: Colors.black,
                     ),

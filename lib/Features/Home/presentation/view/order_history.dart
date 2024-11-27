@@ -3,14 +3,15 @@ import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/build_list_view.dart';
+import 'package:doctor_app/Features/Home/presentation/widgets/custom_shimmer.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/filter_dialog.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/search_bar.dart';
 import 'package:doctor_app/core/utils/constant.dart';
-import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 
 class AllOrdersPage extends StatefulWidget {
   final List<Order> allOrders;
@@ -20,7 +21,6 @@ class AllOrdersPage extends StatefulWidget {
       {super.key, required this.allOrders, required this.state});
 
   @override
-  // ignore: library_private_types_in_public_api
   _AllOrdersPageState createState() => _AllOrdersPageState();
 }
 
@@ -35,7 +35,7 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
   void initState() {
     super.initState();
     searchController.addListener(_filterOrders);
-    filteredOrders = widget.allOrders; // Initialize filteredOrders
+    filteredOrders = widget.allOrders;
   }
 
   @override
@@ -48,17 +48,17 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
   void _filterOrders() {
     final query = searchController.text.toLowerCase();
     final state = context.read<OrderCubit>().state;
+
     if (state is OrderLoaded) {
       setState(() {
         filteredOrders = state.orders.where((order) {
+          // البحث عن المريض المرتبط بالطلب
           final patient = state.patient.firstWhere(
             (patient) => patient.id == order.patientId,
-            orElse: () => Patient(
-              name: '',
-              id: 0,
-              age: 0, // Other fields with default values
-            ),
+            orElse: () => Patient(name: '', id: 0, age: 0),
           );
+
+          // التحقق من مطابقة الاسم ونوع الطلب
           final patientName = patient.name.toLowerCase();
           final orderType = order.detail.type.typeName.toLowerCase();
 
@@ -107,42 +107,58 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
               );
             },
           ),
+          IconButton(
+            onPressed: () async {
+              final selectedDate = await showMonthYearPicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2019),
+                lastDate: DateTime(2042),
+                locale: const Locale('ar', 'Arabic'),
+              );
+              if (selectedDate != null) {
+                BlocProvider.of<OrderCubit>(context).fetchOrders(
+                  startDate: selectedDate,
+                  endDate: DateTime(selectedDate.year, selectedDate.month + 1),
+                );
+              }
+            },
+            icon: const Icon(Icons.calendar_month),
+          ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 16.h),
-            child: CustomSearchBar(searchController: searchController),
-          ),
-          Expanded(
-            child: filteredOrders.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Center(
-                          child: Text("لا يوجد بيانات حاليا"),
+      body: BlocBuilder<OrderCubit, OrderState>(
+        builder: (context, state) {
+          if (state is OrderLoaded) {
+            // تحديث الفلاتر بعد تحميل البيانات
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _filterOrders();
+            });
+
+            return Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 16.h),
+                  child: CustomSearchBar(searchController: searchController),
+                ),
+                Expanded(
+                  child: filteredOrders.isNotEmpty
+                      ? BuildListView(
+                          orders: filteredOrders,
+                          state: widget.state,
+                        )
+                      : const Center(
+                          child: Text('لا توجد طلبات مطابقة.'),
                         ),
-                        SizedBox(
-                          height: 40.h,
-                        ),
-                        CustomButton(
-                            title: "إعادة تحميل",
-                            color: AppColor.primaryColor,
-                            onTap: () async {
-                              context.read<OrderCubit>().fetchOrders();
-                            },
-                            titleColor: Colors.white)
-                      ],
-                    ),
-                  )
-                : BuildListView(
-                    orders: filteredOrders,
-                    state: widget.state,
-                  ),
-          ),
-        ],
+                ),
+              ],
+            );
+          } else if (state is OrderLoading) {
+            return const CustomShimmer();
+          } else {
+            return const Center(child: Text('حدث خطأ أثناء تحميل الطلبات.'));
+          }
+        },
       ),
     );
   }

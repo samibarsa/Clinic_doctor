@@ -15,8 +15,10 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Future<List<Order>> fetchAllOrders() async {
-    return await remoteDataSource.fetchAllOrders();
+  Future<List<Order>> fetchAllOrders(
+      {required DateTime startDate, required DateTime endDate}) async {
+    return await remoteDataSource.fetchAllOrders(
+        startDate: startDate, endDate: endDate);
   }
 
   @override

@@ -29,7 +29,11 @@ class HomeViewError extends StatelessWidget {
                 title: "إعادة تحميل",
                 color: AppColor.primaryColor,
                 onTap: () async {
-                  context.read<OrderCubit>().fetchOrders();
+                  final now = DateTime.now();
+                  final startOfMonth = DateTime(now.year, now.month, 1);
+                  final endOfMonth = DateTime(now.year, now.month + 1, 0);
+                  context.read<OrderCubit>().fetchOrders(
+                      startDate: startOfMonth, endDate: endOfMonth);
                 },
                 titleColor: Colors.white)
           ],

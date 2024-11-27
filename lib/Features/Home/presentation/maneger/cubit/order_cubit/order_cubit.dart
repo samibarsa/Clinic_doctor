@@ -12,10 +12,12 @@ class OrderCubit extends Cubit<OrderState> {
       this.fetchOrdersUseCase, this.fetchDoctorDataUseCase, this.patientUsecase)
       : super(OrderInitial());
 
-  Future<void> fetchOrders() async {
+  Future<void> fetchOrders(
+      {required DateTime startDate, required DateTime endDate}) async {
     emit(OrderLoading());
     try {
-      final orders = await fetchOrdersUseCase.repository.fetchAllOrders();
+      final orders = await fetchOrdersUseCase.repository
+          .fetchAllOrders(startDate: startDate, endDate: endDate);
       final doctor = await fetchDoctorDataUseCase();
       final patient = await patientUsecase.call();
 

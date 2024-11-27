@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart'; // لإدارة التاريخ
 import 'dart:io';
 
 import 'package:doctor_app/Features/Auth/domain/Entities/doctor.dart';
@@ -39,19 +40,26 @@ class RemoteDataSource {
     }
   }
 
-  Future<List<Order>> fetchAllOrders() async {
+  Future<List<Order>> fetchAllOrders(
+      {required DateTime startDate, required DateTime endDate}) async {
     try {
+      // جلب doctor_id بناءً على المستخدم الحالي
       final condition = await Supabase.instance.client
           .from('doctors')
           .select('doctor_id')
           .eq('user_id', Supabase.instance.client.auth.currentUser!.id)
           .single();
+
+      // التحقق من صحة doctor_id
       // ignore: unnecessary_null_comparison
       if (condition == null || condition['doctor_id'] == null) {
         throw Exception('لم يتم العثور على الطبيب.');
       }
 
-      final response = await Supabase.instance.client.from('orders').select('''
+      // تنفيذ الاستعلام لتحديد الطلبات في الشهر والسنة الحاليين
+      final response = await Supabase.instance.client
+          .from('orders')
+          .select('''
         order_id,
         doctor_id,
         patient_id,
@@ -69,13 +77,18 @@ class RemoteDataSource {
           option:examinationoptions(option_id, option_name),
           type:examinationtypes(examination_type_id, type_name)
         )
-      ''').eq('doctor_id', condition['doctor_id']);
+      ''')
+          .eq('doctor_id', condition['doctor_id'])
+          .gte('date', startDate.toIso8601String()) // تاريخ البداية
+          .lte('date', endDate.toIso8601String());
 
+      // التحقق من وجود نتائج
       // ignore: unnecessary_null_comparison
-      if (response == null || response.isEmpty) {
+      if (response == null) {
         throw Exception('لم يتم العثور على طلبات لهذا الطبيب.');
       }
 
+      // تحويل البيانات إلى كائنات Order
       final orders = response.map((item) => Order.fromJson(item)).toList();
       return orders;
     } on SocketException catch (_) {

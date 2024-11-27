@@ -4,6 +4,7 @@ import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
 import 'package:doctor_app/Features/Home/presentation/view/order_history.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/build_list_view.dart';
+import 'package:doctor_app/Features/Home/presentation/widgets/custom_shimmer.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/filter_dialog.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/home_view_error.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/search_bar.dart';
@@ -116,7 +117,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                   SizedBox(height: 30.h),
                   _buildHeader(),
                   SizedBox(height: 70.h),
-                  Expanded(child: _buildShimmer()),
+                  Expanded(child: CustomShimmer()),
                 ],
               ),
             );
@@ -131,7 +132,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             const Duration(microseconds: 50000);
             return RefreshIndicator(
               onRefresh: () async {
-                context.read<OrderCubit>().fetchOrders();
+                final now = DateTime.now();
+                final startOfMonth = DateTime(now.year, now.month, 1);
+                final endOfMonth = DateTime(now.year, now.month + 1, 0);
+                context
+                    .read<OrderCubit>()
+                    .fetchOrders(startDate: startOfMonth, endDate: endOfMonth);
                 context.read<OrderCubit>().fetchDoctorDataUseCase();
               },
               color: const Color(AppColor.primaryColor),
@@ -218,70 +224,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     );
   }
 
-  Widget _buildShimmer() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 35.h,
-            color: Colors.white,
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) => Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 24.w),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 50.w,
-                      height: 50.h,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 16.w),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            height: 16.h,
-                            color: Colors.white,
-                          ),
-                          SizedBox(height: 8.h),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.6,
-                            height: 14.h,
-                            color: Colors.white,
-                          ),
-                          SizedBox(height: 8.h),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            height: 12.h,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 45.h,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   // ignore: unused_element
   Widget _buildEmptyState() {
     return Center(
@@ -296,7 +238,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             title: "إعادة تحميل",
             color: AppColor.primaryColor,
             onTap: () async {
-              context.read<OrderCubit>().fetchOrders();
+              final now = DateTime.now();
+              final startOfMonth = DateTime(now.year, now.month, 1);
+              final endOfMonth = DateTime(now.year, now.month + 1, 0);
+              context
+                  .read<OrderCubit>()
+                  .fetchOrders(startDate: startOfMonth, endDate: endOfMonth);
             },
             titleColor: Colors.white,
           ),
@@ -313,84 +260,4 @@ TextStyle _textStyle() {
     fontSize: 11.sp,
     color: const Color(AppColor.primaryColor),
   );
-}
-
-class ShimmerListTileCard extends StatelessWidget {
-  const ShimmerListTileCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: SizedBox(
-        height: 80.h,
-        child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 16.w),
-          color: const Color(0xfffefefe),
-          child: ListTile(
-            trailing: Padding(
-              padding: EdgeInsets.only(
-                bottom: 15.h,
-              ),
-              child: Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-                child: Container(
-                  width: 24.w,
-                  height: 24.h,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            leading: Padding(
-              padding: EdgeInsets.only(bottom: 16.h),
-              child: Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-                child: Container(
-                  width: 40.w,
-                  height: 40.h,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    height: 16.h,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 8.h),
-                Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    height: 14.h,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 8.h),
-                Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: 12.h,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }

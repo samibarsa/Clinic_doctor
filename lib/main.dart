@@ -23,7 +23,9 @@ import 'package:doctor_app/Features/Splash/splash_screan.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -123,10 +125,15 @@ class ClinicDoctor extends StatelessWidget {
                   UpdatePasswordCubit(updatePassUsecase: updatePassUsecase),
             ),
             BlocProvider<OrderCubit>(
-              create: (context) => OrderCubit(fetchOrdersUseCase,
-                  fetchDoctorDataUseCase, fetchPatientUsecase)
-                ..fetchOrders()
-                ..fetchDoctorDataUseCase(),
+              create: (context) {
+                final now = DateTime.now();
+                final startOfMonth = DateTime(now.year, now.month, 1);
+                final endOfMonth = DateTime(now.year, now.month + 1, 0);
+                return OrderCubit(fetchOrdersUseCase, fetchDoctorDataUseCase,
+                    fetchPatientUsecase)
+                  ..fetchOrders(startDate: startOfMonth, endDate: endOfMonth)
+                  ..fetchDoctorDataUseCase();
+              },
             ),
             BlocProvider<AddPatientCubit>(
                 create: (context) => AddPatientCubit(addPatientUsecase)),
@@ -138,6 +145,17 @@ class ClinicDoctor extends StatelessWidget {
             ),
           ],
           child: MaterialApp(
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              MonthYearPickerLocalizations
+                  .delegate, // إضافة دعم month_year_picker
+            ],
+            supportedLocales: const [
+              Locale('en', 'english'),
+              Locale('ar', 'Arabic'),
+            ],
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               colorScheme: ColorScheme(

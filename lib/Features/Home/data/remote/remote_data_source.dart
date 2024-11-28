@@ -21,7 +21,7 @@ class RemoteDataSource {
       await prefs.setInt('doctorId', response[0]['doctor_id']);
       return Doctor.fromJson(response[0]);
     } on SocketException catch (_) {
-      throw Exception('لا يوجد اتصال بالإنترنت');
+      throw Exception('لا يوجدتصال بالإنترنت');
     } catch (e) {
       throw Exception('فشل في تحميل بيانات الأطباء: ${e.toString()}');
     }

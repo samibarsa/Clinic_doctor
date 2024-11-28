@@ -85,7 +85,7 @@ class MonthlySummaryPage extends StatelessWidget {
                         children: [
                           Text("عدد الطلبات: ${data['orderCount']}"),
                           Text(
-                              "إجمالي الفواتير: ${data['totalPrice'].toStringAsFixed(2)}"),
+                              "إجمالي الفواتير: ${data['totalPrice'].toStringAsFixed(2)} ل.س"),
                         ],
                       ),
                     ),
@@ -221,12 +221,12 @@ class MonthlySummaryPage extends StatelessWidget {
                             pw.Text("الشهر: $monthYear"),
                             pw.Text("عدد الطلبات: ${data['orderCount']}"),
                             pw.Text(
-                                "إجمالي الفواتير: ${data['totalPrice'].toStringAsFixed(2)}"),
+                                "إجمالي الفواتير: ${data['totalPrice'].toStringAsFixed(2)} ل.س"),
                             pw.SizedBox(height: 10),
                           ],
                         ),
                       );
-                    }).toList(),
+                    }),
                   ],
                 ),
               ),

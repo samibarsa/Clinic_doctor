@@ -115,9 +115,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               child: Column(
                 children: [
                   SizedBox(height: 30.h),
-                  _buildHeader(),
                   SizedBox(height: 70.h),
-                  Expanded(child: CustomShimmer()),
+                  const Expanded(child: CustomShimmer()),
                 ],
               ),
             );

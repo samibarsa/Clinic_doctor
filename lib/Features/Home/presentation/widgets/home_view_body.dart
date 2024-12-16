@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shimmer/shimmer.dart';
 
 class HomeViewBody extends StatefulWidget {
   const HomeViewBody({super.key});
@@ -179,12 +178,17 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                   ),
                   SizedBox(height: 24.h),
                   Expanded(
-                    child: BuildListView(
-                      orders: filteredOrders.isEmpty == true
-                          ? ordersToday
-                          : filteredOrders,
-                      state: state,
-                    ),
+                    child: filteredOrders.isNotEmpty
+                        ? BuildListView(
+                            orders: filteredOrders,
+                            state: state,
+                          )
+                        : Center(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.h),
+                              child: const Text('لا توجد طلبات مطابقة.'),
+                            ),
+                          ),
                   ),
                 ],
               ),

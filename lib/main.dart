@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doctor_app/Features/AddOrder/data/datasources/add_order_data_source.dart';
 import 'package:doctor_app/Features/AddOrder/data/repositories/add_order_repo_impl.dart';
 import 'package:doctor_app/Features/AddOrder/domain/usecases/add_order_usecase.dart';
@@ -20,6 +22,7 @@ import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_patient_usecase.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Splash/splash_screan.dart';
+import 'package:doctor_app/core/get_app_version.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,8 +34,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final appVersion = await getAppVersion();
+  log(appVersion.toString());
 
-  // تهيئة Supabase
   final supabase = await Supabase.initialize(
     url: SupabaseKeys.projectUrl,
     anonKey: SupabaseKeys.anonyKey,

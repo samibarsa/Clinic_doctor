@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
 Future<String?> getAppVersion() async {
@@ -12,6 +11,7 @@ Future<String?> getAppVersion() async {
     final version = versionLine.split(':').last.trim();
     return version;
   } catch (e) {
+    // ignore: avoid_print
     print('Failed to load app version: $e');
     return null;
   }

@@ -22,6 +22,7 @@ import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_patient_usecase.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Splash/splash_screan.dart';
+import 'package:doctor_app/Features/getRemoteVersion/data/get_remote_version.dart';
 import 'package:doctor_app/core/get_app_version.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ Future<void> main() async {
     url: SupabaseKeys.projectUrl,
     anonKey: SupabaseKeys.anonyKey,
   );
+ await GetRemoteVersion.getRemoteVersion(supabaseClient: supabase.client);
   final dataRepoImpl = DataRepositoryImpl(RemoteDataSource(supabase.client));
   final authRepositoryImpl = AuthRepositoryImpl(supabase.client);
   final addOrderUsecase = AddOrderUsecase(

@@ -35,7 +35,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   void initState() {
     super.initState();
     searchController.addListener(_filterOrders);
-    _updateFilter(isPanorama, isCephalometric, isCBCT);
   }
 
   @override
@@ -43,6 +42,16 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     searchController.removeListener(_filterOrders);
     searchController.dispose();
     super.dispose();
+  }
+
+  void _initializeFilteredOrders(OrderLoaded state) {
+    final today = DateTime.now();
+    final ordersToday = state.orders.where((order) {
+      return order.date.year == today.year &&
+          order.date.month == today.month &&
+          order.date.day == today.day;
+    }).toList();
+    filteredOrders = ordersToday;
   }
 
   void _filterOrders() {
@@ -106,99 +115,99 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<OrderCubit, OrderState>(
-        builder: (context, state) {
-          if (state is OrderLoading) {
-            return Directionality(
-              textDirection: TextDirection.rtl,
-              child: Column(
-                children: [
-                  SizedBox(height: 30.h),
-                  SizedBox(height: 70.h),
-                  const Expanded(child: CustomShimmer()),
-                ],
-              ),
-            );
-          } else if (state is OrderLoaded) {
-            final today = DateTime.now();
-            final ordersToday = state.orders.where((order) {
-              return order.date.year == today.year &&
-                  order.date.month == today.month &&
-                  order.date.day == today.day;
-            }).toList();
-
-            const Duration(microseconds: 50000);
-            return RefreshIndicator(
-              onRefresh: () async {
-                final now = DateTime.now();
-                final startOfMonth = DateTime(now.year, now.month, 1);
-                final endOfMonth = DateTime(now.year, now.month + 1, 0);
-                context
-                    .read<OrderCubit>()
-                    .fetchOrders(startDate: startOfMonth, endDate: endOfMonth);
-                context.read<OrderCubit>().fetchDoctorDataUseCase();
-              },
-              color: const Color(AppColor.primaryColor),
-              child: Column(
-                children: [
-                  SizedBox(height: 30.h),
-                  _buildHeader(),
-                  SizedBox(height: 24.h),
-                  SizedBox(height: 40.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            MovingNavigation.navTo(
-                              context,
-                              page: AllOrdersPage(
-                                allOrders: state.orders,
-                                state: state,
-                              ),
-                            );
-                          },
-                          child: Text(
-                            "< عرض كل الطلبات",
-                            style: _textStyle().copyWith(fontSize: 14.sp),
-                          ),
-                        ),
-                        Text(
-                          "طلبات اليوم",
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 24.h),
-                  Expanded(
-                    child: filteredOrders.isNotEmpty
-                        ? BuildListView(
-                            orders: filteredOrders,
-                            state: state,
-                          )
-                        : Center(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.h),
-                              child: const Text('لا توجد طلبات مطابقة.'),
-                            ),
-                          ),
-                  ),
-                ],
-              ),
-            );
-          } else if (state is OrderError) {
-            return HomeViewError(state: state);
-          } else {
-            return const Center(child: Text('لم يتم العثور على طلبات.'));
+      body: BlocListener<OrderCubit, OrderState>(
+        listener: (context, state) {
+          if (state is OrderLoaded) {
+            _initializeFilteredOrders(state);
           }
         },
+        child: BlocBuilder<OrderCubit, OrderState>(
+          builder: (context, state) {
+            if (state is OrderLoading) {
+              return Directionality(
+                textDirection: TextDirection.rtl,
+                child: Column(
+                  children: [
+                    SizedBox(height: 30.h),
+                    SizedBox(height: 70.h),
+                    const Expanded(child: CustomShimmer()),
+                  ],
+                ),
+              );
+            } else if (state is OrderLoaded) {
+              const Duration(microseconds: 50000);
+              return RefreshIndicator(
+                onRefresh: () async {
+                  final now = DateTime.now();
+                  final startOfMonth = DateTime(now.year, now.month, 1);
+                  final endOfMonth = DateTime(now.year, now.month + 1, 0);
+                  context
+                      .read<OrderCubit>()
+                      .fetchOrders(startDate: startOfMonth, endDate: endOfMonth);
+                  context.read<OrderCubit>().fetchDoctorDataUseCase();
+                },
+                color: const Color(AppColor.primaryColor),
+                child: Column(
+                  children: [
+                    SizedBox(height: 30.h),
+                    _buildHeader(),
+                    SizedBox(height: 24.h),
+                    SizedBox(height: 40.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              MovingNavigation.navTo(
+                                context,
+                                page: AllOrdersPage(
+                                  allOrders: state.orders,
+                                  state: state,
+                                ),
+                              );
+                            },
+                            child: Text(
+                              "< عرض كل الطلبات",
+                              style: _textStyle().copyWith(fontSize: 14.sp),
+                            ),
+                          ),
+                          Text(
+                            "طلبات اليوم",
+                            style: TextStyle(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 24.h),
+                    Expanded(
+                      child: filteredOrders.isNotEmpty
+                          ? BuildListView(
+                              orders: filteredOrders,
+                              state: state,
+                            )
+                          : Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.h),
+                                child: const Text('لا توجد طلبات مطابقة.'),
+                              ),
+                            ),
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is OrderError) {
+              return HomeViewError(state: state);
+            } else {
+              return const Center(child: Text('لم يتم العثور على طلبات.'));
+            }
+          },
+        ),
       ),
     );
   }

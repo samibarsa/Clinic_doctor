@@ -18,6 +18,7 @@ class ImagesPath {
   static String arrow = 'asset/images/arrow.svg';
   static String done = 'asset/images/done.svg';
   static String arrowListTile = 'asset/images/arrow_listTile.svg';
+  static String maintenenceGif = 'asset/images/Maintenence.png';
 }
 
 class AppColor {

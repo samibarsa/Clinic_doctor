@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart' show rootBundle;
 
-Future<String?> getAppVersion() async {
+Future<String> getAppVersion() async {
   try {
     final pubspecContent = await rootBundle.loadString('pubspec.yaml');
 
@@ -13,6 +13,6 @@ Future<String?> getAppVersion() async {
   } catch (e) {
     // ignore: avoid_print
     print('Failed to load app version: $e');
-    return null;
+    return e.toString();
   }
 }

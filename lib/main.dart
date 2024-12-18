@@ -14,6 +14,9 @@ import 'package:doctor_app/Features/Home/data/repos/data_repo_impl.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_doctor_data.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_order_usecase.dart';
 import 'package:doctor_app/Features/Home/domain/usecase/fetch_patient_usecase.dart';
+import 'package:doctor_app/Features/Splash/data/get_remote_version.dart';
+import 'package:doctor_app/Features/Splash/data/repos/get_version_repo_impl.dart';
+import 'package:doctor_app/Features/Splash/domain/usecase/get_remote_version_usecase.dart';
 import 'package:doctor_app/clinic_doctor.dart';
 import 'package:doctor_app/core/get_app_version.dart';
 import 'package:doctor_app/core/utils/constant.dart';
@@ -59,6 +62,10 @@ Future<void> main() async {
             addOrderRemoteDataSource:
                 AddPatientRemoteDataSource(supabase: supabase.client))),
     addOrderUsecase: addOrderUsecase,
+    getRemoteVersionUsecase: GetRemoteVersionUsecase(
+        getVersionRepoImpl: GetVersionRepoImpl(
+            getRemoteVersionC:
+                GetRemoteVersion(supabaseClient: supabase.client))),
   );
   runApp(clinicDoctor);
 }

@@ -42,6 +42,8 @@ class _HomePageViewWidgetState extends State<HomePageViewWidget> {
   @override
   void initState() {
     super.initState();
+    imagePath = ImagesPath.navbarHome;
+    _filterOrders();
     searchController.addListener(_filterOrders);
   }
 
@@ -70,7 +72,7 @@ class _HomePageViewWidgetState extends State<HomePageViewWidget> {
             orElse: () => Patient(
               name: '',
               id: 0,
-              age: 0, // Other fields with default values
+              age: 0,
             ),
           );
           final patientName = patient.name.toLowerCase();
@@ -88,8 +90,6 @@ class _HomePageViewWidgetState extends State<HomePageViewWidget> {
       });
     }
   }
-
-  
 
   @override
   Widget build(BuildContext context) {

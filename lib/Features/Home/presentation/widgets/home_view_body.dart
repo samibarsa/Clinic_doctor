@@ -34,6 +34,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   void initState() {
     super.initState();
+    _filterOrders();
     searchController.addListener(_filterOrders);
   }
 
@@ -114,40 +115,39 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocListener<OrderCubit, OrderState>(
-        listener: (context, state) {
-          if (state is OrderLoaded) {
-            _initializeFilteredOrders(state);
-          }
-        },
-        child: BlocBuilder<OrderCubit, OrderState>(
-          builder: (context, state) {
-            if (state is OrderLoading) {
-              return Directionality(
-                textDirection: TextDirection.rtl,
-                child: Column(
-                  children: [
-                    SizedBox(height: 30.h),
-                    SizedBox(height: 70.h),
-                    const Expanded(child: CustomShimmer()),
-                  ],
-                ),
-              );
-            } else if (state is OrderLoaded) {
-              const Duration(microseconds: 50000);
-              return RefreshIndicator(
-                onRefresh: () async {
-                  final now = DateTime.now();
-                  final startOfMonth = DateTime(now.year, now.month, 1);
-                  final endOfMonth = DateTime(now.year, now.month + 1, 0);
-                  context
-                      .read<OrderCubit>()
-                      .fetchOrders(startDate: startOfMonth, endDate: endOfMonth);
-                  context.read<OrderCubit>().fetchDoctorDataUseCase();
-                },
-                color: const Color(AppColor.primaryColor),
-                child: Column(
+    return RefreshIndicator(
+      onRefresh: () async {
+        final now = DateTime.now();
+        final startOfMonth = DateTime(now.year, now.month, 1);
+        final endOfMonth = DateTime(now.year, now.month + 1, 0);
+        context
+            .read<OrderCubit>()
+            .fetchOrders(startDate: startOfMonth, endDate: endOfMonth);
+        context.read<OrderCubit>().fetchDoctorDataUseCase();
+      },
+      child: Scaffold(
+        body: BlocListener<OrderCubit, OrderState>(
+          listener: (context, state) {
+            if (state is OrderLoaded) {
+              _initializeFilteredOrders(state);
+            }
+          },
+          child: BlocBuilder<OrderCubit, OrderState>(
+            builder: (context, state) {
+              if (state is OrderLoading) {
+                return Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 30.h),
+                      SizedBox(height: 70.h),
+                      const Expanded(child: CustomShimmer()),
+                    ],
+                  ),
+                );
+              } else if (state is OrderLoaded) {
+                const Duration(microseconds: 50000);
+                return Column(
                   children: [
                     SizedBox(height: 30.h),
                     _buildHeader(),
@@ -199,14 +199,14 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                             ),
                     ),
                   ],
-                ),
-              );
-            } else if (state is OrderError) {
-              return HomeViewError(state: state);
-            } else {
-              return const Center(child: Text('لم يتم العثور على طلبات.'));
-            }
-          },
+                );
+              } else if (state is OrderError) {
+                return HomeViewError(state: state);
+              } else {
+                return const Center(child: Text('لم يتم العثور على طلبات.'));
+              }
+            },
+          ),
         ),
       ),
     );

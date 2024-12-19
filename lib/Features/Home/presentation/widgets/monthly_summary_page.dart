@@ -82,6 +82,7 @@ class MonthlySummaryPage extends StatelessWidget {
 
       await Share.shareXFiles([xFile], text: 'إليك ملخص الجرد الشهري');
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("فشل المشاركة: $e")),
       );

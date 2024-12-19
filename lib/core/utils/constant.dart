@@ -12,7 +12,9 @@ class ImagesPath {
   static String navbarSettings = 'asset/images/navbar_settings.svg';
   static String creatAccount = 'asset/images/make_account.svg';
   static String login = 'asset/images/login.svg';
-  static String xray = 'asset/images/xray.svg';
+  static String cefaloIcon = 'asset/images/cefalo_icon.svg';
+  static String cbctIcon = 'asset/images/cbct_icon.svg';
+  static String panoramaIcon = 'asset/images/panorama_icon.svg';
   static String editIcon = 'asset/images/edit_icon.svg';
   static String nextButton = 'asset/images/next_button.svg';
   static String arrow = 'asset/images/arrow.svg';

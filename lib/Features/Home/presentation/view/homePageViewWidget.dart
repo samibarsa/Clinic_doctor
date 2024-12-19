@@ -78,8 +78,9 @@ class _HomePageViewWidgetState extends State<HomePageViewWidget> {
 
           bool matchesType = false;
           if (isPanorama && orderType.contains('بانوراما')) matchesType = true;
-          if (isCephalometric && orderType.contains('سيفالوماتريك'))
+          if (isCephalometric && orderType.contains('سيفالوماتريك')) {
             matchesType = true;
+          }
           if (isCBCT && orderType.contains('c.b.c.t')) matchesType = true;
 
           return patientName.contains(query) && matchesType;
@@ -88,14 +89,7 @@ class _HomePageViewWidgetState extends State<HomePageViewWidget> {
     }
   }
 
-  void _updateFilter(bool panorama, bool cephalometric, bool cbct) {
-    setState(() {
-      isPanorama = panorama;
-      isCephalometric = cephalometric;
-      isCBCT = cbct;
-    });
-    _filterOrders();
-  }
+  
 
   @override
   Widget build(BuildContext context) {

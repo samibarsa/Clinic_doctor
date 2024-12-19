@@ -36,7 +36,7 @@ class ConfirmAddOrder extends StatelessWidget {
     var examinationOption = "";
     var examinationMode = "";
     var outPut = "";
-    // ignore: unused_local_variable
+    // ignore: unused_local_variable, prefer_typing_uninitialized_variables
     var price;
     var title1 = "الجزء المراد تصويره:";
     var title2 = "وضعية الصورة";

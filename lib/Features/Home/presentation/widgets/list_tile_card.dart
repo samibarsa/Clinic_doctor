@@ -16,6 +16,19 @@ class ListTileCard extends StatelessWidget {
   final String type;
   @override
   Widget build(BuildContext context) {
+    String imagePath = "";
+    switch (type) {
+      case "C.B.C.T":
+        imagePath = ImagesPath.cbctIcon;
+        break;
+      case "سيفالوماتريك":
+        imagePath = ImagesPath.cefaloIcon;
+        break;
+      case "بانوراما":
+        imagePath = ImagesPath.panoramaIcon;
+        break;
+    }
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SizedBox(
@@ -34,7 +47,7 @@ class ListTileCard extends StatelessWidget {
               ),
               leading: Padding(
                 padding: EdgeInsets.only(bottom: 16.h),
-                child: SvgPicture.asset(ImagesPath.xray),
+                child: SvgPicture.asset(imagePath),
               ),
               title: TitleListTile(
                 patientName: papatientName,

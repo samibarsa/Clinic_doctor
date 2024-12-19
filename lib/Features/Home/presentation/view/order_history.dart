@@ -22,6 +22,7 @@ class AllOrdersPage extends StatefulWidget {
       {super.key, required this.allOrders, required this.state});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AllOrdersPageState createState() => _AllOrdersPageState();
 }
 
@@ -105,8 +106,9 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
 
           bool matchesType = false;
           if (isPanorama && orderType.contains('بانوراما')) matchesType = true;
-          if (isCephalometric && orderType.contains('سيفالوماتريك'))
+          if (isCephalometric && orderType.contains('سيفالوماتريك')) {
             matchesType = true;
+          }
           if (isCBCT && orderType.contains('c.b.c.t')) matchesType = true;
 
           return patientName.contains(query) && matchesType;
@@ -159,6 +161,7 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
                 locale: const Locale('ar', 'Arabic'),
               );
               if (selectedDate != null) {
+                // ignore: use_build_context_synchronously
                 BlocProvider.of<OrderCubit>(context).fetchOrders(
                   startDate: selectedDate,
                   endDate: DateTime(selectedDate.year, selectedDate.month + 1),

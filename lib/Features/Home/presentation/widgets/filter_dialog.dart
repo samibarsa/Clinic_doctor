@@ -16,6 +16,7 @@ class FilterDialog extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _FilterDialogState createState() => _FilterDialogState();
 }
 
@@ -66,7 +67,7 @@ class _FilterDialogState extends State<FilterDialog> {
                 widget.onFilterChanged(isPanorama, isCephalometric, isCBCT);
                 Navigator.of(context).pop();
               },
-              child: Text('تطبيق'),
+              child: const Text('تطبيق'),
             ),
           ],
         ),

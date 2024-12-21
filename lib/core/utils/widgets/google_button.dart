@@ -18,10 +18,36 @@ class GoogleButton extends StatelessWidget {
                 border: Border.all(color: const Color(AppColor.primaryColor)),
                 borderRadius: BorderRadius.circular(5.r)),
             child: CustomButton(
-                title: "انشىء حساب بواسطة جوجل",
-                color: 0xffFFFFF,
-                onTap: () {},
-                titleColor: Colors.black)),
+              title: "انشىء حساب بواسطة Google",
+              color: 0xffFFFFFF,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text(
+                        'تنبيه',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      content: const Text(
+                        'المصادقة بواسطة Google ستتوفر في التحديث القادم.',
+                        textAlign: TextAlign.right,
+                        textDirection: TextDirection.rtl,
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('حسنًا'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              titleColor: Colors.black,
+            )),
         Padding(
           padding: const EdgeInsets.only(top: 12, left: 280),
           child: SvgPicture.asset(ImagesPath.google),

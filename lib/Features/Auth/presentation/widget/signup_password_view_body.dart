@@ -2,6 +2,7 @@ import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_sta
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Auth/presentation/views/login_view.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -103,6 +104,9 @@ class _SignUpPasswordViewState extends State<SignUpPasswordView>
               ),
             ),
             body: AuthViewBody(
+              navigation: () {
+                MovingNavigation.navTo(context, page: const LoginView());
+              },
               formKey: formKey,
               validator: (value) {
                 if (value == null || value.isEmpty) {

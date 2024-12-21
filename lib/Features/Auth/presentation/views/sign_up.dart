@@ -1,3 +1,4 @@
+import 'package:doctor_app/Features/Auth/presentation/views/login_view.dart';
 import 'package:doctor_app/Features/Auth/presentation/widget/signup_email_view_body.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
@@ -69,6 +70,9 @@ class _SignUpViewState extends State<SignUpView>
         ),
       ),
       body: AuthViewBody(
+        navigation: () {
+          MovingNavigation.navTo(context, page: const LoginView());
+        },
         formKey: formKey,
         validator: (value) {
           if (value == null || value.isEmpty) {

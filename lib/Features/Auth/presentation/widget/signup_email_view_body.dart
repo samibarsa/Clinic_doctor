@@ -1,3 +1,4 @@
+import 'package:doctor_app/Features/Auth/presentation/views/login_view.dart';
 import 'package:doctor_app/Features/Auth/presentation/widget/signup_password_view_body.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/Auth_view_body.dart';
@@ -70,6 +71,9 @@ class _SignUpEmailViewState extends State<SignUpEmailView>
         ),
       ),
       body: AuthViewBody(
+         navigation: () {
+          MovingNavigation.navTo(context, page: const LoginView());
+        },
         formKey: formKey,
         validator: (value) => value == null || value.isEmpty
             ? 'لا يمكن أن يكون هذا الحقل فارغا'

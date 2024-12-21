@@ -24,7 +24,8 @@ class AuthViewBody extends StatelessWidget {
       required this.firstKeyboardType,
       required this.secondKeyboardType,
       this.formKey,
-      this.validator});
+      this.validator,
+      required this.navigation});
 
   final String firstFiled;
   final String? Function(String?)? validator;
@@ -36,6 +37,7 @@ class AuthViewBody extends StatelessWidget {
   final String state;
   final String questestion;
   final void Function()? onTap;
+  final void Function()? navigation;
   final String buttontitle;
   final Key? formKey; //
   void dispose() {
@@ -115,9 +117,12 @@ class AuthViewBody extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    state,
-                    style: TextStyle(fontSize: 11.sp),
+                  TextButton(
+                    onPressed: navigation,
+                    child: Text(
+                      state,
+                      style: TextStyle(fontSize: 11.sp),
+                    ),
                   ),
                   Text(
                     questestion,

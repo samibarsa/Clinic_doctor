@@ -2,7 +2,9 @@
 
 import 'package:doctor_app/Features/Home/presentation/view/homePageViewWidget.dart';
 import 'package:doctor_app/Features/Splash/presentation/widgets/error_alert_dialog.dart';
+import 'package:doctor_app/Features/Splash/presentation/widgets/maitenence_dialog.dart';
 import 'package:doctor_app/Features/Splash/presentation/widgets/offline_state_body.dart';
+import 'package:doctor_app/Features/Splash/presentation/widgets/update_version_alert_dialog.dart';
 import 'package:doctor_app/Features/wellcome/presentation/views/wellcome.dart';
 import 'package:doctor_app/core/get_app_version.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +41,18 @@ class _SplashScreenState extends State<SplashScreen> {
                       builder: (context) => widget.startWidget
                           ? const HomePageViewWidget()
                           : const WellcomeScrean()));
+            } else if (state.version['version'] == "0.0.0") {
+              showDialog(
+                context: context,
+                builder: (context) => const MaitenenceDialog(),
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (context) => UpdateVersionAlertDialog(
+                  version: state.version,
+                ),
+              );
             }
           }
         }

@@ -2,7 +2,7 @@ import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
-import 'package:doctor_app/Features/Home/presentation/view/order_history.dart';
+import 'package:doctor_app/Features/Home/presentation/view/monthly_order_view.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/build_list_view.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/custom_shimmer.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/filter_dialog.dart';
@@ -162,14 +162,14 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                             onTap: () {
                               MovingNavigation.navTo(
                                 context,
-                                page: AllOrdersPage(
+                                page: MonthlyOrdersPage(
                                   allOrders: state.orders,
                                   state: state,
                                 ),
                               );
                             },
                             child: Text(
-                              "< عرض كل الطلبات",
+                              "< عرض الطلبات الشهرية",
                               style: _textStyle().copyWith(fontSize: 14.sp),
                             ),
                           ),

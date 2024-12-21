@@ -20,6 +20,8 @@ class FilterDialog extends StatefulWidget {
   _FilterDialogState createState() => _FilterDialogState();
 }
 
+bool noDate = false;
+
 class _FilterDialogState extends State<FilterDialog> {
   late bool isPanorama;
   late bool isCephalometric;
@@ -46,17 +48,17 @@ class _FilterDialogState extends State<FilterDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildSwitchOption("بانوراما", isPanorama, (value) {
+            buildSwitchOption("بانوراما", isPanorama, (value) {
               setState(() {
                 isPanorama = value;
               });
             }),
-            _buildSwitchOption("سيفالوماتريك", isCephalometric, (value) {
+            buildSwitchOption("سيفالوماتريك", isCephalometric, (value) {
               setState(() {
                 isCephalometric = value;
               });
             }),
-            _buildSwitchOption("C.B.C.T", isCBCT, (value) {
+            buildSwitchOption("C.B.C.T", isCBCT, (value) {
               setState(() {
                 isCBCT = value;
               });
@@ -75,7 +77,7 @@ class _FilterDialogState extends State<FilterDialog> {
     );
   }
 
-  Widget _buildSwitchOption(
+  Widget buildSwitchOption(
       String title, bool value, ValueChanged<bool> onChanged) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

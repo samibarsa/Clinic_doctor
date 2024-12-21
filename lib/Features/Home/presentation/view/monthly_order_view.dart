@@ -2,31 +2,33 @@ import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_state.dart';
+import 'package:doctor_app/Features/Home/presentation/view/allOrderview.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/monthly_summary_page.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/build_list_view.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/custom_shimmer.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/filter_dialog.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/search_bar.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 
-class AllOrdersPage extends StatefulWidget {
+class MonthlyOrdersPage extends StatefulWidget {
   final List<Order> allOrders;
   final OrderLoaded state;
 
-  const AllOrdersPage(
+  const MonthlyOrdersPage(
       {super.key, required this.allOrders, required this.state});
 
   @override
   // ignore: library_private_types_in_public_api
-  _AllOrdersPageState createState() => _AllOrdersPageState();
+  _MonthlyOrdersPageState createState() => _MonthlyOrdersPageState();
 }
 
-class _AllOrdersPageState extends State<AllOrdersPage> {
+class _MonthlyOrdersPageState extends State<MonthlyOrdersPage> {
   TextEditingController searchController = TextEditingController();
   List<Order> filteredOrders = [];
   Map<String, Map<String, dynamic>> monthlySummary = {};
@@ -132,7 +134,10 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
-        title: const Text('جميع الطلبات'),
+        title: Text(
+          'عرض الطلبات الشهرية',
+          style: TextStyle(fontSize: 18.sp),
+        ),
         actions: [
           IconButton(
             icon: SvgPicture.asset(
@@ -192,12 +197,27 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _filterOrders();
             });
-
             return Column(
               children: [
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 16.h),
                   child: CustomSearchBar(searchController: searchController),
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          MovingNavigation.navTo(context,
+                              page: const Allorderview());
+                        },
+                        child: Text(
+                          "< عرض كل الطلبات",
+                          style: _textStyle().copyWith(fontSize: 14.sp),
+                        )),
+                  ],
                 ),
                 Expanded(
                   child: filteredOrders.isNotEmpty
@@ -212,7 +232,8 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
               ],
             );
           } else if (state is OrderLoading) {
-            return const CustomShimmer();
+            return const Directionality(
+                textDirection: TextDirection.rtl, child: CustomShimmer());
           } else {
             return const Center(child: Text('حدث خطأ أثناء تحميل الطلبات.'));
           }
@@ -220,4 +241,13 @@ class _AllOrdersPageState extends State<AllOrdersPage> {
       ),
     );
   }
+}
+
+TextStyle _textStyle() {
+  return TextStyle(
+    decoration: TextDecoration.underline,
+    decorationColor: const Color(AppColor.primaryColor),
+    fontSize: 11.sp,
+    color: const Color(AppColor.primaryColor),
+  );
 }

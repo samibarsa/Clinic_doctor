@@ -48,26 +48,33 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
       padding: EdgeInsets.symmetric(horizontal: 16.h),
       child: Directionality(
         textDirection: TextDirection.rtl,
-        child: TextField(
-          controller: widget.searchController,
-          focusNode: _focusNode,
-          decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.search),
-            hintText: "ابحث عن اسم المريض",
-            filled: true,
-            fillColor: const Color(0xffF6F7F7),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12.r)),
-              borderSide: BorderSide.none,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(12.r)),
+          child: TextField(
+            controller: widget.searchController,
+            focusNode: _focusNode,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.search),
+              hintText: "ابحث عن اسم المريض",
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                borderSide: const BorderSide(
+                    color: Color(AppColor.primaryColor), width: 2.0),
+              ),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12.r)),
-              borderSide: const BorderSide(
-                  color: Color(AppColor.primaryColor), width: 2.0),
-            ),
+            textInputAction: TextInputAction.search,
+            onSubmitted: _handleSearch,
           ),
-          textInputAction: TextInputAction.search,
-          onSubmitted: _handleSearch,
         ),
       ),
     );

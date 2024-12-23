@@ -35,7 +35,8 @@ class ClinicDoctor extends StatelessWidget {
     required this.startWidget,
     required this.fetchPatientUsecase,
     required this.addPatientUsecase,
-    required this.addOrderUsecase, required this.getRemoteVersionUsecase,
+    required this.addOrderUsecase,
+    required this.getRemoteVersionUsecase,
   });
   final bool startWidget;
 
@@ -51,7 +52,7 @@ class ClinicDoctor extends StatelessWidget {
   final UpdatePassUsecase updatePassUsecase;
   final FetchPatientUsecase fetchPatientUsecase;
   final GetRemoteVersionUsecase getRemoteVersionUsecase;
-  
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -77,10 +78,10 @@ class ClinicDoctor extends StatelessWidget {
             BlocProvider<UpdatePasswordCubit>(
               create: (context) =>
                   UpdatePasswordCubit(updatePassUsecase: updatePassUsecase),
-            ), BlocProvider<GetRemoteVersionCubit>(
-              create: (context) =>
-               GetRemoteVersionCubit(getRemoteVersionUsecase)
             ),
+            BlocProvider<GetRemoteVersionCubit>(
+                create: (context) =>
+                    GetRemoteVersionCubit(getRemoteVersionUsecase)),
             BlocProvider<OrderCubit>(
               create: (context) {
                 final now = DateTime.now();

@@ -51,7 +51,7 @@ class _AddCBCTView2State extends State<AddCBCTView2> {
                       appBarTitle: "صورة تصوير مقطعيC.B.C.T",
                       value1: widget.examinationOption,
                       value2: selectedOption!,
-                      value3: "لا شيء",
+                      value3: "لا يوجد",
                       value4: "${state.price.toString()} ل.س",
                       patientId: widget.patientId,
                       getPriceLoaded: state,

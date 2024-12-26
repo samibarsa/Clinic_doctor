@@ -10,8 +10,10 @@ class Order {
   final String additionalNotes;
   final int price;
   final Output output;
+  final int? toothNumber;
 
-  Order({
+  Order(
+    this.toothNumber, {
     required this.output,
     required this.price,
     required this.orderId,
@@ -24,6 +26,7 @@ class Order {
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
+      json['tooth_number'],
       orderId: json['order_id'],
       doctorId: json['doctor_id'],
       patientId: json['patient_id'],

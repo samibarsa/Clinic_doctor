@@ -66,37 +66,46 @@ class _AddPanoView2State extends State<AddPanoView2> {
             centerTitle: true,
             title: const Text("صورة ماجيك بانوراما"),
           ),
-          body: AddRadioBody(
-            patientId: widget.patientId,
-            options: options,
-            selectedOption: selectedOption,
-            onOptionChanged: (value) {
-              setState(() {
-                selectedOption = value;
-              });
-            },
-            title: "اختر شكل الصورة:",
-            onTap: () async {
-              if (selectedOption != null) {
-                try {
-                  int? detailId = await LocalDataSource.getDetailId(
-                    "لا يوجد",
-                    "بانوراما",
-                    "لا يوجد",
-                  );
-
-                  if (detailId != null) {
-                    BlocProvider.of<GetPriceCubit>(context)
-                        .getPrice(detailId, selectedOption!);
-                  }
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('خطأ: $e')),
-                  );
-                }
+          body: BlocBuilder<GetPriceCubit, GetPriceState>(
+            builder: (context, state) {
+              if (state is GetPriceLoading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
+              return AddRadioBody(
+                patientId: widget.patientId,
+                options: options,
+                selectedOption: selectedOption,
+                onOptionChanged: (value) {
+                  setState(() {
+                    selectedOption = value;
+                  });
+                },
+                title: "اختر شكل الصورة:",
+                onTap: () async {
+                  if (selectedOption != null) {
+                    try {
+                      int? detailId = await LocalDataSource.getDetailId(
+                        "لا يوجد",
+                        "بانوراما",
+                        "لا يوجد",
+                      );
+
+                      if (detailId != null) {
+                        BlocProvider.of<GetPriceCubit>(context)
+                            .getPrice(detailId, selectedOption!);
+                      }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('خطأ: $e')),
+                      );
+                    }
+                  }
+                },
+                titleButton: "تأكيد",
+              );
             },
-            titleButton: "تأكيد",
           ),
         ),
       ),

@@ -31,73 +31,90 @@ class OrderDetailTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TableItem(
-          title: 'اسم المريض',
-          value: patientNameController.text,
-          topradius: 12.r,
-          buttomradius: 0,
-        ),
-        TableItem(
-          title: 'العمر',
-          value: patientAge.toString(),
-          topradius: 0,
-          buttomradius: 0,
-        ),
-        TableItem(
-          title: 'رقم هاتف المريض',
-          value: widget.patient.phoneNumber!,
-          topradius: 12.r,
-          buttomradius: 0,
-        ),
-        TableItem(
-          title: 'اسم الطبيب',
-          value: doctorName,
-          topradius: 0,
-          buttomradius: 0,
-        ),
-        TableItem(
-          title: 'نوع الصورة',
-          value: widget.order.detail.type.typeName,
-          topradius: 0,
-          buttomradius: 0,
-        ),
-        TableItem(
-          title: 'الجزء المراد تصويره',
-          value: widget.order.detail.option.optionName,
-          topradius: 0,
-          buttomradius: 0,
-        ),
-        if (selectedImageType != 'بانوراما')
+        if (patientNameController.text != "لا يوجد")
+          TableItem(
+            title: 'اسم المريض',
+            value: patientNameController.text,
+            topradius: 12.r,
+            buttomradius: 0,
+          ),
+        if (patientAge.toString() != "لا يوجد")
+          TableItem(
+            title: 'العمر',
+            value: patientAge.toString(),
+            topradius: 0,
+            buttomradius: 0,
+          ),
+        if (widget.patient.phoneNumber != "لا يوجد")
+          TableItem(
+            title: 'رقم هاتف المريض',
+            value: widget.patient.phoneNumber!,
+            topradius: 12.r,
+            buttomradius: 0,
+          ),
+        if (doctorName != "لا يوجد")
+          TableItem(
+            title: 'اسم الطبيب',
+            value: doctorName,
+            topradius: 0,
+            buttomradius: 0,
+          ),
+        if (widget.order.detail.type.typeName != "لا يوجد")
+          TableItem(
+            title: 'نوع الصورة',
+            value: widget.order.detail.type.typeName,
+            topradius: 0,
+            buttomradius: 0,
+          ),
+        if (widget.order.detail.option.optionName != "لا يوجد")
+          TableItem(
+            title: 'الجزء المراد تصويره',
+            value: widget.order.detail.option.optionName,
+            topradius: 0,
+            buttomradius: 0,
+          ),
+        if (widget.order.detail.option.optionName == "ساحة 5*5 مميزة للبية")
+          TableItem(
+              title: "رقم السن",
+              value: widget.order.toothNumber.toString(),
+              topradius: 0,
+              buttomradius: 0),
+        if (selectedImageType != 'بانوراما' &&
+            widget.order.detail.mode!.modeName != "لا يوجد")
           TableItem(
             title: 'وضعية الصورة',
             value: widget.order.detail.mode!.modeName,
             topradius: 0,
             buttomradius: 0,
           ),
-        TableItem(
-          title: 'التاريخ',
-          value: date,
-          topradius: 0,
-          buttomradius: 0,
-        ),
-        TableItem(
-          title: 'التوقيت',
-          value: time,
-          topradius: 0,
-          buttomradius: 0,
-        ),
-        TableItem(
-          title: 'الفاتورة',
-          value: "$price ل.س",
-          topradius: 0,
-          buttomradius: 0,
-        ),
-        TableItem(
-          title: 'ملاحظات',
-          value: additionalNotesController.text,
-          topradius: 0,
-          buttomradius: 12.r,
-        ),
+        if (date != "لا يوجد")
+          TableItem(
+            title: 'التاريخ',
+            value: date,
+            topradius: 0,
+            buttomradius: 0,
+          ),
+        if (time != "لا يوجد")
+          TableItem(
+            title: 'التوقيت',
+            value: time,
+            topradius: 0,
+            buttomradius: 0,
+          ),
+        if (price.toString() != "لا يوجد")
+          TableItem(
+            title: 'الفاتورة',
+            value: "$price ل.س",
+            topradius: 0,
+            buttomradius: 0,
+          ),
+        if (additionalNotesController.text != "لا يوجد")
+          TableItem(
+            title: 'ملاحظات',
+            value: additionalNotesController.text,
+            topradius: 0,
+            buttomradius: 12.r,
+          ),
       ],
     );
   }

@@ -59,27 +59,28 @@ class RemoteDataSource {
       final response = await Supabase.instance.client
           .from('orders')
           .select('''
-        order_id,
-        doctor_id,
-        patient_id,
-        order_price,
-        date,
-        additional_notes,
-        output:order_output(
-          id,
-          output_type,
-          price
-        ),
-        examinationdetails!inner(
-          detail_id,
-          mode:examinationmodes(mode_id, mode_name),
-          option:examinationoptions(option_id, option_name),
-          type:examinationtypes(examination_type_id, type_name)
-        )
-      ''')
+    order_id,
+    doctor_id,
+    patient_id,
+    order_price,
+    date,
+    additional_notes,
+    tooth_number, 
+    output:order_output(
+      id,
+      output_type,
+      price
+    ),
+    examinationdetails!inner(
+      detail_id,
+      mode:examinationmodes(mode_id, mode_name),
+      option:examinationoptions(option_id, option_name),
+      type:examinationtypes(examination_type_id, type_name)
+    )
+  ''')
           .eq('doctor_id', condition['doctor_id'])
           .gte('date', startDate.toIso8601String()) // تاريخ البداية
-          .lte('date', endDate.toIso8601String());
+          .lte('date', endDate.toIso8601String()); // تاريخ النهاية
 
       // التحقق من وجود نتائج
       // ignore: unnecessary_null_comparison

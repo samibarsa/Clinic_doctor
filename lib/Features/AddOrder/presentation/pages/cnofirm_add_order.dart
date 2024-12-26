@@ -22,8 +22,10 @@ class ConfirmAddOrder extends StatelessWidget {
       required this.value3,
       required this.value4,
       required this.patientId,
-      required this.getPriceLoaded});
+      required this.getPriceLoaded,
+      this.toothNumber});
   final String appBarTitle;
+  final int? toothNumber;
   final String value1;
   final String value2;
   final String value3;
@@ -54,15 +56,27 @@ class ConfirmAddOrder extends StatelessWidget {
       examinationMode = "لا يوجد";
       type = "بانوراما";
     } else if (appBarTitle == "صورة تصوير مقطعيC.B.C.T") {
-      title1 = "الجزء المراد تصويره:";
-      examinationOption = value1;
-      title2 = "وضعية الصورة";
-      examinationMode = value2;
-      title3 = "شكل الصورة:";
-      outPut = "لا شيء";
-      title4 = "الفاتورة :";
-      price = value3;
-      type = "C.B.C.T";
+      if (value1 == "ساحة 5*5 مميزة للبية") {
+        title1 = "الجزء المراد تصويره:";
+        examinationOption = value1;
+        title2 = "وضعية الصورة";
+        examinationMode = value2;
+        title3 = "رقم السن :";
+        outPut = value3;
+        title4 = "الفاتورة :";
+        price = value4;
+        type = "C.B.C.T";
+      } else {
+        title1 = "الجزء المراد تصويره:";
+        examinationOption = value1;
+        title2 = "وضعية الصورة";
+        examinationMode = value2;
+        title3 = "شكل الصورة:";
+        outPut = "لا يوجد";
+        title4 = "الفاتورة :";
+        price = value3;
+        type = "C.B.C.T";
+      }
     } else if (appBarTitle == "صورة سيفالومتريك") {
       title1 = "الجزء المراد تصويره:";
       examinationOption = value1;
@@ -125,84 +139,91 @@ class ConfirmAddOrder extends StatelessWidget {
                   SizedBox(
                     height: 34.h,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SectionTitle(
-                        title: title1,
-                        style: TextStyle(
-                            fontSize: 20.sp, fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: 30.h,
-                      ),
-                      InfoBeforDone(value: value1),
-                      SizedBox(
-                        height: 36.h,
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SectionTitle(
-                        title: title2,
-                        style: TextStyle(
-                            fontSize: 20.sp, fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: 30.h,
-                      ),
-                      InfoBeforDone(value: value2),
-                      SizedBox(
-                        height: 36.h,
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      appBarTitle != "صورة تصوير مقطعيC.B.C.T"
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SectionTitle(
-                                  title: title3,
-                                  style: TextStyle(
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(
-                                  height: 30.h,
-                                ),
-                                InfoBeforDone(value: value3),
-                                SizedBox(
-                                  height: 36.h,
-                                )
-                              ],
-                            )
-                          : const SizedBox()
-                    ],
-                  ),
-                  appBarTitle != "صورة ماجيك بانوراما"
-                      ? Column(
+                  if (value1 != "لا يوجد") // الشرط هنا
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SectionTitle(
+                          title: title1,
+                          style: TextStyle(
+                              fontSize: 20.sp, fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        InfoBeforDone(value: value1),
+                        SizedBox(
+                          height: 36.h,
+                        )
+                      ],
+                    ),
+                  if (value2 != "لا يوجد") // الشرط هنا
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SectionTitle(
+                          title: title2,
+                          style: TextStyle(
+                              fontSize: 20.sp, fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        InfoBeforDone(value: value2),
+                        SizedBox(
+                          height: 36.h,
+                        )
+                      ],
+                    ),
+                  if (value3 != "لا يوجد") // الشرط هنا
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SectionTitle(
-                              title: title4,
+                              title: title3,
                               style: TextStyle(
                                   fontSize: 20.sp, fontWeight: FontWeight.w500),
                             ),
                             SizedBox(
                               height: 30.h,
                             ),
-                            InfoBeforDone(value: value4),
+                            InfoBeforDone(value: value3),
                             SizedBox(
                               height: 36.h,
                             )
                           ],
                         )
-                      : const SizedBox(),
+                      ],
+                    ),
+                  if (value4 != "لا يوجد") // الشرط هنا
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        appBarTitle != "صورة ماجيك بانوراما"
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SectionTitle(
+                                    title: title4,
+                                    style: TextStyle(
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 30.h,
+                                  ),
+                                  InfoBeforDone(value: value4),
+                                  SizedBox(
+                                    height: 36.h,
+                                  )
+                                ],
+                              )
+                            : const SizedBox()
+                      ],
+                    ),
                   CustomTextField(
                     title: 'ملاحظات',
                     radius: 6.sp,
@@ -226,6 +247,7 @@ class ConfirmAddOrder extends StatelessWidget {
                         final endOfMonth = DateTime(now.year, now.month + 1, 0);
                         await BlocProvider.of<AddOrderCubit>(context).addOrder(
                             getPriceLoaded,
+                            toothNumber != null ? toothNumber! : 0,
                             outPut,
                             examinationOption,
                             patientId,
@@ -261,20 +283,22 @@ class InfoBeforDone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 20.w,
-        ),
-        SvgPicture.asset(ImagesPath.done),
-        SizedBox(
-          width: 16.w,
-        ),
-        Text(
-          value,
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
-        ),
-      ],
-    );
+    return value != "لا يوجد" // الشرط هنا
+        ? Row(
+            children: [
+              SizedBox(
+                width: 20.w,
+              ),
+              SvgPicture.asset(ImagesPath.done),
+              SizedBox(
+                width: 16.w,
+              ),
+              Text(
+                value,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
+              ),
+            ],
+          )
+        : const SizedBox(); // إرجاع عنصر فارغ إذا كانت القيمة "لا يوجد"
   }
 }

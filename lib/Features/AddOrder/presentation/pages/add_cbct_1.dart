@@ -99,7 +99,7 @@ class _AddCBCTView1State extends State<AddCBCTView1> {
                             examinationOption: selectedOption!,
                           ));
                     } else if (selectedOption == 'ساحة 5*5 مميزة للبية') {
-                      MovingNavigation.navTo(context, page: Teeth());
+                      MovingNavigation.navTo(context, page: Teeth(patientId: widget.patientId,));
                     } else if (selectedOption == 'كامل الجمجمة' ||
                         selectedOption == 'الفكين معا') {
                       try {

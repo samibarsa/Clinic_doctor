@@ -13,6 +13,7 @@ class AddOrderCubit extends Cubit<AddorderState> {
   AddOrderCubit(this.addOrderUsecase) : super(AddorderInitial());
   Future<void> addOrder(
       GetPriceLoaded state,
+      int toothNumber,
       String outPut,
       String examinationOption,
       int patientId,
@@ -34,6 +35,7 @@ class AddOrderCubit extends Cubit<AddorderState> {
         outputId = 3;
       }
       final data = {
+        'tooth_number': toothNumber == 0 ? null : toothNumber,
         'doctor_id': doctorId,
         'detiles_id': detailId,
         'order_price': state.price,

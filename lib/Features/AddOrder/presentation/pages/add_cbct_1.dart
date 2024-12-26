@@ -55,7 +55,7 @@ class _AddCBCTView1State extends State<AddCBCTView1> {
                               appBarTitle: "صورة تصوير مقطعيC.B.C.T",
                               value1: selectedOption!,
                               value2: "لا يوجد",
-                              value3: "لا شيء",
+                              value3: "لا يوجد",
                               value4: "${state.price.toString()} ل.س",
                               patientId: widget.patientId,
                               getPriceLoaded: state));
@@ -99,7 +99,10 @@ class _AddCBCTView1State extends State<AddCBCTView1> {
                             examinationOption: selectedOption!,
                           ));
                     } else if (selectedOption == 'ساحة 5*5 مميزة للبية') {
-                      MovingNavigation.navTo(context, page: Teeth(patientId: widget.patientId,));
+                      MovingNavigation.navTo(context,
+                          page: Teeth(
+                            patientId: widget.patientId,
+                          ));
                     } else if (selectedOption == 'كامل الجمجمة' ||
                         selectedOption == 'الفكين معا') {
                       try {

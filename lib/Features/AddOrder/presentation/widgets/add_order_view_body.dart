@@ -1,6 +1,5 @@
 import 'package:doctor_app/Features/AddOrder/presentation/pages/add_cbct_1.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/pages/add_pano_view2.dart';
-import 'package:doctor_app/Features/AddOrder/presentation/pages/add_pano_view_1.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/pages/add_sefalo_1.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/pages/add_sefalo_3.dart';
 import 'package:doctor_app/core/utils/constant.dart';
@@ -43,15 +42,15 @@ class AddOrderViewBody extends StatelessWidget {
             MovingNavigation.navTo(context,
                 page: AddPanoView2(
                   patientId: patientId,
-                  examinationOption: "",
+                  examinationOption: "مفصل TMJ",
                 ));
           }),
           _buildCarrlListTile("العمر العظمي Carpus", () {
             MovingNavigation.navTo(context,
                 page: AddSefaloView3(
-                    examinationOption: "",
+                    examinationOption: "Carpus العمر العظمي",
                     patientId: patientId,
-                    examinationMode: ""));
+                    examinationMode: "لا يوجد"));
           }),
         ],
       ),

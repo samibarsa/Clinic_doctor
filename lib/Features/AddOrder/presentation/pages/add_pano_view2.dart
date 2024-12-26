@@ -42,7 +42,9 @@ class _AddPanoView2State extends State<AddPanoView2> {
                     context,
                     page: ConfirmAddOrder(
                       appBarTitle: "صورة ماجيك بانوراما",
-                      value1: "لا يوجد",
+                      value1: widget.examinationOption == "مفصل TMJ"
+                          ? widget.examinationOption
+                          : "لا يوجد",
                       value2: selectedOption!,
                       value3: "${state.price.toString()} ل.س",
                       value4: '',

@@ -44,9 +44,9 @@ class _AddPanoView1State extends State<AddSefaloView2> {
             if (selectedOption != null) {
               MovingNavigation.navTo(context,
                   page: AddSefaloView3(
-                      examinationOption: widget.examinationOption,
+                      examinationOption: selectedOption!,
                       patientId: widget.patientId,
-                      examinationMode: selectedOption!));
+                      examinationMode: "لا يوجد"));
             }
           },
         ),

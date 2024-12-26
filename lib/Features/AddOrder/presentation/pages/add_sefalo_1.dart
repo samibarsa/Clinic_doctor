@@ -1,4 +1,5 @@
 import 'package:doctor_app/Features/AddOrder/presentation/pages/add_sefalo_2.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/pages/add_sefalo_3.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/widgets/add_radio_body.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class _AddPanoView1State extends State<AddSefaloView1> {
 
   final List<String> options = [
     'Full lateral جانبية',
-    'Carpus العمر العظمي',
+    'Forntal جبهية',
   ];
 
   @override
@@ -41,9 +42,10 @@ class _AddPanoView1State extends State<AddSefaloView1> {
           onTap: () {
             if (selectedOption != null) {
               MovingNavigation.navTo(context,
-                  page: AddSefaloView2(
+                  page: AddSefaloView3(
                     patientId: widget.patientId,
                     examinationOption: selectedOption!,
+                    examinationMode: 'لا يوجد',
                   ));
             }
           },

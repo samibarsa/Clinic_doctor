@@ -16,23 +16,22 @@ class AddCBCTView2 extends StatefulWidget {
   });
 
   final String examinationOption;
-
   final int patientId;
 
   @override
-  State<AddCBCTView2> createState() => _AddPanoView2State();
+  State<AddCBCTView2> createState() => _AddCBCTView2State();
 }
 
-class _AddPanoView2State extends State<AddCBCTView2> {
+class _AddCBCTView2State extends State<AddCBCTView2> {
   String? selectedOption;
 
   @override
   Widget build(BuildContext context) {
     final List<String> options = [
-      'كامل الجمجمة',
-      'ساحة 5*5 مميزة للبية',
-      'إجراء دراسة كاملة للمقطع',
-      'نصف فك'
+      'الفك كامل',
+      'نصف فك أيمن',
+      'نصف فك أيسر',
+      'المنطقة الأمامية'
     ];
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -42,7 +41,7 @@ class _AddPanoView2State extends State<AddCBCTView2> {
             listener: (context, state) {
               if (state is GetPriceLoaded) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${state.price} الكلفه')),
+                  SnackBar(content: Text('${state.price} الكلفة')),
                 );
 
                 if (selectedOption != null) {
@@ -79,7 +78,7 @@ class _AddPanoView2State extends State<AddCBCTView2> {
             return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: const Text("صورة تصوير مقطعيC.B.C.T"),
+                title: const Text("صورة تصوير مقطعي C.B.C.T"),
               ),
               body: AddRadioBody(
                 patientId: widget.patientId,

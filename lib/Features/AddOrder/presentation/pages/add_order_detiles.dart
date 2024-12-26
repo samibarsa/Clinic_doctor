@@ -8,18 +8,18 @@ import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddPanoView2 extends StatefulWidget {
-  const AddPanoView2(
+class AddTMJ extends StatefulWidget {
+  const AddTMJ(
       {super.key, required this.examinationOption, required this.patientId});
 
   final String examinationOption;
   final int patientId;
 
   @override
-  State<AddPanoView2> createState() => _AddPanoView2State();
+  State<AddTMJ> createState() => _AddTMJState();
 }
 
-class _AddPanoView2State extends State<AddPanoView2> {
+class _AddTMJState extends State<AddTMJ> {
   String? selectedOption;
 
   @override
@@ -41,8 +41,8 @@ class _AddPanoView2State extends State<AddPanoView2> {
                   MovingNavigation.navTo(
                     context,
                     page: ConfirmAddOrder(
-                      appBarTitle: "صورة ماجيك بانوراما",
-                      value1: "لا يوجد",
+                      appBarTitle: "صورة TMJ",
+                      value1: widget.examinationOption,
                       value2: selectedOption!,
                       value3: "${state.price.toString()} ل.س",
                       value4: '',
@@ -62,7 +62,7 @@ class _AddPanoView2State extends State<AddPanoView2> {
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: const Text("صورة ماجيك بانوراما"),
+            title: const Text("صورة TMJ"),
           ),
           body: AddRadioBody(
             patientId: widget.patientId,
@@ -80,7 +80,7 @@ class _AddPanoView2State extends State<AddPanoView2> {
                   int? detailId = await LocalDataSource.getDetailId(
                     "لا يوجد",
                     "بانوراما",
-                    "لا يوجد",
+                    widget.examinationOption,
                   );
 
                   if (detailId != null) {

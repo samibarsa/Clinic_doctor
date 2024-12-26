@@ -1,6 +1,8 @@
 import 'package:doctor_app/Features/AddOrder/presentation/pages/add_cbct_1.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/pages/add_pano_view2.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/pages/add_pano_view_1.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/pages/add_sefalo_1.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/pages/add_sefalo_3.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +26,9 @@ class AddOrderViewBody extends StatelessWidget {
           ),
           _buildCarrlListTile("تصوير ماجيك بانوراما", () {
             MovingNavigation.navTo(context,
-                page: AddPanoView1(
+                page: AddPanoView2(
                   patientId: patientId,
+                  examinationOption: '',
                 ));
           }),
           _buildCarrlListTile("تصوير سيفالومتريك", () {
@@ -35,6 +38,20 @@ class AddOrderViewBody extends StatelessWidget {
           _buildCarrlListTile("تصوير مقطعي C.B.C.T", () {
             MovingNavigation.navTo(context,
                 page: AddCBCTView1(patientId: patientId));
+          }),
+          _buildCarrlListTile("مفصل TMJ", () {
+            MovingNavigation.navTo(context,
+                page: AddPanoView2(
+                  patientId: patientId,
+                  examinationOption: "",
+                ));
+          }),
+          _buildCarrlListTile("العمر العظمي Carpus", () {
+            MovingNavigation.navTo(context,
+                page: AddSefaloView3(
+                    examinationOption: "",
+                    patientId: patientId,
+                    examinationMode: ""));
           }),
         ],
       ),

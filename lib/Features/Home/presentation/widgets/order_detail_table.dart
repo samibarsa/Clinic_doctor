@@ -73,6 +73,13 @@ class OrderDetailTable extends StatelessWidget {
             topradius: 0,
             buttomradius: 0,
           ),
+        if (widget.order.detail.type.typeName != "C.B.C.T")
+          TableItem(
+            title: 'شكل الصورة',
+            value: widget.order.output.outputType,
+            topradius: 0,
+            buttomradius: 0,
+          ),
         if (widget.order.detail.option.optionName == "ساحة 5*5 مميزة للبية")
           TableItem(
               title: "رقم السن",

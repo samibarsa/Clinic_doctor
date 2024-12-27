@@ -31,7 +31,7 @@ class LoginViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthSuccess) {
+        if (state is AuthSuccess && state.isFromSignUp == false) {
           Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) =>

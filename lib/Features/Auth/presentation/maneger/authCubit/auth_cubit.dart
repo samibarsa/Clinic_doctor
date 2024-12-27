@@ -19,31 +19,24 @@ class AuthCubit extends Cubit<AuthState> {
     required this.signOutUseCase,
   }) : super(AuthInitial());
 
-  // عملية التسجيل
+  /// **تسجيل حساب جديد**
   Future<void> signUp(
       String email, String password, String doctorName, String phone) async {
     emit(AuthLoading());
     try {
       await signUpUseCase.call(email, password, doctorName, phone);
-      emit(AuthSuccess());
+      emit(AuthSuccess(isFromSignUp: true));
     } catch (e) {
-      String errorMessage = 'حدث خطأ غير متوقع. يرجى المحاولة لاحقًا.';
-      if (e.toString().contains('User already exists')) {
-        errorMessage =
-            'هذا البريد الإلكتروني مسجل بالفعل. يرجى استخدام بريد إلكتروني آخر.';
-      } else if (e.toString().contains('weak password')) {
-        errorMessage = 'كلمة المرور ضعيفة. يرجى استخدام كلمة مرور أقوى.';
-      }
-      emit(AuthFailure(errorMessage));
+      emit(AuthFailure(e.toString()));
     }
   }
 
-  // عملية تسجيل الدخول
+  /// **تسجيل الدخول**
   Future<void> signIn(String email, String password) async {
     emit(AuthLoading());
     try {
       await signInUseCase.call(email, password);
-      emit(AuthSuccess());
+      emit(AuthSuccess(isFromSignUp: false));
     } catch (e) {
       String errorMessage = 'حدث خطأ غير متوقع. يرجى المحاولة لاحقًا.';
       if (e.toString().contains('Invalid login credentials')) {
@@ -56,7 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  // عملية تسجيل الخروج
+  /// **تسجيل الخروج**
   Future<void> signOut() async {
     emit(AuthLoading());
     try {
@@ -69,20 +62,24 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  /// **إعادة تعيين كلمة المرور**
   Future<void> ressetPassword(String email) async {
     emit(AuthLoading());
     try {
       await ressetPasswordUseCase.call(email);
-      emit(AuthSuccess());
+      emit(AuthSuccess(isFromSignUp: false));
     } catch (e) {
       emit(AuthFailure(e.toString().split(":")[3]));
     }
   }
 }
 
+/// **كوبت التحقق**
 class VerifyCubit extends Cubit<VerifyState> {
   final VerifyTokenUseCase verifyTokenUseCase;
+
   VerifyCubit({required this.verifyTokenUseCase}) : super(VerifyInitial());
+
   Future<void> verifyToken(
       String email, String token, BuildContext context) async {
     emit(VerifyLoading());
@@ -90,9 +87,11 @@ class VerifyCubit extends Cubit<VerifyState> {
       await verifyTokenUseCase.call(email, token, context);
       emit(VerifySuccess());
     } catch (e) {
-      e.toString().split(":")[2].split(",")[0] ==
-          "Token has expired or is invalid";
-      emit(VerifyFailure("الرمز غير صحيح أو منتهي الصلاحية"));
+      String errorMessage = 'الرمز غير صحيح أو منتهي الصلاحية';
+      if (e.toString().contains("Token has expired or is invalid")) {
+        errorMessage = 'الرمز غير صحيح أو منتهي الصلاحية';
+      }
+      emit(VerifyFailure(errorMessage));
     }
   }
 }

@@ -162,7 +162,7 @@ class ShowOrderState extends StatelessWidget {
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: Container(
-          width: MediaQuery.of(context).size.width / 1.2,
+          width: MediaQuery.of(context).size.width / 1.1,
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
           decoration: BoxDecoration(
             color:

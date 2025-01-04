@@ -2,10 +2,12 @@
 
 import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/AddOrder/addorder_cubit.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/maneger/cubit/GetPrice/get_price_cubit.dart';
+import 'package:doctor_app/Features/AddOrder/presentation/pages/add_order_view.dart';
 import 'package:doctor_app/Features/AddOrder/presentation/widgets/section_title.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/view/homePageViewWidget.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +34,9 @@ class ConfirmAddOrder extends StatelessWidget {
   final String value4;
   final int patientId;
   final GetPriceLoaded getPriceLoaded;
-
   @override
   Widget build(BuildContext context) {
+    bool oneImage = false;
     TextEditingController notes = TextEditingController();
     var examinationOption = "";
     var examinationMode = "";
@@ -103,7 +105,7 @@ class ConfirmAddOrder extends StatelessWidget {
               (Route<dynamic> route) =>
                   false, // شرط الإزالة: إزالة جميع الصفحات
             );
-          } else if (state is AddorderSucses) {
+          } else if (state is AddorderSucses && oneImage == true) {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
@@ -242,6 +244,7 @@ class ConfirmAddOrder extends StatelessWidget {
                       title: "تأكيد",
                       color: 0xffFFFF,
                       onTap: () async {
+                        oneImage = true;
                         final now = DateTime.now();
                         final startOfMonth = DateTime(now.year, now.month, 1);
                         final endOfMonth = DateTime(now.year, now.month + 1, 0);
@@ -261,8 +264,37 @@ class ConfirmAddOrder extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 120.h,
-                  )
+                    height: 21.h,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(6.r)),
+                        border: Border.all(
+                            color: const Color(AppColor.primaryColor))),
+                    child: CustomButton(
+                      title: "صورة أخرى",
+                      color: 0xffFFFF,
+                      onTap: () async {
+                        oneImage = false;
+                        await BlocProvider.of<AddOrderCubit>(context).addOrder(
+                            getPriceLoaded,
+                            toothNumber != null ? toothNumber! : 0,
+                            outPut,
+                            examinationOption,
+                            patientId,
+                            examinationMode,
+                            type,
+                            notes.text);
+
+                        MovingNavigation.navTo(context,
+                            page: AddOrderView(
+                              patientId: patientId,
+                            ));
+                      },
+                      titleColor: Colors.black,
+                    ),
+                  ),
+                  Spacer()
                 ],
               ),
             ),

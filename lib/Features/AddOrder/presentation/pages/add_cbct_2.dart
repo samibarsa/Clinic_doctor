@@ -40,10 +40,6 @@ class _AddCBCTView2State extends State<AddCBCTView2> {
           BlocListener<GetPriceCubit, GetPriceState>(
             listener: (context, state) {
               if (state is GetPriceLoaded) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${state.price} الكلفة')),
-                );
-
                 if (selectedOption != null) {
                   MovingNavigation.navTo(
                     context,

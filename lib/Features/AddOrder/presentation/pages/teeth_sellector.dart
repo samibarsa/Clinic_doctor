@@ -32,9 +32,6 @@ class _TeethState extends State<Teeth> {
       body: BlocListener<GetPriceCubit, GetPriceState>(
         listener: (context, state) {
           if (state is GetPriceLoaded) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${state.price} الكلفة')),
-            );
             if (toothNumber != "") {
               MovingNavigation.navTo(
                 context,

@@ -33,10 +33,6 @@ class _AddPanoView2State extends State<AddPanoView2> {
           BlocListener<GetPriceCubit, GetPriceState>(
             listener: (context, state) {
               if (state is GetPriceLoaded) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${state.price} الكلفه')),
-                );
-
                 if (selectedOption != null) {
                   MovingNavigation.navTo(
                     context,

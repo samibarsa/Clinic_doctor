@@ -35,7 +35,6 @@ class ListTileCard extends StatelessWidget {
         height: 80.h,
         child: Card(
           margin: EdgeInsets.symmetric(horizontal: 16.w),
-          color: const Color(0xfffefefe),
           child: ListTile(
               trailing: Padding(
                 padding: EdgeInsets.only(

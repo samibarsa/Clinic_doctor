@@ -285,7 +285,9 @@ class ConfirmAddOrder extends StatelessWidget {
                       titleColor: Colors.black,
                     ),
                   ),
-                  Spacer()
+                  SizedBox(
+                    height: 30.h,
+                  )
                 ],
               ),
             ),

@@ -60,28 +60,30 @@ class _MonthlyOrdersPageState extends State<MonthlyOrdersPage> {
     };
 
     for (var order in filteredOrders) {
-      final date = DateTime.parse(
-          order.date.toString()); // Assuming `order.date` is a String
-      final monthYear = "${date.month}-${date.year}";
-      final orderType = order.detail.type.typeName.toLowerCase();
+      if (order.isImaged) {
+        final date = DateTime.parse(
+            order.date.toString()); // Assuming `order.date` is a String
+        final monthYear = "${date.month}-${date.year}";
+        final orderType = order.detail.type.typeName.toLowerCase();
 
-      if (!monthlySummary.containsKey(monthYear)) {
-        monthlySummary[monthYear] = {
-          "totalPrice": 0.0,
-          "orderCount": 0,
-        };
-      }
+        if (!monthlySummary.containsKey(monthYear)) {
+          monthlySummary[monthYear] = {
+            "totalPrice": 0.0,
+            "orderCount": 0,
+          };
+        }
 
-      monthlySummary[monthYear]!["totalPrice"] += order.price;
-      monthlySummary[monthYear]!["orderCount"]++;
+        monthlySummary[monthYear]!["totalPrice"] += order.price;
+        monthlySummary[monthYear]!["orderCount"]++;
 
-      // زيادة العداد لكل نوع بناءً على النوع
-      if (orderType.contains("بانوراما")) {
-        orderTypeCount["بانوراما"] = orderTypeCount["بانوراما"]! + 1;
-      } else if (orderType.contains("سيفالوماتريك")) {
-        orderTypeCount["سيفالوماتريك"] = orderTypeCount["سيفالوماتريك"]! + 1;
-      } else if (orderType.contains("c.b.c.t")) {
-        orderTypeCount["C.BC.T"] = orderTypeCount["C.BC.T"]! + 1;
+        // زيادة العداد لكل نوع بناءً على النوع
+        if (orderType.contains("بانوراما")) {
+          orderTypeCount["بانوراما"] = orderTypeCount["بانوراما"]! + 1;
+        } else if (orderType.contains("سيفالوماتريك")) {
+          orderTypeCount["سيفالوماتريك"] = orderTypeCount["سيفالوماتريك"]! + 1;
+        } else if (orderType.contains("c.b.c.t")) {
+          orderTypeCount["C.BC.T"] = orderTypeCount["C.BC.T"]! + 1;
+        }
       }
     }
 

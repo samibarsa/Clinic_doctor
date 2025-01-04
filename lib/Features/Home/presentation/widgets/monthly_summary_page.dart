@@ -19,19 +19,23 @@ class MonthlySummaryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "ملخص الجرد الشهري",
-              style: TextStyle(fontSize: 18.sp),
-            ),
-            if (doctorName.isNotEmpty)
+        title: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
-                "دكتور: $doctorName",
-                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
+                "ملخص الجرد الشهري",
+                style: TextStyle(fontSize: 18.sp),
               ),
-          ],
+              if (doctorName.isNotEmpty)
+                Text(
+                  "دكتور: $doctorName",
+                  style:
+                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
+                ),
+            ],
+          ),
         ),
         centerTitle: true,
         actions: [

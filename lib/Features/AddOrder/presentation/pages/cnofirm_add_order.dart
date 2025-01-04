@@ -97,14 +97,7 @@ class ConfirmAddOrder extends StatelessWidget {
           if (state is AddorderFailure) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.errMessage)));
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      const HomePageViewWidget()), // الصفحة الجديدة
-              (Route<dynamic> route) =>
-                  false, // شرط الإزالة: إزالة جميع الصفحات
-            );
+            ;
           } else if (state is AddorderSucses && oneImage == true) {
             Navigator.pushAndRemoveUntil(
               context,
@@ -122,10 +115,6 @@ class ConfirmAddOrder extends StatelessWidget {
               body: Center(
                 child: CircularProgressIndicator(),
               ),
-            );
-          } else if (state is AddorderFailure) {
-            return Center(
-              child: Text(state.errMessage),
             );
           }
           return Scaffold(
@@ -241,7 +230,7 @@ class ConfirmAddOrder extends StatelessWidget {
                         border: Border.all(
                             color: const Color(AppColor.primaryColor))),
                     child: CustomButton(
-                      title: "تأكيد",
+                      title: "إنهاء",
                       color: 0xffFFFF,
                       onTap: () async {
                         oneImage = true;
@@ -285,11 +274,13 @@ class ConfirmAddOrder extends StatelessWidget {
                             examinationMode,
                             type,
                             notes.text);
-
-                        MovingNavigation.navTo(context,
-                            page: AddOrderView(
-                              patientId: patientId,
-                            ));
+                        Future.delayed(Duration(milliseconds: 100));
+                        if (state is AddorderSucses && oneImage == false) {
+                          MovingNavigation.navTo(context,
+                              page: AddOrderView(
+                                patientId: patientId,
+                              ));
+                        }
                       },
                       titleColor: Colors.black,
                     ),

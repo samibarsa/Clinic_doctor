@@ -75,9 +75,9 @@ class _OrderDetailsState extends State<OrderDetails> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'معلومات الطلب',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
       ),
       body: SingleChildScrollView(
@@ -85,16 +85,19 @@ class _OrderDetailsState extends State<OrderDetails> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 34.h),
-            OrderDetailTable(
-              patientNameController: patientNameController,
-              doctorName: doctorName,
-              patientAge: patientAge,
-              widget: widget,
-              selectedImageType: selectedImageType,
-              date: date,
-              time: DateFormat('hh:mm a').format(widget.order.date),
-              additionalNotesController: additionalNotesController,
-              price: widget.order.price,
+            Center(
+              child: OrderDetailTable(
+                order: widget.order,
+                patientNameController: patientNameController,
+                doctorName: doctorName,
+                patientAge: patientAge,
+                widget: widget,
+                selectedImageType: selectedImageType,
+                date: date,
+                time: DateFormat('hh:mm a').format(widget.order.date),
+                additionalNotesController: additionalNotesController,
+                price: widget.order.price,
+              ),
             ),
           ],
         ),

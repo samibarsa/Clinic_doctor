@@ -154,7 +154,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
                             onPressed: () {
@@ -171,6 +170,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                               style: _textStyle().copyWith(fontSize: 14.sp),
                             ),
                           ),
+                          Spacer(),
                           Text(
                             "طلبات اليوم",
                             style: TextStyle(

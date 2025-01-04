@@ -5,6 +5,7 @@ class Order {
   final int orderId;
   final int doctorId;
   final int patientId;
+  final bool isImaged;
   final DateTime date;
   final ExaminationDetail detail;
   final String additionalNotes;
@@ -16,6 +17,7 @@ class Order {
     this.toothNumber, {
     required this.output,
     required this.price,
+    required this.isImaged,
     required this.orderId,
     required this.doctorId,
     required this.patientId,
@@ -28,6 +30,7 @@ class Order {
     return Order(
       json['tooth_number'],
       orderId: json['order_id'],
+      isImaged: json['isImaged'],
       doctorId: json['doctor_id'],
       patientId: json['patient_id'],
       date: DateTime.parse(json['date']),

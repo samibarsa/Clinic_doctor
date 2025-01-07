@@ -104,7 +104,7 @@ class _HomePageViewWidgetState extends State<HomePageViewWidget> {
       body: PageView(
         onPageChanged: (value) {
           setState(() {
-            animateNavBar(value);
+            animateNavBar(value, context);
           });
         },
         controller: pageController,

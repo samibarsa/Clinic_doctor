@@ -17,12 +17,14 @@ int currentIndex = 0;
 EdgeInsetsGeometry padding = const EdgeInsets.only();
 String imagePath = ImagesPath.navbarHome;
 
-void animateNavBar(int value) {
+void animateNavBar(int value, BuildContext context) {
   if (value == 0) {
-    padding = EdgeInsets.only(right: 220.w);
+    padding = EdgeInsets.only(right: MediaQuery.of(context).size.width / 9);
+    currentIndex = 0;
     imagePath = ImagesPath.navbarHistory;
   } else if (value == 1) {
     padding = EdgeInsets.only(left: 220.w);
+    currentIndex = 1;
     imagePath = ImagesPath.navbarHome;
   }
 }
@@ -34,15 +36,23 @@ class _NavBarState extends State<NavBar> {
       alignment: Alignment.bottomCenter,
       children: [
         Padding(
-          padding: EdgeInsets.only(bottom: 21.h),
-          child: SvgPicture.asset(fit: BoxFit.fill, imagePath),
+          padding:
+              EdgeInsets.only(bottom: 21.h), // استخدم نسباً أو ScreenUtil هنا
+          child: SvgPicture.asset(
+            imagePath,
+            fit: BoxFit.contain, // استخدم BoxFit يتناسب مع الحالة
+            height: 54.h, // حجم نسبي للصورة
+            width: 154.w, // عرض نسبي للصورة
+          ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 25.h),
+          padding: EdgeInsets.symmetric(vertical: 35.h),
           child: Row(
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 120.w, top: 30.h),
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 3,
+                    top: MediaQuery.of(context).size.height / 100),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
@@ -53,12 +63,14 @@ class _NavBarState extends State<NavBar> {
                   },
                   child: SizedBox(
                     height: 30.h,
-                    width: 45.w,
+                    width: currentIndex == 0 ? 90.w : 45.w,
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 45.w, top: 15.h),
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 90,
+                    top: MediaQuery.of(context).size.height / 50),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
@@ -69,7 +81,7 @@ class _NavBarState extends State<NavBar> {
                   },
                   child: SizedBox(
                     height: 30.h,
-                    width: 45.w,
+                    width: currentIndex == 1 ? 90.w : 40.w,
                   ),
                 ),
               ),

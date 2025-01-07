@@ -9,7 +9,7 @@ class InactiveAccountDialog extends StatelessWidget {
       : super(key: key);
 
   void _launchWhatsApp() async {
-    final whatsappUrl = Uri.parse('https://wa.me/963937262829');
+    final whatsappUrl = Uri.parse('https://wa.me/0943818201');
     if (await canLaunchUrl(whatsappUrl)) {
       await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
     } else {

@@ -38,12 +38,10 @@ class _NavBarState extends State<NavBar> {
         Padding(
           padding:
               EdgeInsets.only(bottom: 21.h), // استخدم نسباً أو ScreenUtil هنا
-          child: SvgPicture.asset(
-            imagePath,
-            fit: BoxFit.contain, // استخدم BoxFit يتناسب مع الحالة
-            height: 54.h, // حجم نسبي للصورة
-            width: 154.w, // عرض نسبي للصورة
-          ),
+          child: SvgPicture.asset(imagePath,
+              height: 54.h, // حجم نسبي للصورة
+              width: 154.w // عرض نسبي للصورة
+              ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 35.h),

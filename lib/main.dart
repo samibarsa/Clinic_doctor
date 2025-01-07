@@ -22,6 +22,7 @@ import 'package:doctor_app/core/get_app_version.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/supabase_keys.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -68,5 +69,9 @@ Future<void> main() async {
             getRemoteVersionC:
                 GetRemoteVersion(supabaseClient: supabase.client))),
   );
-  runApp(clinicDoctor);
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // يسمح بالوضع العمودي فقط
+  ]).then((_) {
+    runApp(clinicDoctor);
+  });
 }

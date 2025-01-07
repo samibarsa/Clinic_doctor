@@ -18,7 +18,7 @@ class AddOrderRemoteDataSource {
           .select('price')
           .eq('output_type', output)
           .single();
-      return (detailPrice['price'] as int) + (outputPrice['price'] as int);
+      return (detailPrice['price'] as int) + outputPrice['price'] as int;
     } on SocketException catch (_) {
       throw Exception('لا يوجد اتصال بالإنترنت');
     } catch (e) {

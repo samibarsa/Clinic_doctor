@@ -7,7 +7,6 @@ import 'package:doctor_app/Features/AddOrder/presentation/widgets/section_title.
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
 import 'package:doctor_app/Features/Home/presentation/view/homePageViewWidget.dart';
 import 'package:doctor_app/core/utils/constant.dart';
-import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -95,18 +94,25 @@ class ConfirmAddOrder extends StatelessWidget {
       child: BlocConsumer<AddOrderCubit, AddorderState>(
         listener: (BuildContext context, AddorderState state) {
           if (state is AddorderFailure) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.errMessage)));
-            ;
-          } else if (state is AddorderSucses && oneImage == true) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      const HomePageViewWidget()), // الصفحة الجديدة
-              (Route<dynamic> route) =>
-                  false, // شرط الإزالة: إزالة جميع الصفحات
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.errMessage)),
             );
+          } else if (state is AddorderSucses) {
+            if (oneImage) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const HomePageViewWidget()),
+                (Route<dynamic> route) => false,
+              );
+            } else {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AddOrderView(patientId: patientId)),
+                (Route<dynamic> route) => false,
+              );
+            }
           }
         },
         builder: (context, state) {
@@ -263,9 +269,9 @@ class ConfirmAddOrder extends StatelessWidget {
                     child: CustomButton(
                       title: "صورة أخرى",
                       color: 0xffFFFF,
-                      onTap: () async {
+                      onTap: () {
                         oneImage = false;
-                        await BlocProvider.of<AddOrderCubit>(context).addOrder(
+                        BlocProvider.of<AddOrderCubit>(context).addOrder(
                             getPriceLoaded,
                             toothNumber != null ? toothNumber! : 0,
                             outPut,
@@ -274,13 +280,6 @@ class ConfirmAddOrder extends StatelessWidget {
                             examinationMode,
                             type,
                             notes.text);
-                        Future.delayed(Duration(milliseconds: 100));
-                        if (state is AddorderSucses && oneImage == false) {
-                          MovingNavigation.navTo(context,
-                              page: AddOrderView(
-                                patientId: patientId,
-                              ));
-                        }
                       },
                       titleColor: Colors.black,
                     ),

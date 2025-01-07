@@ -37,6 +37,7 @@ class AddOrderCubit extends Cubit<AddorderState> {
       final data = {
         'tooth_number': toothNumber == 0 ? null : toothNumber,
         'doctor_id': doctorId,
+        'isImaged': false,
         'detiles_id': detailId,
         'order_price': state.price,
         'order_output': outputId,

@@ -20,6 +20,7 @@ import 'package:doctor_app/Features/Splash/domain/usecase/get_remote_version_use
 import 'package:doctor_app/clinic_doctor.dart';
 import 'package:doctor_app/core/get_app_version.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/supabase_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

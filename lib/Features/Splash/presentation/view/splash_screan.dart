@@ -35,6 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
             final futureVersion = await getAppVersion();
 
             if (state.version['version'] == futureVersion) {
+              await Future.delayed(Duration(seconds: 2));
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

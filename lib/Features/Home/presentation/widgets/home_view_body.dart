@@ -1,3 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:doctor_app/Features/Home/presentation/widgets/inactive_account_dialog.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/patient.dart';
 import 'package:doctor_app/Features/Home/presentation/maneger/cubit/order_cubit/order_cubit.dart';
@@ -145,111 +151,93 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     ],
                   ),
                 );
-              } else if (state is OrderLoaded) {
-                return Column(
-                  children: [
-                    SizedBox(height: 30.h),
-                    _buildHeader(),
-                    SizedBox(height: 64.h),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: Row(
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              MovingNavigation.navTo(
-                                context,
-                                page: MonthlyOrdersPage(
-                                  allOrders: state.orders,
-                                  state: state,
-                                ),
-                              );
-                            },
-                            child: Text(
-                              "< عرض الطلبات الشهرية",
-                              style: _textStyle().copyWith(fontSize: 14.sp),
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            "طلبات اليوم",
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 24.h),
-                    Expanded(
-                      child: filteredOrders.isNotEmpty
-                          ? BuildListView(
-                              orders: filteredOrders,
-                              state: state,
-                            )
-                          : Center(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.h),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text('لا توجد طلبات مطابقة'),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          _updateFilter(true, true, true);
-                                          final now = DateTime.now();
-                                          final startOfMonth =
-                                              DateTime(now.year, now.month, 1);
-                                          final endOfMonth = DateTime(
-                                              now.year, now.month + 1, 0);
-                                          context
-                                              .read<OrderCubit>()
-                                              .fetchOrders(
-                                                  startDate: startOfMonth,
-                                                  endDate: endOfMonth);
-                                          context
-                                              .read<OrderCubit>()
-                                              .fetchDoctorDataUseCase();
-                                        },
-                                        child: Container(
-                                          height: 40.h,
-                                          width: 200.w,
-                                          child: Center(
-                                            child: Text(
-                                              'إعادة التحميل',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                          decoration: BoxDecoration(
-                                              color:
-                                                  Color(AppColor.primaryColor),
-                                              borderRadius:
-                                                  BorderRadius.circular(12.r)),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 50.h,
-                                      )
-                                    ],
+              }
+
+              if (state is OrderLoaded) {
+                if (state.doctor.isActive) {
+                  return Column(
+                    children: [
+                      SizedBox(height: 30.h),
+                      _buildHeader(),
+                      SizedBox(height: 64.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: Row(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                MovingNavigation.navTo(
+                                  context,
+                                  page: MonthlyOrdersPage(
+                                    allOrders: state.orders,
+                                    state: state,
                                   ),
-                                ),
+                                );
+                              },
+                              child: Text(
+                                "< عرض الطلبات الشهرية",
+                                style: _textStyle().copyWith(fontSize: 14.sp),
                               ),
                             ),
-                    ),
-                  ],
-                );
-              } else if (state is OrderError) {
-                return HomeViewError(state: state);
-              } else {
-                return const Center(child: Text('لم يتم العثور على طلبات.'));
+                            Spacer(),
+                            Text(
+                              "طلبات اليوم",
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 24.h),
+                      Expanded(
+                        child: filteredOrders.isNotEmpty
+                            ? BuildListView(
+                                orders: filteredOrders,
+                                state: state,
+                              )
+                            : _buildEmptyState(),
+                      ),
+                      // إضافة زر صغير لمعلومات المطور في أسفل الشاشة
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: IconButton(
+                            icon: Icon(Icons.info_outline, color: Colors.grey),
+                            onPressed: () {
+                              showDeveloperInfoBottomSheet(context);
+                            },
+                            tooltip: 'معلومات المطور',
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  // حساب الطبيب ليس نشطًا
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    showDialog(
+                      context: context,
+                      builder: (context) =>
+                          InactiveAccountDialog(email: state.doctor.email),
+                    ).then((_) {
+                      // Exit the app when the dialog is closed
+                      SystemNavigator.pop();
+                    });
+                  });
+                  ;
+                }
               }
+
+              if (state is OrderError) {
+                return HomeViewError(state: state);
+              }
+
+              // في حالة عدم تطابق أي حالة
+              return const Center(child: Text('لم يتم العثور على طلبات.'));
             },
           ),
         ),
@@ -299,5 +287,104 @@ TextStyle _textStyle() {
     decorationColor: const Color(AppColor.primaryColor),
     fontSize: 11.sp,
     color: const Color(AppColor.primaryColor),
+  );
+}
+
+void showDeveloperInfoBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+    ),
+    builder: (BuildContext context) {
+      return Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+          padding: EdgeInsets.all(16.0.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'معلومات المطورين',
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.h),
+              ListTile(
+                leading:
+                    Icon(Icons.person, color: Color(AppColor.primaryColor)),
+                title: Text(
+                  'محمد سامي برصه',
+                  style: TextStyle(fontSize: 18.sp),
+                ),
+                subtitle: Text('مطور التطبيق'),
+              ),
+              ListTile(
+                leading:
+                    Icon(Icons.person, color: Color(AppColor.primaryColor)),
+                title: Text(
+                  'أحمد السكني',
+                  style: TextStyle(fontSize: 18.sp),
+                ),
+                subtitle: Text('مطور التطبيق'),
+              ),
+              SizedBox(height: 8.h),
+              ListTile(
+                leading: Icon(FontAwesomeIcons.whatsapp, color: Colors.green),
+                title: GestureDetector(
+                  onTap: () async {
+                    const whatsappUrl = 'https://wa.me/+963959026001';
+                    if (await canLaunch(whatsappUrl)) {
+                      await launch(whatsappUrl);
+                    } else {
+                      throw 'Could not launch $whatsappUrl';
+                    }
+                  },
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Text(
+                      textAlign: TextAlign.end,
+                      '0959 026 001',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        color: Color(AppColor.primaryColor),
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ),
+                subtitle: Text('للتواصل عبر واتساب'),
+              ),
+              SizedBox(height: 16.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                child: Text(
+                  'إن أردت تطوير تطبيق مشابه أو لديك استفسارات، لا تتردد في التواصل معنا عبر الواتساب!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14.sp, color: Colors.grey[700]),
+                ),
+              ),
+              SizedBox(height: 16.h),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Color(AppColor.primaryColor),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                ),
+                child: Text(
+                  'إغلاق',
+                  style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
   );
 }

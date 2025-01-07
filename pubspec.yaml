@@ -29,7 +29,6 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   app_links: ^6.3.2
-  awesome_icons: ^1.1.0
   cross_file: ^0.3.4+2
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
@@ -43,6 +42,7 @@ dependencies:
   flutter_offline: ^4.0.0
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.10+1
+  font_awesome_flutter: ^10.8.0
   modal_progress_hud_nsn: ^0.5.1
   month_year_picker: ^0.4.0+1
   path_drawing: ^1.0.1

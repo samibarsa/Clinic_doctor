@@ -14,64 +14,66 @@ class WellcomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset(
-                ImagesPath.logo,
-                height: 217.8.h,
-                width: 263.w,
-              ),
-              SizedBox(
-                height: 205.h,
-              ),
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  SvgPicture.asset(
+    return Center(
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(),
+            Image.asset(
+              ImagesPath.logo,
+              height: MediaQuery.of(context).size.height * 0.25,
+              width: 263.w,
+            ),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.97,
+                  child: SvgPicture.asset(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    fit: BoxFit.cover,
                     ImagesPath.wellcome,
                   ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 100.h,
-                      ),
-                      CustomButton(
-                        onTap: () {
-                          MovingNavigation.navTo(context,
-                              page: const SignUpView());
-                        },
-                        title: "انشاء حساب",
-                        color: AppColor.primaryColor,
-                        titleColor: Colors.white,
-                      ),
-                      SizedBox(
-                        height: 24.h,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: const Color(AppColor.primaryColor)),
-                            borderRadius: BorderRadius.circular(5.r)),
-                        child: CustomButton(
-                            titleColor: Colors.black,
-                            onTap: () {
-                              MovingNavigation.navTo(context,
-                                  page: const LoginView());
-                            },
-                            title: 'تسجيل دخول',
-                            color: 0xffFFFF),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                    ),
+                    CustomButton(
+                      onTap: () {
+                        MovingNavigation.navTo(context,
+                            page: const SignUpView());
+                      },
+                      title: "انشاء حساب",
+                      color: AppColor.primaryColor,
+                      titleColor: Colors.white,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: const Color(AppColor.primaryColor)),
+                          borderRadius: BorderRadius.circular(5.r)),
+                      child: CustomButton(
+                          titleColor: Colors.black,
+                          onTap: () {
+                            MovingNavigation.navTo(context,
+                                page: const LoginView());
+                          },
+                          title: 'تسجيل دخول',
+                          color: 0xffFFFF),
+                    ),
+                  ],
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );

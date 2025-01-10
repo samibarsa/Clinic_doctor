@@ -24,6 +24,7 @@ class _AddPanoView1State extends State<AddSefaloView1> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
+          forceMaterialTransparency: true,
           centerTitle: true,
           title: const Text("صورة سيفالومتريك"),
         ),

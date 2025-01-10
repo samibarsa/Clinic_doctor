@@ -26,6 +26,7 @@ class _TeethState extends State<Teeth> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         centerTitle: true,
         title: const Text("اختر رقم السن"),
       ),
@@ -60,96 +61,101 @@ class _TeethState extends State<Teeth> {
                 child: CircularProgressIndicator(),
               );
             }
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TeethSelector(
-                    onChange: (selected) {
-                      if (selected.isNotEmpty) {
-                        setState(() {
-                          toothNumber = selected[0];
-                        });
-                      } else {
-                        setState(() {
-                          toothNumber = "";
-                        });
-                      }
-                    },
-                    showPermanent: true,
-                    showPrimary: false,
-                    notation: (isoString) => "ISO: $isoString",
-                    multiSelect: false,
-                    selectedColor: Color(AppColor.primaryColor),
-                    unselectedColor: Colors.grey,
-                    tooltipColor: Colors.red,
-                    defaultStrokeColor: Colors.transparent,
-                    strokeWidth: {
-                      "11": 10.0,
-                      "12": 10.0,
-                    },
-                    defaultStrokeWidth: 10.0,
-                    leftString: "جهة اليسار",
-                    rightString: "جهة اليمين",
-                    textStyle: TextStyle(
-                      fontSize: 16.sp,
+            return SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 60.h,
                     ),
-                    tooltipTextStyle: TextStyle(
-                      fontSize: 16.sp,
+                    TeethSelector(
+                      onChange: (selected) {
+                        if (selected.isNotEmpty) {
+                          setState(() {
+                            toothNumber = selected[0];
+                          });
+                        } else {
+                          setState(() {
+                            toothNumber = "";
+                          });
+                        }
+                      },
+                      showPermanent: true,
+                      showPrimary: false,
+                      notation: (isoString) => "ISO: $isoString",
+                      multiSelect: false,
+                      selectedColor: Color(AppColor.primaryColor),
+                      unselectedColor: Colors.grey,
+                      tooltipColor: Colors.red,
+                      defaultStrokeColor: Colors.transparent,
+                      strokeWidth: {
+                        "11": 10.0,
+                        "12": 10.0,
+                      },
+                      defaultStrokeWidth: 10.0,
+                      leftString: "جهة اليسار",
+                      rightString: "جهة اليمين",
+                      textStyle: TextStyle(
+                        fontSize: 16.sp,
+                      ),
+                      tooltipTextStyle: TextStyle(
+                        fontSize: 16.sp,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  Card(
-                    color: Colors.green[100],
-                    child: SizedBox(
-                      height: 40,
-                      width: 60,
-                      child: Center(
-                        child: Text(
-                          toothNumber,
-                          style: TextStyle(fontSize: 16.sp),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Card(
+                      color: Colors.green[100],
+                      child: SizedBox(
+                        height: 40,
+                        width: 60,
+                        child: Center(
+                          child: Text(
+                            toothNumber,
+                            style: TextStyle(fontSize: 16.sp),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color(AppColor.primaryColor),
-                        ),
-                        borderRadius: BorderRadius.circular(6.r)),
-                    child: CustomButton(
-                      title: "تأكيد",
-                      color: (0x00000000),
-                      onTap: () async {
-                        if (toothNumber != "") {
-                          try {
-                            int? detailId = await LocalDataSource.getDetailId(
-                              "لا يوجد",
-                              "C.B.C.T",
-                              "ساحة 5*5 مميزة للبية",
-                            );
-
-                            if (detailId != null) {
-                              BlocProvider.of<GetPriceCubit>(context)
-                                  .getPrice(detailId, "لا شيء");
-                            }
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('خطأ: $e')),
-                            );
-                          }
-                        }
-                      },
-                      titleColor: Colors.black,
+                    SizedBox(
+                      height: 30.h,
                     ),
-                  ),
-                ],
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(AppColor.primaryColor),
+                          ),
+                          borderRadius: BorderRadius.circular(6.r)),
+                      child: CustomButton(
+                        title: "تأكيد",
+                        color: (0x00000000),
+                        onTap: () async {
+                          if (toothNumber != "") {
+                            try {
+                              int? detailId = await LocalDataSource.getDetailId(
+                                "لا يوجد",
+                                "C.B.C.T",
+                                "ساحة 5*5 مميزة للبية",
+                              );
+
+                              if (detailId != null) {
+                                BlocProvider.of<GetPriceCubit>(context)
+                                    .getPrice(detailId, "لا شيء");
+                              }
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('خطأ: $e')),
+                              );
+                            }
+                          }
+                        },
+                        titleColor: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

@@ -26,7 +26,9 @@ class OfflineStateBody extends StatelessWidget {
           );
         }
         return Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            forceMaterialTransparency: true,
+          ),
           body: const SplashScreenViewBody(),
         );
       },

@@ -47,6 +47,7 @@ class UpdatePassword extends StatelessWidget {
           inAsyncCall: state is UpdatePasswordLoading,
           child: Scaffold(
             appBar: AppBar(
+              forceMaterialTransparency: true,
               title: const Text("انشئ كلمة مرور جديدة"),
               centerTitle: true,
             ),

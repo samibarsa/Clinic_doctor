@@ -19,6 +19,7 @@ class MonthlySummaryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         title: Directionality(
           textDirection: TextDirection.rtl,
           child: Column(

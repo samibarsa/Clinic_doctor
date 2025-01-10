@@ -57,6 +57,7 @@ class _AddTMJState extends State<AddTMJ> {
         ],
         child: Scaffold(
           appBar: AppBar(
+            forceMaterialTransparency: true,
             centerTitle: true,
             title: const Text("صورة TMJ"),
           ),

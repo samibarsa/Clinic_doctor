@@ -51,7 +51,9 @@ class VerificationScreen extends StatelessWidget {
         return ModalProgressHUD(
           inAsyncCall: state is VerifyLoading,
           child: Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              forceMaterialTransparency: true,
+            ),
             body: Padding(
               padding: EdgeInsets.only(right: 20.w, left: 20.w),
               child: Column(

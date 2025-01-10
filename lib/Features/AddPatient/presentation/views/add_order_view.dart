@@ -9,6 +9,7 @@ class AddPatientView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        forceMaterialTransparency: true,
         title: const Text("معلومات المريض"),
       ),
       body: const AddOrederViewBody(),

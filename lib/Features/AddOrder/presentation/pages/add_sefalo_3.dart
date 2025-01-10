@@ -70,6 +70,7 @@ class _AddPanoView2State extends State<AddSefaloView3> {
             }
             return Scaffold(
               appBar: AppBar(
+                forceMaterialTransparency: true,
                 centerTitle: true,
                 title: const Text("صورة سيفالومتريك"),
               ),

@@ -9,6 +9,7 @@ class AddOrderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         centerTitle: true,
         title: const Text("اختيار نوع الصورة"),
       ),

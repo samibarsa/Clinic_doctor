@@ -59,6 +59,7 @@ class _AddPanoView2State extends State<AddPanoView2> {
         ],
         child: Scaffold(
           appBar: AppBar(
+            forceMaterialTransparency: true,
             centerTitle: true,
             title: const Text("صورة ماجيك بانوراما"),
           ),

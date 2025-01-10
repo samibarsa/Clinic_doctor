@@ -43,6 +43,7 @@ class RessetPassword extends StatelessWidget {
           inAsyncCall: state is AuthLoading,
           child: Scaffold(
             appBar: AppBar(
+              forceMaterialTransparency: true,
               centerTitle: true,
               title: const Text("إعادة تعيين كلمة المرور"),
             ),

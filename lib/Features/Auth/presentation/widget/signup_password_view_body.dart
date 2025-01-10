@@ -89,6 +89,7 @@ class _SignUpPasswordViewState extends State<SignUpPasswordView>
           inAsyncCall: inAsyncCall,
           child: Scaffold(
             appBar: AppBar(
+              forceMaterialTransparency: true,
               automaticallyImplyLeading: false,
               title: Directionality(
                 textDirection: TextDirection.rtl,

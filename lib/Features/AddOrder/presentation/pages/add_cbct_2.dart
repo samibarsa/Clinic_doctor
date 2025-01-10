@@ -73,6 +73,7 @@ class _AddCBCTView2State extends State<AddCBCTView2> {
             }
             return Scaffold(
               appBar: AppBar(
+                forceMaterialTransparency: true,
                 centerTitle: true,
                 title: const Text("صورة تصوير مقطعي C.B.C.T"),
               ),

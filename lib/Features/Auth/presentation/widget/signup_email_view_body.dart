@@ -56,6 +56,7 @@ class _SignUpEmailViewState extends State<SignUpEmailView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         automaticallyImplyLeading: false,
         title: Directionality(
           textDirection: TextDirection.rtl,
@@ -71,7 +72,7 @@ class _SignUpEmailViewState extends State<SignUpEmailView>
         ),
       ),
       body: AuthViewBody(
-         navigation: () {
+        navigation: () {
           MovingNavigation.navTo(context, page: const LoginView());
         },
         formKey: formKey,

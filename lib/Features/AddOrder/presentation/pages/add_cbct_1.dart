@@ -35,6 +35,7 @@ class _AddCBCTView1State extends State<AddCBCTView1> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
+          forceMaterialTransparency: true,
           centerTitle: true,
           title: const Text("صورة تصوير مقطعي C.B.C.T"),
         ),

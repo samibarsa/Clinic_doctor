@@ -53,6 +53,7 @@ class _SignUpViewState extends State<SignUpView>
 
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         automaticallyImplyLeading: false,
         title: Directionality(
           textDirection: TextDirection.rtl,

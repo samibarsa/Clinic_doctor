@@ -266,27 +266,30 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   // ignore: unused_element
   Widget _buildEmptyState() {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Center(
-            child: Text("لا يوجد بيانات حاليا"),
+      child: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Center(
+                child: Text("لا يوجد بيانات حاليا"),
+              ),
+              SizedBox(height: 40.h),
+              CustomButton(
+                title: "إعادة تحميل",
+                color: AppColor.primaryColor,
+                onTap: () async {
+                  final now = DateTime.now();
+                  final startOfMonth = DateTime(now.year, now.month, 1);
+                  final endOfMonth = DateTime(now.year, now.month + 1, 0);
+                  context.read<OrderCubit>().fetchOrders(
+                      startDate: startOfMonth, endDate: endOfMonth);
+                },
+                titleColor: Colors.white,
+              ),
+            ],
           ),
-          SizedBox(height: 40.h),
-          CustomButton(
-            title: "إعادة تحميل",
-            color: AppColor.primaryColor,
-            onTap: () async {
-              final now = DateTime.now();
-              final startOfMonth = DateTime(now.year, now.month, 1);
-              final endOfMonth = DateTime(now.year, now.month + 1, 0);
-              context
-                  .read<OrderCubit>()
-                  .fetchOrders(startDate: startOfMonth, endDate: endOfMonth);
-            },
-            titleColor: Colors.white,
-          ),
-        ],
+        ),
       ),
     );
   }

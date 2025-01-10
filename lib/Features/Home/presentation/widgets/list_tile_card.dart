@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:doctor_app/Features/Home/presentation/widgets/title_list_tile.dart';
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +12,11 @@ class ListTileCard extends StatelessWidget {
     required this.type,
     required this.date,
   });
+
   final String date;
   final String papatientName;
   final String type;
+
   @override
   Widget build(BuildContext context) {
     String imagePath = "";
@@ -28,10 +31,6 @@ class ListTileCard extends StatelessWidget {
         imagePath = ImagesPath.panoramaIcon;
         break;
     }
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double fontSize10 = screenWidth * 0.035;
-    double fontSize12 = screenWidth * 0.050;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -39,26 +38,77 @@ class ListTileCard extends StatelessWidget {
         height: 80.h,
         child: Card(
           margin: EdgeInsets.symmetric(horizontal: 16.w),
+          elevation: 3.0, // إضافة ظل خفيف للـ Card
           child: ListTile(
-              trailing: Padding(
-                padding: EdgeInsets.only(
-                  bottom: 15.h,
-                ),
-                child: SvgPicture.asset(
-                  ImagesPath.arrowListTile,
-                ),
-              ),
-              leading: Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
-                child: SvgPicture.asset(imagePath),
-              ),
-              title: TitleListTile(
-                patientName: papatientName,
-                type: type,
-                date: date,
-              )),
+            trailing: Padding(
+              padding: EdgeInsets.only(bottom: 15.h),
+              child: SvgPicture.asset(ImagesPath.arrowListTile),
+            ),
+            leading: Padding(
+              padding: EdgeInsets.only(bottom: 16.h),
+              child: SvgPicture.asset(imagePath),
+            ),
+            title: TitleListTile(
+              patientName: papatientName,
+              type: type,
+              date: date,
+            ),
+          ),
         ),
       ),
+    );
+  }
+}
+
+class TitleListTile extends StatelessWidget {
+  const TitleListTile({
+    Key? key,
+    required this.patientName,
+    required this.type,
+    required this.date,
+  }) : super(key: key);
+
+  final String patientName;
+  final String type;
+  final String date;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AutoSizeText(
+          patientName,
+          style: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          maxLines: 1,
+          minFontSize: 8.sp,
+          overflow: TextOverflow.ellipsis,
+        ),
+        SizedBox(height: 4.h),
+        AutoSizeText(
+          type,
+          style: TextStyle(
+            fontSize: 12.sp,
+            color: Colors.grey[600],
+          ),
+          maxLines: 1,
+          minFontSize: 8.sp,
+          overflow: TextOverflow.ellipsis,
+        ),
+        AutoSizeText(
+          date,
+          style: TextStyle(
+            fontSize: 9.sp,
+            color: Colors.green[600],
+          ),
+          maxLines: 1,
+          minFontSize: 8.sp,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
     );
   }
 }

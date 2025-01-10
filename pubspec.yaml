@@ -61,6 +61,7 @@ dependencies:
   teeth_selector: ^0.2.2
   timeago: ^3.7.0
   url_launcher: ^6.3.1
+  auto_size_text:
 
 dev_dependencies: null
 

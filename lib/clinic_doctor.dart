@@ -114,6 +114,7 @@ class ClinicDoctor extends StatelessWidget {
               Locale('en', 'english'),
               Locale('ar', 'Arabic'),
             ],
+            locale: Locale('en'),
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               colorScheme: ColorScheme(

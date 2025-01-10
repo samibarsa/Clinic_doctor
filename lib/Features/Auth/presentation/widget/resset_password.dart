@@ -2,7 +2,6 @@ import 'package:doctor_app/Features/Auth/presentation/widget/verify_token.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_cubit.dart';
 import 'package:doctor_app/Features/Auth/presentation/maneger/authCubit/auth_state.dart';
 import 'package:doctor_app/core/utils/constant.dart';
-import 'package:doctor_app/core/utils/navigator/navigator.dart';
 import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:doctor_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +26,13 @@ class RessetPassword extends StatelessWidget {
                 content: Text(
                     "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني")),
           );
-          MovingNavigation.navTo(context,
-              page: VerificationScreen(
-                email: emailController.text,
-              ));
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => VerificationScreen(
+                      email: emailController.text,
+                    )), // الصفحة الجديدة التي تريد الانتقال إليها
+            (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة
+          );
         }
       },
       builder: (context, state) {

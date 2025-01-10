@@ -28,9 +28,11 @@ class UpdatePassword extends StatelessWidget {
     return BlocConsumer<UpdatePasswordCubit, UpdatePasswordState>(
       listener: (context, state) {
         if (state is UpdatePasswordSucsess) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => const WellcomeScrean(),
-          ));
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const WellcomeScrean(),
+              ),
+              (Route<dynamic> route) => false);
         }
         if (state is UpdatePasswordFailure) {
           ScaffoldMessenger.of(context)

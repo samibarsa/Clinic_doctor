@@ -19,7 +19,6 @@ import 'package:doctor_app/Features/Splash/data/repos/get_version_repo_impl.dart
 import 'package:doctor_app/Features/Splash/domain/usecase/get_remote_version_usecase.dart';
 import 'package:doctor_app/clinic_doctor.dart';
 import 'package:doctor_app/core/get_app_version.dart';
-import 'package:doctor_app/core/utils/constant.dart';
 import 'package:doctor_app/core/utils/supabase_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

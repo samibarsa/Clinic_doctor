@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:doctor_app/Features/Home/presentation/widgets/inactive_account_dialog.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -225,7 +227,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           InactiveAccountDialog(email: state.doctor.email),
                     ).then((_) {
                       // Exit the app when the dialog is closed
-                      SystemNavigator.pop();
+                      exit(0);
                     });
                   });
                   ;

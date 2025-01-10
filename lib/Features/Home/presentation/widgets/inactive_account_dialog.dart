@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:doctor_app/core/utils/constant.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InactiveAccountDialog extends StatelessWidget {
   final String email;
@@ -23,7 +24,7 @@ class InactiveAccountDialog extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: AlertDialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
         ),
         backgroundColor: Colors.white,
         title: Column(
@@ -34,19 +35,19 @@ class InactiveAccountDialog extends StatelessWidget {
                 color: Colors.orange.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              padding: const EdgeInsets.all(12),
-              child: const Icon(
+              padding: EdgeInsets.all(12.w),
+              child: Icon(
                 Icons.warning_amber_rounded,
                 color: Colors.orange,
-                size: 64,
+                size: 64.sp,
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: 16.h),
+            Text(
               'الحساب غير نشط',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 22,
+                fontSize: 22.sp,
                 color: Colors.black87,
               ),
               textAlign: TextAlign.center,
@@ -56,27 +57,28 @@ class InactiveAccountDialog extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
+            Text(
               'عذرًا، حسابك غير نشط حاليًا. يرجى التواصل مع إدارة المركز لتفعيل الحساب.',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+              style: TextStyle(fontSize: 14.sp, color: Colors.grey),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: EdgeInsets.all(8.w),
               decoration: BoxDecoration(
                 color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(8.r),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.email, color: Colors.grey[600]),
-                  const SizedBox(width: 8),
+                  Icon(Icons.email, color: Colors.grey[600], size: 20.sp),
+                  SizedBox(width: 8.w),
                   Flexible(
                     child: Text(
                       email,
-                      style: TextStyle(fontSize: 14, color: Colors.grey[800]),
+                      style:
+                          TextStyle(fontSize: 14.sp, color: Colors.grey[800]),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -87,22 +89,22 @@ class InactiveAccountDialog extends StatelessWidget {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+            padding: EdgeInsets.only(bottom: 8.h),
             child: Center(
               child: ElevatedButton.icon(
                 onPressed: _launchWhatsApp,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(AppColor.primaryColor),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8.r),
                   ),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
                 ),
-                icon: const Icon(Icons.chat, color: Colors.white),
-                label: const Text(
+                icon: Icon(Icons.chat, color: Colors.white, size: 18.sp),
+                label: Text(
                   'تواصل مع الإدارة',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(fontSize: 16.sp, color: Colors.white),
                 ),
               ),
             ),

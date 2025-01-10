@@ -14,6 +14,10 @@ class TitleListTile extends StatelessWidget {
   final String date;
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double fontSize10 = screenWidth * 0.035;
+    double fontSize12 = screenWidth * 0.050;
     return Padding(
       padding: EdgeInsets.only(left: 0.w),
       child: Column(
@@ -24,6 +28,7 @@ class TitleListTile extends StatelessWidget {
             patientName,
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: fontSize10),
           ),
           Directionality(
             textDirection: TextDirection.rtl,

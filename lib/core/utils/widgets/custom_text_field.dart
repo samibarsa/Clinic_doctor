@@ -21,12 +21,14 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 361.w,
+      width: MediaQuery.of(context).size.width -
+          (MediaQuery.of(context).size.width) / 10,
+      height: MediaQuery.of(context).size.height / 18,
       child: TextFormField(
         validator: validator,
         keyboardType: keyboardType,
         controller: textEditingController,
-        style: const TextStyle(fontSize: 12, height: 1),
+        style: TextStyle(fontSize: 12.sp, height: 1.h),
         textDirection: TextDirection.rtl,
         decoration: InputDecoration(
             suffixIcon: suffix,

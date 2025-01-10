@@ -10,7 +10,6 @@ class CustomSearchBar extends StatefulWidget {
   const CustomSearchBar({super.key, required this.searchController});
 
   @override
-  // ignore: library_private_types_in_public_api
   _CustomSearchBarState createState() => _CustomSearchBarState();
 }
 
@@ -32,48 +31,51 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   void _handleFocusChange() {
     if (!_focusNode.hasFocus) {
-      // Logic to handle unfocus event, for example, you can clear the search field or perform a search
       print("Search bar unfocused");
     }
   }
 
   void _handleSearch(String query) {
-    // Logic to handle search, for example, filter the list based on the query
     print("Search query submitted: $query");
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 12.w), // تقليل المسافة الأفقية
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: Container(
+          height: 40.h, // تقليل ارتفاع الحاوية
           decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(12.r)),
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(8.r), // تقليل نصف القطر
+          ),
           child: TextField(
             controller: widget.searchController,
             focusNode: _focusNode,
             decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.search),
+              prefixIcon: Icon(Icons.search, size: 18.sp), // تقليل حجم الأيقونة
               hintText: "ابحث عن اسم المريض",
+              hintStyle: TextStyle(fontSize: 12.sp), // تقليل حجم النص
               disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                borderRadius: BorderRadius.all(Radius.circular(8.r)),
                 borderSide: BorderSide(color: Colors.transparent, width: 1.0),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                borderRadius: BorderRadius.all(Radius.circular(8.r)),
                 borderSide: BorderSide(color: Colors.transparent, width: 1.0),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                borderRadius: BorderRadius.all(Radius.circular(8.r)),
                 borderSide: const BorderSide(
-                    color: Color(AppColor.primaryColor), width: 2.0),
+                    color: Color(AppColor.primaryColor),
+                    width: 1.5), // تقليل العرض
               ),
             ),
             textInputAction: TextInputAction.search,
             onSubmitted: _handleSearch,
+            style: TextStyle(fontSize: 12.sp), // تقليل حجم النص
           ),
         ),
       ),

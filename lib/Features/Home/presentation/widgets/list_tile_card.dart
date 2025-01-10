@@ -28,6 +28,10 @@ class ListTileCard extends StatelessWidget {
         imagePath = ImagesPath.panoramaIcon;
         break;
     }
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double fontSize10 = screenWidth * 0.035;
+    double fontSize12 = screenWidth * 0.050;
 
     return Directionality(
       textDirection: TextDirection.rtl,

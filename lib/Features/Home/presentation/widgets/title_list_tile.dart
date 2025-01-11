@@ -17,7 +17,6 @@ class TitleListTile extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     double fontSize10 = screenWidth * 0.035;
-    double fontSize12 = screenWidth * 0.050;
     return Padding(
       padding: EdgeInsets.only(left: 0.w),
       child: Column(

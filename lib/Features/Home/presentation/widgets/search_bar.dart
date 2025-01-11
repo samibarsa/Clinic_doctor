@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:doctor_app/core/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,22 +40,34 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.w), // تقليل المسافة الأفقية
+      padding: EdgeInsets.symmetric(horizontal: 8.w), // تقليل المسافة الأفقية
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: Container(
-          height: 40.h, // تقليل ارتفاع الحاوية
           decoration: BoxDecoration(
             color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(8.r), // تقليل نصف القطر
+            borderRadius: BorderRadius.circular(8.r), // الإبقاء على نصف القطر
           ),
           child: TextField(
             controller: widget.searchController,
             focusNode: _focusNode,
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search, size: 18.sp), // تقليل حجم الأيقونة
+              prefixIcon: Padding(
+                padding: EdgeInsets.all(6.r), // تقليل المسافة حول الأيقونة
+                child: Icon(
+                  Icons.search,
+                  size: 18.sp, // تقليل حجم الأيقونة
+                ),
+              ),
               hintText: "ابحث عن اسم المريض",
-              hintStyle: TextStyle(fontSize: 12.sp), // تقليل حجم النص
+              hintStyle: TextStyle(
+                fontSize: 12.sp, // تصغير حجم النص
+                color: Colors.grey[600],
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 6.h, // تقليل المسافة العمودية داخل الحقل
+                horizontal: 8.w,
+              ),
               disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8.r)),
                 borderSide: BorderSide(color: Colors.transparent, width: 1.0),
@@ -69,13 +79,17 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8.r)),
                 borderSide: const BorderSide(
-                    color: Color(AppColor.primaryColor),
-                    width: 1.5), // تقليل العرض
+                  color: Color(AppColor.primaryColor),
+                  width: 1.0, // تقليل عرض الخط
+                ),
               ),
             ),
             textInputAction: TextInputAction.search,
             onSubmitted: _handleSearch,
-            style: TextStyle(fontSize: 12.sp), // تقليل حجم النص
+            style: TextStyle(
+              fontSize: 12.sp, // تصغير حجم النص داخل الحقل
+              color: Colors.black,
+            ),
           ),
         ),
       ),

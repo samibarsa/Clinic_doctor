@@ -123,21 +123,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
     double fontSize10 = screenWidth * 0.030;
     double fontSize12 = screenWidth * 0.045;
     return Scaffold(
       appBar: buildAppBar(context, _showFilterDialog),
       body: RefreshIndicator(
-        onRefresh: () async {
-          final now = DateTime.now();
-          final startOfMonth = DateTime(now.year, now.month, 1);
-          final endOfMonth = DateTime(now.year, now.month + 1, 0);
-          context
-              .read<OrderCubit>()
-              .fetchOrders(startDate: startOfMonth, endDate: endOfMonth);
-          context.read<OrderCubit>().fetchDoctorDataUseCase();
-        },
+        onRefresh: _handleRefresh, // Handle the refresh operation here
         child: BlocListener<OrderCubit, OrderState>(
           listener: (context, state) {
             if (state is OrderLoaded) {
@@ -151,7 +142,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                   textDirection: TextDirection.rtl,
                   child: Column(
                     children: [
-                      SizedBox(height: 100.h),
+                      SizedBox(height: 0.h),
                       const Expanded(child: CustomShimmer()),
                     ],
                   ),
@@ -160,13 +151,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
               if (state is OrderLoaded) {
                 if (state.doctor.isActive) {
-                  return Directionality(
-                    textDirection: TextDirection.ltr,
+                  return SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(height: 30.h),
+                        SizedBox(height: 10.h),
                         _buildHeader(),
-                        SizedBox(height: 64.h),
+                        SizedBox(height: 10.h),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
                           child: Row(
@@ -200,35 +190,21 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           ),
                         ),
                         SizedBox(height: 24.h),
-                        Expanded(
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.7,
                           child: filteredOrders.isNotEmpty
-                              ? BuildListView(
-                                  orders: filteredOrders,
-                                  state: state,
+                              ? RefreshIndicator(
+                                  onRefresh: _handleRefresh,
+                                  child: BuildListView(
+                                      orders: filteredOrders, state: state),
                                 )
                               : _buildEmptyState(),
-                        ),
-                        // إضافة زر صغير لمعلومات المطور في أسفل الشاشة
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.w, vertical: 8.h),
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: IconButton(
-                              icon:
-                                  Icon(Icons.info_outline, color: Colors.grey),
-                              onPressed: () {
-                                showDeveloperInfoBottomSheet(context);
-                              },
-                              tooltip: 'معلومات المطور',
-                            ),
-                          ),
                         ),
                       ],
                     ),
                   );
                 } else {
-                  // حساب الطبيب ليس نشطًا
+                  // Handle inactive doctor account
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     showDialog(
                       context: context,
@@ -239,7 +215,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                       exit(0);
                     });
                   });
-                  ;
                 }
               }
 
@@ -247,13 +222,24 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                 return HomeViewError(state: state);
               }
 
-              // في حالة عدم تطابق أي حالة
+              // Default state
               return const Center(child: Text('لم يتم العثور على طلبات.'));
             },
           ),
         ),
       ),
     );
+  }
+
+// Refresh function that triggers fetching orders
+  Future<void> _handleRefresh() async {
+    final now = DateTime.now();
+    final startOfMonth = DateTime(now.year, now.month, 1);
+    final endOfMonth = DateTime(now.year, now.month + 1, 0);
+    await context
+        .read<OrderCubit>()
+        .fetchOrders(startDate: startOfMonth, endDate: endOfMonth);
+    await context.read<OrderCubit>().fetchDoctorDataUseCase();
   }
 
   Widget _buildHeader() {

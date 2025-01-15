@@ -151,57 +151,51 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
               if (state is OrderLoaded) {
                 if (state.doctor.isActive) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10.h),
-                        _buildHeader(),
-                        SizedBox(height: 10.h),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.w),
-                          child: Row(
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  MovingNavigation.navTo(
-                                    context,
-                                    page: MonthlyOrdersPage(
-                                      allOrders: state.orders,
-                                      state: state,
-                                    ),
-                                  );
-                                },
-                                child: Text(
-                                  "< عرض الطلبات الشهرية",
-                                  style: _textStyle()
-                                      .copyWith(fontSize: fontSize10),
-                                ),
+                  return Column(
+                    children: [
+                      SizedBox(height: 10.h),
+                      _buildHeader(),
+                      SizedBox(height: 10.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: Row(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                MovingNavigation.navTo(
+                                  context,
+                                  page: MonthlyOrdersPage(
+                                    allOrders: state.orders,
+                                    state: state,
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "< عرض الطلبات الشهرية",
+                                style:
+                                    _textStyle().copyWith(fontSize: fontSize10),
                               ),
-                              Spacer(),
-                              Text(
-                                "طلبات اليوم",
-                                style: TextStyle(
-                                  fontSize: fontSize12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
+                            ),
+                            Spacer(),
+                            Text(
+                              "طلبات اليوم",
+                              style: TextStyle(
+                                fontSize: fontSize12,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 24.h),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.7,
-                          child: filteredOrders.isNotEmpty
-                              ? RefreshIndicator(
-                                  onRefresh: _handleRefresh,
-                                  child: BuildListView(
-                                      orders: filteredOrders, state: state),
-                                )
-                              : _buildEmptyState(),
-                        ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 24.h),
+                      Expanded(
+                        child: filteredOrders.isNotEmpty
+                            ? BuildListView(
+                                orders: filteredOrders, state: state)
+                            : _buildEmptyState(),
+                      ),
+                    ],
                   );
                 } else {
                   // Handle inactive doctor account

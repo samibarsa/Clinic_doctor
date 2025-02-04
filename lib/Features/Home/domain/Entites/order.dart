@@ -9,12 +9,14 @@ class Order {
   final DateTime date;
   final ExaminationDetail detail;
   final String additionalNotes;
+  final String imageUrl;
   final int price;
   final Output output;
   final int? toothNumber;
 
   Order(
     this.toothNumber, {
+    required this.imageUrl,
     required this.output,
     required this.price,
     required this.isImaged,
@@ -38,6 +40,7 @@ class Order {
       additionalNotes: json['additional_notes'] ?? '',
       price: json['order_price'],
       output: Output.fromJson(json['output']),
+      imageUrl: json['image_url'],
     );
   }
 }

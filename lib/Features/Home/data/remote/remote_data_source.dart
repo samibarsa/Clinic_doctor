@@ -67,7 +67,8 @@ class RemoteDataSource {
     isImaged,
     date,
     additional_notes,
-    tooth_number, 
+    tooth_number,
+    image_url, 
     output:order_output(
       id,
       output_type,

@@ -1,4 +1,7 @@
 import 'package:doctor_app/Features/Home/presentation/view/order_view_detiles.dart';
+import 'package:doctor_app/core/utils/constant.dart';
+import 'package:doctor_app/core/utils/navigator/navigator.dart';
+import 'package:doctor_app/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:doctor_app/Features/Home/domain/Entites/order.dart';
@@ -138,6 +141,26 @@ class OrderDetailTable extends StatelessWidget {
                   topradius: 0,
                   buttomradius: 12.r,
                 ),
+              SizedBox(height: 40.h),
+              CustomButton(
+                  title: "عرض الصورة",
+                  color: 0xffFFFFFF,
+                  onTap: () {
+                    MovingNavigation.navTo(context,
+                        page: Scaffold(
+                          appBar: AppBar(
+                            leading: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(Icons.arrow_back)),
+                          ),
+                          body: Center(
+                            child: Image.network(order.imageUrl),
+                          ),
+                        ));
+                  },
+                  titleColor: Color(AppColor.primaryColor)),
               SizedBox(height: 40.h),
               ShowOrderState(order: order)
             ],

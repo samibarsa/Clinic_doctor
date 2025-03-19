@@ -1,16 +1,26 @@
-# doctor_app
+🏥 Imaging Center App
 
-A new Flutter project.
+An advanced management system for imaging centers to handle and process requests efficiently.
 
-## Getting Started
+🔹 Key Features:
 
-This project is a starting point for a Flutter application.
+✅ Simple and intuitive UI: for quick order submission.✅ Advanced search & filtering: for managing requests effectively.✅ PDF reports generation: for individual dentists & all dentists.✅ Role-based access control: for enhanced data security.✅ Responsive Design: Adapts to all screen sizes for a smooth experience.✅ Clean Architecture: Built using Clean Architecture for better maintainability and scalability.✅ Daily Inflow Management & Monthly Inventory: For accurate stock tracking and efficient collaboration with affiliated dentists.✅ Image Upload & Cloud Storage: To securely store patient data and enhance the center’s service quality.
 
-A few resources to get you started if this is your first Flutter project:
+🛠 Technologies Used:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Frontend: Flutter (Dart)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Backend: Supabase (Auth, Database, API)
+
+State Management: Bloc
+
+PDF Generation: flutter_pdf
+
+🎯 Related Projects:
+
+This project is part of a connected system with another app designed specifically for dentists. The dentists' app allows them to upload files, view requested images, and it features a dark theme instead of the light theme used here. Both apps work seamlessly to ensure effective service integration.
+
+🔹 Future Enhancements:
+
+🔹 Implement push notifications for request status updates.🔹 Add dark mode support for a better UI experience.
+
